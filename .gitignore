@@ -15,3 +15,7 @@
 *.csproj
 *.sln
 .DS_Store
+ProjectSettings/
+Packages/manifest.json
+Packages/
+training.slnx
