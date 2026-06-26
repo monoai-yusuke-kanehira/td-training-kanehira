@@ -4,24 +4,24 @@ using UnityEngine;
 namespace TowerDefense.Nodes
 {
 	/// <summary>
-	/// Provides a way to select a node for agents to navigate towards
+	/// Agentが向かうNodeを選択する仕組みを提供します
 	/// </summary>
 	public abstract class NodeSelector : MonoBehaviour
 	{
 		/// <summary>
-		/// A list of Nodes that can be selected by this NodeSelector
+		/// このNodeSelectorが選択できるNodeのリスト
 		/// </summary>
 		public List<Node> linkedNodes;
 
 		/// <summary>
-		/// Gets the next node in the fixed list of nodes
+		/// 固定されたNodeリストから次のNodeを取得します
 		/// </summary>
-		/// <returns>The next node in the list of Nodes, null if the node is the endpoint</returns>
+		/// <returns>Nodeリスト内の次のNode。終端Nodeの場合はnull</returns>
 		public abstract Node GetNextNode();
 
 #if UNITY_EDITOR
 		/// <summary>
-		/// Draws the links between nodes for editor purposes
+		/// Editor用にNode間のリンクを描画します
 		/// </summary>
 		protected virtual void OnDrawGizmos()
 		{

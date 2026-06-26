@@ -3,12 +3,12 @@
 namespace TowerDefense.UI
 {
 	/// <summary>
-	/// Simple script to open a URL
+	/// URLを開くシンプルなスクリプト
 	/// </summary>
 	public class UrlOpen : MonoBehaviour
 	{
 		/// <summary>
-		/// Open the given url
+		/// 指定されたURLを開く
 		/// </summary>
 		public void OpenUrl(string url)
 		{

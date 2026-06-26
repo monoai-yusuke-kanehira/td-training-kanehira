@@ -6,24 +6,24 @@ using UnityEngine;
 namespace TowerDefense.Towers.Data
 {
 	/// <summary>
-	/// The asset which holds the list of different towers
+	/// 複数種類のTowerリストを保持するアセット
 	/// </summary>
 	[CreateAssetMenu(fileName = "TowerLibrary.asset", menuName = "TowerDefense/Tower Library", order = 1)]
 	public class TowerLibrary : ScriptableObject, IList<Tower>, IDictionary<string, Tower>
 	{
 		/// <summary>
-		/// The list of all the towers
+		/// すべてのTowerのリスト
 		/// </summary>
 		public List<Tower> configurations;
 
 		/// <summary>
-		/// The internal reference to the dictionary made from the list of towers
-		/// with the name of tower as the key
+		/// Towerリストから作成したDictionaryへの内部参照
+		/// Tower名をキーとして使います
 		/// </summary>
 		Dictionary<string, Tower> m_ConfigurationDictionary;
 
 		/// <summary>
-		/// The accessor to the towers by index
+		/// インデックスでTowerにアクセスするためのアクセサ
 		/// </summary>
 		/// <param name="index"></param>
 		public Tower this[int index]
@@ -36,7 +36,7 @@ namespace TowerDefense.Towers.Data
 		}
 
 		/// <summary>
-		/// Convert the list (m_Configurations) to a dictionary for access via name
+		/// 名前でアクセスできるよう、リスト（m_Configurations）をDictionaryに変換します
 		/// </summary>
 		public void OnAfterDeserialize()
 		{

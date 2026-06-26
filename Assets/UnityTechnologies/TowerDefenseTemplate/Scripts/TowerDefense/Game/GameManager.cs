@@ -6,18 +6,18 @@ using UnityEngine.SceneManagement;
 namespace TowerDefense.Game
 {
 	/// <summary>
-	/// Game Manager - a persistent single that handles persistence, and level lists, etc.
-	/// This should be initialized when the game starts.
+	/// ゲームマネージャー。永続化やレベルリストなどを処理する常駐オブジェクト
+	/// ゲーム起動時に初期化する必要があります
 	/// </summary>
 	public class GameManager : GameManagerBase<GameManager, GameDataStore>
 	{
 		/// <summary>
-		/// Scriptable object for list of levels
+		/// レベルのリストのスクリプト可能なオブジェクト
 		/// </summary>
 		public LevelList levelList;
 
 		/// <summary>
-		/// Set sleep timeout to never sleep
+		/// スリープしないようにスリープ タイムアウトを設定します
 		/// </summary>
 		protected override void Awake()
 		{
@@ -26,9 +26,9 @@ namespace TowerDefense.Game
 		}
 
 		/// <summary>
-		/// Method used for completing the level
+		/// レベルを完了するために使用される方法
 		/// </summary>
-		/// <param name="levelId">The levelId to mark as complete</param>
+		/// <param name="levelId">完了としてマークする levelId</param>
 		/// <param name="starsEarned"></param>
 		public void CompleteLevel(string levelId, int starsEarned)
 		{
@@ -43,7 +43,7 @@ namespace TowerDefense.Game
 		}
 
 		/// <summary>
-		/// Gets the id for the current level
+		/// 現在のレベルの ID を取得します
 		/// </summary>
 		public LevelItem GetLevelForCurrentScene()
 		{
@@ -53,10 +53,10 @@ namespace TowerDefense.Game
 		}
 
 		/// <summary>
-		/// Determines if a specific level is completed
+		/// 特定のレベルが完了したかどうかを判断します
 		/// </summary>
-		/// <param name="levelId">The level ID to check</param>
-		/// <returns>true if the level is completed</returns>
+		/// <param name="levelId">確認するレベルID</param>
+		/// <returns>レベルが完了している場合は true</returns>
 		public bool IsLevelCompleted(string levelId)
 		{
 			if (!levelList.ContainsKey(levelId))
@@ -69,7 +69,7 @@ namespace TowerDefense.Game
 		}
 
 		/// <summary>
-		/// Gets the stars earned on a given level
+		/// 指定されたレベルで獲得したスターを取得します
 		/// </summary>
 		/// <param name="levelId"></param>
 		/// <returns></returns>

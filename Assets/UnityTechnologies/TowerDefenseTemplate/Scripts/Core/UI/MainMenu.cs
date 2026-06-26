@@ -4,26 +4,26 @@ using UnityEngine;
 namespace Core.UI
 {
 	/// <summary>
-	/// Abstract base class of a MainMenu
-	/// The concrete class should expose serialized fields for the different pages e.g. OptionsMenu
-	/// The concrete class should expose methods for change pages that use ChangePage() under the hood. e.g. OpenOptionsMenu()
+	/// MainMenuの抽象基底クラス
+	/// 具象クラスでは、OptionsMenuなど各ページ用のシリアライズ対象フィールドを公開する
+	/// 具象クラスでは、内部でChangePage()を使うページ切り替え用メソッドを公開する。例: OpenOptionsMenu()
 	/// </summary>
 	public abstract class MainMenu : MonoBehaviour
 	{
 		/// <summary>
-		/// Currently open MenuPage
+		/// 現在開いているMenuPage
 		/// </summary>
 		protected IMainMenuPage m_CurrentPage;
 
 		/// <summary>
-		/// This stack is to track the pages used to get to specific page - use by the back methods
+		/// 特定のページに到達するまでに通ったページを記録するスタック。戻る処理で使用する
 		/// </summary>
 		protected Stack<IMainMenuPage> m_PageStack = new Stack<IMainMenuPage>();
 
 		/// <summary>
-		/// Change page
+		/// ページを切り替える
 		/// </summary>
-		/// <param name="newPage">the page to transition to</param>
+		/// <param name="newPage">遷移先のページ</param>
 		protected virtual void ChangePage(IMainMenuPage newPage)
 		{
 			DeactivateCurrentPage();
@@ -31,7 +31,7 @@ namespace Core.UI
 		}
 
 		/// <summary>
-		/// Deactivates the current page is there is one
+		/// 現在のページがあれば無効化する
 		/// </summary>
 		protected void DeactivateCurrentPage()
 		{
@@ -42,9 +42,9 @@ namespace Core.UI
 		}
 
 		/// <summary>
-		/// Activates the new page, sets it to the current page an adds it to the stack
+		/// 新しいページを有効化し、現在のページとして設定してスタックに追加する
 		/// </summary>
-		/// <param name="newPage">the page to be activated</param>
+		/// <param name="newPage">有効化するページ</param>
 		protected void ActivateCurrentPage(IMainMenuPage newPage)
 		{
 			m_CurrentPage = newPage;
@@ -53,9 +53,9 @@ namespace Core.UI
 		}
 
 		/// <summary>
-		/// Goes back to a certain page
+		/// 指定したページへ戻る
 		/// </summary>
-		/// <param name="backPage">Page to go back to</param>
+		/// <param name="backPage">戻り先のページ</param>
 		protected void SafeBack(IMainMenuPage backPage)
 		{
 			DeactivateCurrentPage();
@@ -63,7 +63,7 @@ namespace Core.UI
 		}
 
 		/// <summary>
-		/// Goes back one page if possible
+		/// 可能であれば1つ前のページへ戻る
 		/// </summary>
 		public virtual void Back()
 		{
@@ -78,9 +78,9 @@ namespace Core.UI
 		}
 
 		/// <summary>
-		/// Goes back to a specified page if possible
+		/// 可能であれば指定したページへ戻る
 		/// </summary>
-		/// <param name="backPage">Page to go back to</param>
+		/// <param name="backPage">戻り先のページ</param>
 		public virtual void Back(IMainMenuPage backPage)
 		{
 			int count = m_PageStack.Count;

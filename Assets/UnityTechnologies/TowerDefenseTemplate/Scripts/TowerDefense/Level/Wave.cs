@@ -10,27 +10,27 @@ using UnityEngine;
 namespace TowerDefense.Level
 {
 	/// <summary>
-	/// A Wave is a TimedBehaviour, that uses the RepeatingTimer to spawn enemies
+	/// Wave は TimedBehaviour であり、RepeatingTimer を使用して敵を生成します
 	/// </summary>
 	public class Wave : TimedBehaviour
 	{
 		/// <summary>
-		/// A list of instructions on how to spawn enemies
+		/// 敵の出現方法のリスト
 		/// </summary>
 		public List<SpawnInstruction> spawnInstructions;
 
 		/// <summary>
-		/// The index of the current enemy to spawn
+		/// スポーンする現在の敵のインデックス
 		/// </summary>
 		protected int m_CurrentIndex;
 
 		/// <summary>
-		/// The RepeatingTimer used to spawn enemies
+		/// 敵をスポーンするために使用されるRepeatingTimer
 		/// </summary>
 		protected RepeatingTimer m_SpawnTimer;
 
 		/// <summary>
-		/// The event that is fired when a Wave is completed
+		/// Wave が完了したときに発生するイベント
 		/// </summary>
 		public event Action waveCompleted;
 
@@ -40,11 +40,11 @@ namespace TowerDefense.Level
 		}
 
 		/// <summary>
-		/// Initializes the Wave
+		/// ウェーブを初期化します
 		/// </summary>
 		public virtual void Init()
 		{
-			// If the wave is empty then warn the level designer and fire complete event
+			// Wave が空の場合は、レベル デザイナーに警告し、Complete イベントを発生させます
 			if (spawnInstructions.Count == 0)
 			{
 				Debug.LogWarning("[LEVEL] Empty Wave");
@@ -57,7 +57,7 @@ namespace TowerDefense.Level
 		}
 
 		/// <summary>
-		/// Handles spawning the current agent and sets up the next agent for spawning
+		/// 現在のエージェントの生成を処理し、次のエージェントの生成をセットアップします
 		/// </summary>
 		protected virtual void SpawnCurrent()
 		{
@@ -65,14 +65,14 @@ namespace TowerDefense.Level
 			if (!TrySetupNextSpawn())
 			{
 				SafelyBroadcastWaveCompletedEvent();
-				// this is required so wave progress is still accurate
+				// これは波の進行状況が正確であるために必要です
 				m_CurrentIndex = spawnInstructions.Count;
 				StopTimer(m_SpawnTimer);
 			}
 		}
 
 		/// <summary>
-		/// Spawns the current agent
+		/// 現在のエージェントを生成します
 		/// </summary>
 		protected void Spawn()
 		{
@@ -81,9 +81,9 @@ namespace TowerDefense.Level
 		}
 
 		/// <summary>
-		/// Tries to setup the next spawn
+		/// 次のスポーンをセットアップしようとします
 		/// </summary>
-		/// <returns>true if there is another spawn instruction, false if not</returns>
+		/// <returns>別のスポーン命令がある場合は true、そうでない場合は false</returns>
 		protected bool TrySetupNextSpawn()
 		{
 			bool hasNext = spawnInstructions.Next(ref m_CurrentIndex);
@@ -104,10 +104,10 @@ namespace TowerDefense.Level
 		}
 
 		/// <summary>
-		/// Spawns the agent
+		/// エージェントを生成します
 		/// </summary>
-		/// <param name="agentConfig">The agent to spawn</param>
-		/// <param name="node">The starting node that the agent uses</param>
+		/// <param name="agentConfig">生成するエージェント</param>
+		/// <param name="node">エージェントが使用する開始ノード</param>
 		protected virtual void SpawnAgent(AgentConfiguration agentConfig, Node node)
 		{
 			Vector3 spawnPosition = node.GetRandomPointInNodeArea();
@@ -125,7 +125,7 @@ namespace TowerDefense.Level
 		}
 
 		/// <summary>
-		/// Launch the waveCompleted event
+		/// waveCompleted イベントを開始する
 		/// </summary>
 		protected void SafelyBroadcastWaveCompletedEvent()
 		{

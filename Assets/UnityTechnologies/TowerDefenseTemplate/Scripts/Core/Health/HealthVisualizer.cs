@@ -3,43 +3,43 @@
 namespace Core.Health
 {
 	/// <summary>
-	/// Class to visualizer the health of a damageable
+	/// Damageableの体力を表示するクラス
 	/// </summary>
 	public class HealthVisualizer : MonoBehaviour
 	{
 		/// <summary>
-		/// The DamageableBehaviour that will be used to assign the damageable
+		/// Damageableの割り当てに使うDamageableBehaviour
 		/// </summary>
 		[Tooltip("This field does not need to be populated here, it can be set up in code using AssignDamageable")]
 		public DamageableBehaviour damageableBehaviour;
 		
 		/// <summary>
-		/// The object whose X-scale we change to decrease the health bar. Should have a default uniform scale
+		/// ヘルスバーを減らすためにXスケールを変更するオブジェクト。初期状態では均一なスケールにしてください
 		/// </summary>
 		public Transform healthBar;
 		
 		/// <summary>
-		/// The object whose X-scale we change to increase the health bar background. Should have a default uniform scale
+		/// ヘルスバー背景を増やすためにXスケールを変更するオブジェクト。初期状態では均一なスケールにしてください
 		/// </summary>
 		public Transform backgroundBar;
 
 		/// <summary>
-		/// Whether to show this health bar even when it is full
+		/// 体力が満タンでもこのヘルスバーを表示するかどうか
 		/// </summary>
 		public bool showWhenFull;
 
 		/// <summary>
-		/// Camera to face the visualization at
+		/// 表示を向ける対象のカメラ
 		/// </summary>
 		protected Transform m_CameraToFace;
 
 		/// <summary>
-		/// Damageable whose health is visualized
+		/// 体力を表示する対象のDamageable
 		/// </summary>
 		protected Damageable m_Damageable;
 
 		/// <summary>
-		/// Updates the visualization of the health
+		/// 上dates the visualization of the health
 		/// </summary>
 		/// <param name="normalizedHealth">Normalized health value</param>
 		public void UpdateHealth(float normalizedHealth)
@@ -62,7 +62,7 @@ namespace Core.Health
 		}
 
 		/// <summary>
-		/// Sets the visibility status of this visualiser
+		/// この表示オブジェクトの表示状態を設定します
 		/// </summary>
 		public void SetVisible(bool visible)
 		{
@@ -70,7 +70,7 @@ namespace Core.Health
 		}
 
 		/// <summary>
-		/// Assigns the damageable, subscribing to the damaged event
+		/// damageableを割り当て、ダメージイベントを購読します
 		/// </summary>
 		/// <param name="damageable">Damageable to assign</param>
 		public void AssignDamageable(Damageable damageable)
@@ -84,7 +84,7 @@ namespace Core.Health
 		}
 
 		/// <summary>
-		/// Turns us to face the camera
+		/// カメラの方を向かせます
 		/// </summary>
 		protected virtual void Update()
 		{
@@ -93,7 +93,7 @@ namespace Core.Health
 		}
 
 		/// <summary>
-		/// Assigns a damageable if damageableBehaviour is populated
+		/// damageableBehaviourが設定されている場合、damageableを割り当てます
 		/// </summary>
 		protected virtual void Awake()
 		{
@@ -104,7 +104,7 @@ namespace Core.Health
 		}
 
 		/// <summary>
-		/// Caches the main camera
+		/// メインカメラをキャッシュします
 		/// </summary>
 		protected virtual void Start()
 		{

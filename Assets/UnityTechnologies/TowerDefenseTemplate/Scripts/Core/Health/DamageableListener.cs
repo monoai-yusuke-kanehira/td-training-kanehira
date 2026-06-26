@@ -5,7 +5,7 @@ using UnityEngine.Events;
 namespace Core.Health
 {
 	/// <summary>
-	/// A UnityEvent that passes through the HealthChangeInfo
+	/// HealthChangeInfoを渡すUnityEvent
 	/// </summary>
 	[Serializable]
 	public class HealthChangeEvent : UnityEvent<HealthChangeInfo>
@@ -13,7 +13,7 @@ namespace Core.Health
 	}
 
 	/// <summary>
-	/// A UnityEvent that passes through the HitInfo
+	/// HitInfoを渡すUnityEvent
 	/// </summary>
 	[Serializable]
 	public class HitEvent : UnityEvent<HitInfo>
@@ -21,33 +21,33 @@ namespace Core.Health
 	}
 
 	/// <summary>
-	/// Damageable listener.
+	/// Damageableのリスナー。
 	/// </summary>
 	public class DamageableListener : MonoBehaviour
 	{
-		// The damageable behaviour to listen to
+		// 監視するDamageableBehaviour
 		[Tooltip("Leave this empty if the DamageableBehaviour and DamageableListener are on the same component")]
 		public DamageableBehaviour damageableBehaviour;
 
-		// Events for health change (i.e. healing/damage) - to be configured in the editor
+		// 体力変化（回復/ダメージ）用のイベント。Editorで設定します
 		public HealthChangeEvent damaged;
 		
 		public HealthChangeEvent healed;
 
-		// Events for death and max health - to be configured in the editor
+		// 死亡と最大体力用のイベント。Editorで設定します
 		public UnityEvent died;
 
 		public UnityEvent reachedMaxHealth;
 
-		// Event for when health is change
+		// 体力が変化したときのイベント
 		public HealthChangeEvent healthChanged;
 		
-		// Event for hits
+		// ヒット用のイベント
 		[Header("The hit event is different from the damage event as it also contains hit position data")]
 		public HitEvent hit;
 
 		/// <summary>
-		/// Lazy loads the DamageableBehaviour
+		/// DamageableBehaviourを遅延読み込みします
 		/// </summary>
 		protected virtual void Awake()
 		{
@@ -55,7 +55,7 @@ namespace Core.Health
 		}
 
 		/// <summary>
-		/// Subscribes to events
+		/// イベントを購読します
 		/// </summary>
 		protected virtual void OnEnable()
 		{
@@ -68,7 +68,7 @@ namespace Core.Health
 		}
 
 		/// <summary>
-		/// Unsubscribes from events on disable
+		/// 無効化時にイベントの購読を解除します
 		/// </summary>
 		protected virtual void OnDisable()
 		{
@@ -81,7 +81,7 @@ namespace Core.Health
 		}
 
 		/// <summary>
-		/// Raises the death UnityEvent.
+		/// 死亡のUnityEventを発火します。
 		/// </summary>
 		protected virtual void OnDeath(HealthChangeInfo info)
 		{
@@ -89,7 +89,7 @@ namespace Core.Health
 		}
 
 		/// <summary>
-		/// Raises the max health UnityEvent.
+		/// 最大体力のUnityEventを発火します。
 		/// </summary>
 		protected virtual void OnReachedMaxHealth()
 		{
@@ -97,7 +97,7 @@ namespace Core.Health
 		}
 
 		/// <summary>
-		/// Raises the heal UnityEvent.
+		/// 回復のUnityEventを発火します。
 		/// </summary>
 		/// <param name="info">Info.</param>
 		protected virtual void OnHealed(HealthChangeInfo info)
@@ -106,7 +106,7 @@ namespace Core.Health
 		}
 
 		/// <summary>
-		/// Raises the damage UnityEvent.
+		/// ダメージのUnityEventを発火します。
 		/// </summary>
 		/// <param name="info">Info.</param>
 		protected virtual void OnDamaged(HealthChangeInfo info)
@@ -115,7 +115,7 @@ namespace Core.Health
 		}
 		
 		/// <summary>
-		/// Raises the healthChanged UnityEvent.
+		/// healthChangedのUnityEventを発火します。
 		/// </summary>
 		/// <param name="info">Info.</param>
 		protected virtual void OnHealthChanged(HealthChangeInfo info)
@@ -124,7 +124,7 @@ namespace Core.Health
 		}
 
 		/// <summary>
-		/// Raises the hit UnityEvent.
+		/// ヒットのUnityEventを発火します。
 		/// </summary>
 		/// <param name="info">Info.</param>
 		protected virtual void OnHit(HitInfo info)
@@ -133,8 +133,8 @@ namespace Core.Health
 		}
 
 		/// <summary>
-		/// Looks for the damageableBehaviour if it is not already assigned
-		/// It may be assigned in editor or from a previous LazyLoad() call
+		/// damageableBehaviourがまだ割り当てられていない場合に探します
+		/// Editorで割り当てられている場合や、以前のLazyLoad()呼び出しで設定されている場合があります
 		/// </summary>
 		protected void LazyLoad()
 		{

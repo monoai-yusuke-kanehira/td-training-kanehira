@@ -6,23 +6,23 @@ using UnityEngine;
 namespace TowerDefense.Towers.TowerLaunchers
 {
 	/// <summary>
-	/// An implementation of ILauncher that firest homing missiles
+	/// ホーミングミサイルを発射するILauncherの実装
 	/// </summary>
 	public class HomingLauncher : Launcher
 	{
 		public ParticleSystem fireParticleSystem;
 
 		/// <summary>
-		/// Launches homing missile at a target from a starting position
+		/// 開始位置からターゲットへホーミングミサイルを発射します
 		/// </summary>
 		/// <param name="enemy">
-		/// The enemy to attack
+		/// 攻撃する敵
 		/// </param>
 		/// <param name="attack">
-		/// The projectile used to attack
+		/// 攻撃に使うProjectile
 		/// </param>
 		/// <param name="firingPoint">
-		/// The point the projectile is being fired from
+		/// Projectileの発射元となる点
 		/// </param>
 		public override void Launch(Targetable enemy, GameObject attack, Transform firingPoint)
 		{

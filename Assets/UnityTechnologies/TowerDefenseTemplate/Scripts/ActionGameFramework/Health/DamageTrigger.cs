@@ -3,15 +3,15 @@
 namespace ActionGameFramework.Health
 {
 	/// <summary>
-	/// Damage trigger - a trigger based implementation of Damage zone
+	/// DamageZone を Trigger ベースで実装したダメージ用トリガー
 	/// </summary>
 	[RequireComponent(typeof(Collider))]
 	public class DamageTrigger : DamageZone
 	{
 		/// <summary>
-		/// On entering the trigger see that the collider has a Damager component and if so make the damageableBehaviour take damage
+		/// Trigger に入った Collider に Damager があるか確認し、あれば damageableBehaviour にダメージを与える
 		/// </summary>
-		/// <param name="triggeredCollider">The collider that entered the trigger</param>
+		/// <param name="triggeredCollider">Trigger に入った Collider</param>
 		protected void OnTriggerEnter(Collider triggeredCollider)
 		{
 			var damager = triggeredCollider.GetComponent<Damager>();

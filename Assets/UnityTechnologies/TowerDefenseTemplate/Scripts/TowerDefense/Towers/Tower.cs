@@ -9,42 +9,42 @@ using UnityEngine;
 namespace TowerDefense.Towers
 {
 	/// <summary>
-	/// Common functionality for all types of towers
+	/// すべてのTower種別で共通する機能
 	/// </summary>
 	public class Tower : Targetable
 	{
 		/// <summary>
-		/// The tower levels associated with this tower
+		/// このTowerに関連付けられたTowerレベル
 		/// </summary>
 		public TowerLevel[] levels;
 
 		/// <summary>
-		/// A generalised name common to a levels
+		/// 各レベルで共通して使う汎用名
 		/// </summary>
 		public string towerName;
 
 		/// <summary>
-		/// The size of the tower's footprint
+		/// Towerの占有サイズ
 		/// </summary>
 		public IntVector2 dimensions;
 
 		/// <summary>
-		/// The physics mask the tower searches on
+		/// Towerが検索に使うPhysics Mask
 		/// </summary>
 		public LayerMask enemyLayerMask;
 
 		/// <summary>
-		/// The current level of the tower
+		/// Towerの現在レベル
 		/// </summary>
 		public int currentLevel { get; protected set; }
 
 		/// <summary>
-		/// Reference to the data of the current level
+		/// 現在レベルのデータへの参照
 		/// </summary>
 		public TowerLevel currentTowerLevel { get; protected set; }
 
 		/// <summary>
-		/// Gets whether the tower can level up anymore
+		/// Towerがこれ以上レベルアップできるかを取得します
 		/// </summary>
 		public bool isAtMaxLevel
 		{
@@ -52,7 +52,7 @@ namespace TowerDefense.Towers
 		}
 
 		/// <summary>
-		/// Gets the first level tower ghost prefab
+		/// 最初のレベルのTower Ghost Prefabを取得します
 		/// </summary>
 		public TowerPlacementGhost towerGhostPrefab
 		{
@@ -60,17 +60,17 @@ namespace TowerDefense.Towers
 		}
 
 		/// <summary>
-		/// Gets the grid position for this tower on the <see cref="placementArea"/>
+		/// <see cref="placementArea"/>上でのこのTowerのグリッド位置を取得します
 		/// </summary>
 		public IntVector2 gridPosition { get; private set; }
 
 		/// <summary>
-		/// The placement area we've been built on
+		/// このTowerが建てられている配置エリア
 		/// </summary>
 		public IPlacementArea placementArea { get; private set; }
 
 		/// <summary>
-		/// The purchase cost of the tower
+		/// Towerの購入コスト
 		/// </summary>
 		public int purchaseCost
 		{
@@ -78,20 +78,20 @@ namespace TowerDefense.Towers
 		}
 
 		/// <summary>
-		/// The event that fires off when a player deletes a tower
+		/// プレイヤーがTowerを削除したときに発火するイベント
 		/// </summary>
 		public Action towerDeleted;
 
 		/// <summary>
-		/// The event that fires off when a tower has been destroyed
+		/// Towerが破壊されたときに発火するイベント
 		/// </summary>
 		public Action towerDestroyed;
 
 		/// <summary>
-		/// Provide the tower with data to initialize with
+		/// 初期化に使うデータをTowerへ渡します
 		/// </summary>
-		/// <param name="targetArea">The placement area configuration</param>
-		/// <param name="destination">The destination position</param>
+		/// <param name="targetArea">配置エリアの設定</param>
+		/// <param name="destination">目的地の位置</param>
 		public virtual void Initialize(IPlacementArea targetArea, IntVector2 destination)
 		{
 			placementArea = targetArea;
@@ -112,9 +112,9 @@ namespace TowerDefense.Towers
 		}
 
 		/// <summary>
-		/// Provides information on the cost to upgrade
+		/// アップグレードコストの情報を返します
 		/// </summary>
-		/// <returns>Returns -1 if the towers is already at max level, other returns the cost to upgrade</returns>
+		/// <returns>Towerがすでに最大レベルなら-1、それ以外はアップグレードコストを返します</returns>
 		public int GetCostForNextLevel()
 		{
 			if (isAtMaxLevel)
@@ -125,31 +125,31 @@ namespace TowerDefense.Towers
 		}
 
 		/// <summary>
-		/// Kills this tower
+		/// このTowerを破壊します
 		/// </summary>
 		public void KillTower()
 		{
-			// Invoke base kill method
+			// 基底のKillメソッドを呼び出します
 			Kill();
 		}
 
 		/// <summary>
-		/// Provides the value recived for selling this tower
+		/// このTowerを売却したときに得られる値を返します
 		/// </summary>
-		/// <returns>A sell value of the tower</returns>
+		/// <returns>Towerの売却値</returns>
 		public int GetSellLevel()
 		{
 			return GetSellLevel(currentLevel);
 		}
 
 		/// <summary>
-		/// Provides the value recived for selling this tower of a particular level
+		/// 指定レベルのこのTowerを売却したときに得られる値を返します
 		/// </summary>
-		/// <param name="level">Level of tower</param>
-		/// <returns>A sell value of the tower</returns>
+		/// <param name="level">Towerのレベル</param>
+		/// <returns>Towerの売却値</returns>
 		public int GetSellLevel(int level)
 		{
-			// sell for full price if waves haven't started yet
+			// Wave開始前なら全額で売却します
 			if (LevelManager.instance.levelState == LevelState.Building)
 			{
 				int cost = 0;
@@ -164,7 +164,7 @@ namespace TowerDefense.Towers
 		}
 
 		/// <summary>
-		/// Used to (try to) upgrade the tower data
+		/// Towerデータのアップグレードを試みるために使います
 		/// </summary>
 		public virtual bool UpgradeTower()
 		{
@@ -177,10 +177,10 @@ namespace TowerDefense.Towers
 		}
 
 		/// <summary>
-		/// A method for downgrading tower
+		/// Towerをダウングレードするメソッド
 		/// </summary>
 		/// <returns>
-		/// <value>false</value> if tower is at lowest level
+		/// Towerが最低レベルの場合は<value>false</value>
 		/// </returns>
 		public virtual bool DowngradeTower()
 		{
@@ -193,13 +193,13 @@ namespace TowerDefense.Towers
 		}
 
 		/// <summary>
-		/// Used to set the tower to any valid level
+		/// Towerを任意の有効なレベルに設定するために使います
 		/// </summary>
 		/// <param name="level">
-		/// The level to upgrade the tower to
+		/// Towerをアップグレードする先のレベル
 		/// </param>
 		/// <returns>
-		/// True if successful
+		/// 成功した場合はtrue
 		/// </returns>
 		public virtual bool UpgradeTowerToLevel(int level)
 		{
@@ -217,7 +217,7 @@ namespace TowerDefense.Towers
 		}
 
 		/// <summary>
-		/// Removes tower from placement area and destroys it
+		/// Towerを配置エリアから取り除いて破棄します
 		/// </summary>
 		public override void Remove()
 		{
@@ -228,7 +228,7 @@ namespace TowerDefense.Towers
 		}
 
 		/// <summary>
-		/// unsubsribe when necessary
+		/// 必要に応じて購読解除します
 		/// </summary>
 		protected virtual void OnDestroy()
 		{
@@ -239,7 +239,7 @@ namespace TowerDefense.Towers
 		}
 
 		/// <summary>
-		/// Cache and update oftenly used data
+		/// よく使うデータをキャッシュして更新します
 		/// </summary>
 		protected void SetLevel(int level)
 		{
@@ -253,24 +253,24 @@ namespace TowerDefense.Towers
 				Destroy(currentTowerLevel.gameObject);
 			}
 
-			// instantiate the visual representation
+			// 表示用オブジェクトを生成します
 			currentTowerLevel = Instantiate(levels[currentLevel], transform);
 
-			// initialize TowerLevel
+			// TowerLevelを初期化します
 			currentTowerLevel.Initialize(this, enemyLayerMask, configuration.alignmentProvider);
 
-			// health data
+			// 体力データ
 			ScaleHealth();
 
-			// disable affectors
+			// Affectorを無効化します
 			LevelState levelState = LevelManager.instance.levelState;
 			bool initialise = levelState == LevelState.AllEnemiesSpawned || levelState == LevelState.SpawningEnemies;
 			currentTowerLevel.SetAffectorState(initialise);
 		}
 
 		/// <summary>
-		/// Scales the health based on the previous health
-		/// Requires override when the rules for scaling health on upgrade changes
+		/// 以前の体力を基準に体力をスケールします
+		/// アップグレード時の体力スケール規則が変わる場合はoverrideが必要です
 		/// </summary>
 		protected virtual void ScaleHealth()
 		{
@@ -288,7 +288,7 @@ namespace TowerDefense.Towers
 		}
 
 		/// <summary>
-		/// Intiailises affectors based on the level state
+		/// レベル状態に応じてAffectorを初期化します
 		/// </summary>
 		protected virtual void OnLevelStateChanged(LevelState previous, LevelState current)
 		{

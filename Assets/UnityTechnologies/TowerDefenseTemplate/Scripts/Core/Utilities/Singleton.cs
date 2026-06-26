@@ -3,18 +3,18 @@
 namespace Core.Utilities
 {
 	/// <summary>
-	/// Singleton class
+	/// Singletonクラス
 	/// </summary>
-	/// <typeparam name="T">Type of the singleton</typeparam>
+	/// <typeparam name="T">Singletonの型</typeparam>
 	public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
 	{
 		/// <summary>
-		/// The static reference to the instance
+		/// インスタンスへのstatic参照
 		/// </summary>
 		public static T instance { get; protected set; }
 
 		/// <summary>
-		/// Gets whether an instance of this singleton exists
+		/// このSingletonのインスタンスが存在するかを取得する
 		/// </summary>
 		public static bool instanceExists
 		{
@@ -22,7 +22,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Awake method to associate singleton with instance
+		/// Singletonとインスタンスを関連付けるAwakeメソッド
 		/// </summary>
 		protected virtual void Awake()
 		{
@@ -37,7 +37,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// OnDestroy method to clear singleton association
+		/// Singletonとの関連付けを解除するOnDestroyメソッド
 		/// </summary>
 		protected virtual void OnDestroy()
 		{

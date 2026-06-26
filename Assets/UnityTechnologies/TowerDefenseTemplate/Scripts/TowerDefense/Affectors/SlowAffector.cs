@@ -5,35 +5,35 @@ using UnityEngine;
 namespace TowerDefense.Affectors
 {
 	/// <summary>
-	/// Uses a trigger to attach and remove <see cref="AgentSlower" /> components to agents
+	/// トリガーを使って、エージェントに<see cref="AgentSlower" />コンポーネントを追加・削除します
 	/// </summary>
 	public class SlowAffector : PassiveAffector
 	{
 		/// <summary>
-		/// A normalized value to slow agents by
+		/// エージェントを遅くする割合を表す正規化された値です
 		/// </summary>
 		[Range(0, 1)]
 		public float slowFactor;
 
 		/// <summary>
-		/// The slow factor for displaying to the UI
+		/// UIに表示するためのスロー倍率です
 		/// </summary>
 		public string slowFactorFormat = "<b>Slow Factor:</b> {0}";
 
 		/// <summary>
-		/// The particle system that plays when an entity enters the sphere
+		/// エンティティが球に入ったときに再生されるパーティクル システム
 		/// </summary>
 		public ParticleSystem enterParticleSystem;
 
 		public GameObject slowFxPrefab;
 
 		/// <summary>
-		/// The audio source that plays when an entity enters the sphere
+		/// エンティティが球体に入ったときに再生されるオーディオ ソース
 		/// </summary>
 		public AudioSource audioSource;
 
 		/// <summary>
-		/// Subsribes to the relevant targetter events
+		/// 関連するターゲッターイベントをサブスクライブします
 		/// </summary>
 		protected void Awake()
 		{
@@ -42,7 +42,7 @@ namespace TowerDefense.Affectors
 		}
 
 		/// <summary>
-		/// Unsubsribes from the relevant targetter events
+		/// 関連するターゲッターイベントのサブスクライブを解除します
 		/// </summary>
 		void OnDestroy()
 		{
@@ -51,9 +51,9 @@ namespace TowerDefense.Affectors
 		}
 
 		/// <summary>
-		/// Attaches a <see cref="AgentSlower" /> to the agent
+		/// エージェントに<see cref="AgentSlower" />を追加します
 		/// </summary>
-		/// <param name="target">The agent to attach the slower to</param>
+		/// <param name="target">Slowerを追加する対象のエージェントです</param>
 		protected void AttachSlowComponent(Agent target)
 		{
 			var slower = target.GetComponent<AgentSlower>();
@@ -74,9 +74,9 @@ namespace TowerDefense.Affectors
 		}
 
 		/// <summary>
-		/// Removes the <see cref="AgentSlower" /> from the agent once it leaves the area
+		/// エージェントが範囲外に出たら、<see cref="AgentSlower" />を削除します
 		/// </summary>
-		/// <param name="target">The agent to remove the slower from</param>
+		/// <param name="target">Slowerを削除する対象のエージェントです</param>
 		protected void RemoveSlowComponent(Agent target)
 		{
 			if (target == null)
@@ -91,7 +91,7 @@ namespace TowerDefense.Affectors
 		}
 
 		/// <summary>
-		/// Fired when the targetter aquires a new targetable
+		/// ターゲッターが新しいターゲット可能オブジェクトを取得したときに発生します
 		/// </summary>
 		protected void OnTargetEntersRange(Targetable other)
 		{
@@ -104,7 +104,7 @@ namespace TowerDefense.Affectors
 		}
 
 		/// <summary>
-		/// Fired when the targetter aquires loses a targetable
+		/// ターゲット設定者がターゲット可能オブジェクトを取得したときに発生します
 		/// </summary>
 		protected void OnTargetExitsRange(Targetable other)
 		{

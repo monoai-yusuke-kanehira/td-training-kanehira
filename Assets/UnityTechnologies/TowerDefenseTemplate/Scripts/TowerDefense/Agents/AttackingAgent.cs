@@ -6,23 +6,23 @@ using UnityEngine;
 namespace TowerDefense.Agents
 {
 	/// <summary>
-	/// An implementation of Agent that will attack 
-	/// any Towers that block its path
+	/// 攻撃するエージェントの実装 
+	/// その​​進路を妨げるあらゆる塔
 	/// </summary>
 	public class AttackingAgent : Agent
 	{
 		/// <summary>
-		/// Tower to target
+		/// ターゲットへのタワー
 		/// </summary>
 		protected Tower m_TargetTower;
 
 		/// <summary>
-		/// The attached attack affector
+		/// 付属の攻撃アフェクター
 		/// </summary>
 		protected AttackAffector m_AttackAffector;
 		
 		/// <summary>
-		/// Is this agent currently engaging a tower?
+		/// このエージェントは現在タワーと交戦中ですか?
 		/// </summary>
 		protected bool m_IsAttacking;
 
@@ -30,17 +30,17 @@ namespace TowerDefense.Agents
 		{
 			base.Initialize();
 			
-			// Attack affector
+			// 攻撃Affectorです
 			m_AttackAffector.Initialize(configuration.alignmentProvider);
 			
-			// We don't want agents to attack towers until their path is blocked, 
-			// so disable m_AttackAffector until it is needed
+			// エージェントには、進路がブロックされるまでタワーを攻撃してほしくないのですが、 
+			// したがって、必要になるまで m_ AttackAffector を無効にします
 			m_AttackAffector.enabled = false;
 		}
 
 		/// <summary>
-		/// Unsubscribes from tracked towers removed event
-		/// and disables the attached attack affector
+		/// 追跡されたタワーの削除イベントの登録を解除する
+		/// そして、アタッチされた攻撃アフェクターを無効にします
 		/// </summary>
 		public override void Remove()
 		{
@@ -54,9 +54,9 @@ namespace TowerDefense.Agents
 		}
 
 		/// <summary>
-		/// Gets the closest tower to the agent
+		/// エージェントに最も近いタワーを取得します
 		/// </summary>
-		/// <returns>The closest tower</returns>
+		/// <returns>一番近い塔</returns>
 		protected Tower GetClosestTower()
 		{
 			var towerController = m_AttackAffector.towerTargetter.GetTarget() as Tower;
@@ -64,7 +64,7 @@ namespace TowerDefense.Agents
 		}
 
 		/// <summary>
-		/// Caches the Attack Affector if necessary
+		/// 必要に応じて攻撃アフェクターをキャッシュします
 		/// </summary>
 		protected override void LazyLoad()
 		{
@@ -76,9 +76,9 @@ namespace TowerDefense.Agents
 		}
 		
 		/// <summary>
-		/// If the tower is destroyed while other agents attack it, ensure it becomes null
+		/// 他のエージェントが攻撃している間にタワーが破壊された場合、タワーが無効になることを確認します
 		/// </summary>
-		/// <param name="tower">The tower that has been destroyed</param>
+		/// <param name="tower">破壊された塔</param>
 		protected virtual void OnTargetTowerDestroyed(DamageableBehaviour tower)
 		{
 			if (m_TargetTower == tower)
@@ -89,7 +89,7 @@ namespace TowerDefense.Agents
 		}
 		
 		/// <summary>
-		/// Peforms the relevant path update for the states <see cref="Agent.State.OnCompletePath"/>, 
+		/// 状態に関連するパスの更新を実行します <see cref="Agent.State.OnCompletePath"/>, 
 		/// <see cref="Agent.State.OnPartialPath"/> and <see cref="Agent.State.Attacking"/>
 		/// </summary>
 		protected override void PathUpdate()
@@ -109,8 +109,8 @@ namespace TowerDefense.Agents
 		}
 		
 		/// <summary>
-		/// Change to <see cref="Agent.State.OnCompletePath" /> when path is no longer blocked or to
-		/// <see cref="Agent.State.Attacking" /> when the agent reaches <see cref="AttackingAgent.m_TargetTower" />
+		///に変更 <see cref="Agent.State.OnCompletePath" /> パスがブロックされなくなったとき、または
+		/// <see cref="Agent.State.Attacking" /> エージェントが到着すると <see cref="AttackingAgent.m_TargetTower" />
 		/// </summary>
 		protected override void OnPartialPathUpdate()
 		{
@@ -120,21 +120,21 @@ namespace TowerDefense.Agents
 				return;
 			}
 
-			// Check for closest tower at the end of the partial path
+			// 部分的なパスの終点で最も近いタワーを確認する
 			m_AttackAffector.towerTargetter.transform.position = m_NavMeshAgent.pathEndPosition;
 			Tower tower = GetClosestTower();
 			if (tower != m_TargetTower)
 			{
-				// if the current target is to be replaced, unsubscribe from removed event
+				// 現在のターゲットを置き換える場合は、削除されたイベントのサブスクライブを解除します
 				if (m_TargetTower != null)
 				{
 					m_TargetTower.removed -= OnTargetTowerDestroyed;
 				}
 				
-				// assign target, can be null
+				// ターゲットを設定します。nullになる場合もあります
 				m_TargetTower = tower;
 				
-				// if new target found subscribe to removed event
+				// 新しいターゲットが見つかった場合は、削除されたイベントをサブスクライブします
 				if (m_TargetTower != null)
 				{
 					m_TargetTower.removed += OnTargetTowerDestroyed;
@@ -159,7 +159,7 @@ namespace TowerDefense.Agents
 		}
 		
 		/// <summary>
-		/// The agent attacks until the path is available again or it has killed the target tower
+		/// エージェントは、パスが再び利用可能になるまで、またはターゲットのタワーを破壊するまで攻撃します
 		/// </summary>
 		protected void AttackingUpdate()
 		{
@@ -169,12 +169,12 @@ namespace TowerDefense.Agents
 			}
 			MoveToNode();
 
-			// Resume path once blocking has been cleared
+			// ブロックが解除されたらパスを再開します
 			m_IsAttacking = false;
 			m_NavMeshAgent.isStopped = false;
 			m_AttackAffector.enabled = false;
 			state = isPathBlocked ? State.OnPartialPath : State.OnCompletePath;
-			// Move the Targetter back to the agent's position
+			// ターゲッターをエージェントの位置に戻します
 			m_AttackAffector.towerTargetter.transform.position = transform.position;
 		}
 	}

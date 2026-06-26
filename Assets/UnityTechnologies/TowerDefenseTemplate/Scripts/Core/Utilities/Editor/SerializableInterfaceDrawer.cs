@@ -7,13 +7,13 @@ using Object = UnityEngine.Object;
 namespace Core.Utilities.Editor
 {
 	/// <summary>
-	/// Property drawer for serializable interfaces
+	/// シリアライズ可能なインターフェース用のPropertyDrawer
 	/// </summary>
 	[CustomPropertyDrawer(typeof(SerializableInterface), true)]
 	public class SerializableInterfaceDrawer : PropertyDrawer
 	{
 		/// <summary>
-		/// Cached interface type that we get generically
+		/// ジェネリック型から取得したインターフェース型のキャッシュ
 		/// </summary>
 		Type m_CachedInterfaceType;
 		
@@ -21,8 +21,8 @@ namespace Core.Utilities.Editor
 		{
 			SerializedProperty gameObjectProperty = property.FindPropertyRelative("unityObjectReference");
 
-			// Try and find the interface type we need to filter for
-			// Use ISerializableInterface by default
+			// フィルターに使うインターフェース型を探す
+			// デフォルトではISerializableInterfaceを使う
 			Type interfaceType = typeof(ISerializableInterface);
 			
 			Object containingObject = property.serializedObject.targetObject;
@@ -48,7 +48,7 @@ namespace Core.Utilities.Editor
 				int firstDotIndex = fieldPath.IndexOf(".", StringComparison.Ordinal);
 				if (firstDotIndex > 0)
 				{
-					// Get first type and recurse in
+					// 最初の型を取得して再帰的にたどる
 					string parentFieldName = fieldPath.Substring(0, firstDotIndex);
 					FieldInfo parentField = owningType.GetField(parentFieldName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 

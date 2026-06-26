@@ -5,17 +5,17 @@ using UnityEngine;
 namespace TowerDefense.UI.HUD
 {
 	/// <summary>
-	/// UI component that displays towers that can be built on this level.
+	/// このレベルで建設できるタワーを表示するUIコンポーネント。
 	/// </summary>
 	public class BuildSidebar : MonoBehaviour
 	{
 		/// <summary>
-		/// The prefab spawned for each button
+		/// 各ボタンとして生成されるPrefab
 		/// </summary>
 		public TowerSpawnButton towerSpawnButton;
 
 		/// <summary>
-		/// Initialize the tower spawn buttons
+		/// タワー生成ボタンを初期化する
 		/// </summary>
 		protected virtual void Start()
 		{
@@ -33,7 +33,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Sets the GameUI to build mode with the <see cref="towerData"/>
+		/// <see cref="towerData"/> を使ってGameUIをビルドモードに設定する
 		/// </summary>
 		/// <param name="towerData"></param>
 		void OnButtonTapped(Tower towerData)
@@ -47,7 +47,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Sets the GameUI to build mode with the <see cref="towerData"/> 
+		/// <see cref="towerData"/> を使ってGameUIをビルドモードに設定する
 		/// </summary>
 		/// <param name="towerData"></param>
 		void OnButtonDraggedOff(Tower towerData)
@@ -59,7 +59,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Unsubscribes from all the tower spawn buttons
+		/// すべてのタワー生成ボタンから購読を解除する
 		/// </summary>
 		void OnDestroy()
 		{
@@ -73,7 +73,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Called by start wave button in scene
+		/// シーン内のウェーブ開始ボタンから呼ばれる
 		/// </summary>
 		public void StartWaveButtonPressed()
 		{
@@ -84,9 +84,9 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Debug button to add currency
+		/// 通貨を追加するデバッグ用ボタン
 		/// </summary>
-		/// <param name="amount">How much to add</param>
+		/// <param name="amount">追加する量</param>
 		public void AddCurrency(int amount)
 		{
 			if (LevelManager.instanceExists)

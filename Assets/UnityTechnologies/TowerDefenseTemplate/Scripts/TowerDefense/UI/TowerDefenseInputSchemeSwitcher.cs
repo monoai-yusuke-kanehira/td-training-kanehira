@@ -5,12 +5,12 @@ using State = TowerDefense.UI.HUD.GameUI.State;
 namespace TowerDefense.UI
 {
 	/// <summary>
-	/// TD Specific input switcher that also disables controls when the game is paused
+	/// Tower Defense専用の入力切替。ゲームのポーズ中は操作も無効にする
 	/// </summary>
 	public class TowerDefenseInputSchemeSwitcher : InputSchemeSwitcher
 	{
 		/// <summary>
-		/// Gets whether the game is in a paused state
+		/// ゲームがポーズ状態かどうかを取得する
 		/// </summary>
 		public bool isPaused
 		{
@@ -18,7 +18,7 @@ namespace TowerDefense.UI
 		}
 
 		/// <summary>
-		/// Register GameUI's stateChanged event
+		/// GameUIのstateChangedイベントを登録する
 		/// </summary>
 		protected virtual void Start()
 		{
@@ -29,7 +29,7 @@ namespace TowerDefense.UI
 		}
 
 		/// <summary>
-		/// Do nothing when game is paused
+		/// ゲームがポーズ中の場合は何もしない
 		/// </summary>
 		protected override void Update()
 		{
@@ -42,7 +42,7 @@ namespace TowerDefense.UI
 		}
 
 		/// <summary>
-		/// Unregister from GameUI's stateChanged event
+		/// GameUIのstateChangedイベントの登録を解除する
 		/// </summary>
 		protected virtual void OnDestroy()
 		{
@@ -53,7 +53,7 @@ namespace TowerDefense.UI
 		}
 
 		/// <summary>
-		/// Activate or deactivate the current input scheme when the game pauses/unpauses
+		/// ゲームがポーズ/ポーズ解除されたとき、現在の入力スキームを有効または無効にする
 		/// </summary>
 		void OnUIStateChanged(State oldState, State newState)
 		{

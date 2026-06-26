@@ -10,78 +10,78 @@ using UnityEngine.UI;
 namespace TowerDefense.UI
 {
 	/// <summary>
-	/// UI to display the game over screen
+	/// ゲームオーバー画面を表示するUI
 	/// </summary>
 	public class EndGameScreen : MonoBehaviour
 	{
 		/// <summary>
-		/// AudioClip to play when victorious
+		/// 勝利時に再生するAudioClip
 		/// </summary>
 		public AudioClip victorySound;
 
 		/// <summary>
-		/// AudioClip to play when failed
+		/// 敗北時に再生するAudioClip
 		/// </summary>
 		public AudioClip defeatSound;
 
 		/// <summary>
-		/// AudioSource that plays the sound
+		/// サウンドを再生するAudioSource
 		/// </summary>
 		public AudioSource audioSource;
 
 		/// <summary>
-		/// The containing panel of the End Game UI
+		/// 終了画面UIを含むパネル
 		/// </summary>
 		public Canvas endGameCanvas;
 
 		/// <summary>
-		/// Reference to the Text object that displays the result message
+		/// 結果メッセージを表示するTextオブジェクトへの参照
 		/// </summary>
 		public Text endGameMessageText;
 
 		/// <summary>
-		/// Panel that shows final star rating
+		/// 最終的な星評価を表示するパネル
 		/// </summary>
 		public ScorePanel scorePanel;
 
 		/// <summary>
-		/// Name of level select screen
+		/// レベル選択画面の名前
 		/// </summary>
 		public string menuSceneName = "MainMenu";
 
 		/// <summary>
-		/// Text to be displayed on popup
+		/// ポップアップに表示するテキスト
 		/// </summary>
 		public string levelCompleteText = "{0} COMPLETE!";
 		
 		public string levelFailedText = "{0} FAILED!";
 
 		/// <summary>
-		/// Background image
+		/// 背景画像
 		/// </summary>
 		public Image background;
 
 		/// <summary>
-		/// Color to set background
+		/// 背景に設定する色
 		/// </summary>
 		public Color winBackgroundColor;
 		
 		public Color loseBackgroundColor;
 
 		/// <summary>
-		/// The Canvas that holds the button to go to the next level
-		/// if the player has beaten the level
+		/// プレイヤーがレベルをクリアしたときに、
+		/// 次のレベルへ進むボタンを保持するCanvas
 		/// </summary>
 		public Canvas nextLevelButton;
 
 		/// <summary>
-		/// Reference to the <see cref="LevelManager" />
+		/// <see cref="LevelManager" /> への参照
 		/// </summary>
 		protected LevelManager m_LevelManager;
 
 		/// <summary>
-		/// Safely unsubscribes from <see cref="LevelManager" /> events.
-		/// Go back to the main menu scene
+		/// <see cref="LevelManager" /> のイベント購読を安全に解除する。
+		/// メインメニューシーンへ戻る
 		/// </summary>
 		public void GoToMainMenu()
 		{
@@ -90,8 +90,8 @@ namespace TowerDefense.UI
 		}
 
 		/// <summary>
-		/// Safely unsubscribes from <see cref="LevelManager" /> events.
-		/// Reloads the active scene
+		/// <see cref="LevelManager" /> のイベント購読を安全に解除する。
+		/// アクティブなシーンを再読み込みする
 		/// </summary>
 		public void RestartLevel()
 		{
@@ -101,8 +101,8 @@ namespace TowerDefense.UI
 		}
 
 		/// <summary>
-		/// Safely unsubscribes from <see cref="LevelManager" /> events.
-		/// Goes to the next scene if valid
+		/// <see cref="LevelManager" /> のイベント購読を安全に解除する。
+		/// 有効な場合は次のシーンへ進む
 		/// </summary>
 		public void GoToNextLevel()
 		{
@@ -133,8 +133,8 @@ namespace TowerDefense.UI
 		}
 
 		/// <summary>
-		/// Hide the panel if it is active at the start.
-		/// Subscribe to the <see cref="LevelManager" /> completed/failed events.
+		/// 開始時にパネルがアクティブなら非表示にする。
+		/// <see cref="LevelManager" /> の完了/失敗イベントを購読する。
 		/// </summary>
 		protected void Start()
 		{
@@ -148,7 +148,7 @@ namespace TowerDefense.UI
 		}
 
 		/// <summary>
-		/// Shows the end game screen
+		/// 終了画面を表示する
 		/// </summary>
 		protected void OpenEndGameScreen(string endResultText)
 		{
@@ -164,7 +164,7 @@ namespace TowerDefense.UI
 			} 
 			else 
 			{
-				// If the level is not in LevelList, we should just use the name of the scene. This will not store the level's score.
+				// レベルがLevelListにない場合は、シーン名をそのまま使用する。この場合、レベルのスコアは保存されない。
 				string levelName = SceneManager.GetActiveScene ().name;
 				endGameMessageText.text = string.Format (endResultText, levelName.ToUpper ());
 			}
@@ -182,7 +182,7 @@ namespace TowerDefense.UI
 		}
 
 		/// <summary>
-		/// Occurs when the level is sucessfully completed
+		/// レベルを正常にクリアしたときに発生する
 		/// </summary>
 		protected void Victory()
 		{
@@ -193,7 +193,7 @@ namespace TowerDefense.UI
 			}
 			background.color = winBackgroundColor;
 
-			//first check if there are any more levels after this one
+			// まず、このレベルの後にさらにレベルがあるか確認する
 			if (nextLevelButton == null || !GameManager.instanceExists)
 			{
 				return;
@@ -211,8 +211,8 @@ namespace TowerDefense.UI
 					break;
 				}
 			}
-			//if the level does not exist or this is the last level
-			//hide the next level button
+			// レベルが存在しない、またはこれが最後のレベルの場合は
+			// 次のレベルボタンを非表示にする
 			if (index < 0 || index == levelCount - 1)
 			{
 				nextLevelButton.enabled = false;
@@ -224,7 +224,7 @@ namespace TowerDefense.UI
 		}
 
 		/// <summary>
-		/// Occurs when level is failed
+		/// レベルに失敗したときに発生する
 		/// </summary>
 		protected void Defeat()
 		{
@@ -242,7 +242,7 @@ namespace TowerDefense.UI
 		}
 
 		/// <summary>
-		/// Safely unsubscribes from <see cref="LevelManager" /> events.
+		/// <see cref="LevelManager" /> のイベント購読を安全に解除する。
 		/// </summary>
 		protected void OnDestroy()
 		{
@@ -254,7 +254,7 @@ namespace TowerDefense.UI
 		}
 
 		/// <summary>
-		/// Ensure that <see cref="LevelManager" /> events are unsubscribed from when necessary
+		/// 必要なときに <see cref="LevelManager" /> のイベント購読が解除されるようにする
 		/// </summary>
 		protected void SafelyUnsubscribe()
 		{
@@ -264,7 +264,7 @@ namespace TowerDefense.UI
 		}
 
 		/// <summary>
-		/// Ensure <see cref="m_LevelManager" /> is not null
+		/// <see cref="m_LevelManager" /> がnullでないことを保証する
 		/// </summary>
 		protected void LazyLoad()
 		{
@@ -275,9 +275,9 @@ namespace TowerDefense.UI
 		}
 
 		/// <summary>
-		/// Add up the health of all the Home Bases and return a score
+		/// すべてのHome Baseの体力を合計し、スコアを返す
 		/// </summary>
-		/// <returns>Final score</returns>
+		/// <returns>最終スコア</returns>
 		protected int CalculateFinalScore()
 		{
 			int homeBaseCount = m_LevelManager.numberOfHomeBases;
@@ -296,11 +296,11 @@ namespace TowerDefense.UI
 		}
 
 		/// <summary>
-		/// Take the final remaining health of all bases and rates them
+		/// すべての拠点の最終残り体力をもとに評価する
 		/// </summary>
-		/// <param name="remainingHealth">the total remaining health of all home bases</param>
-		/// <param name="maxHealth">the total maximum health of all home bases</param>
-		/// <returns>0 to 3 depending on how much health is remaining</returns>
+		/// <param name="remainingHealth">すべてのHome Baseの合計残り体力</param>
+		/// <param name="maxHealth">すべてのHome Baseの合計最大体力</param>
+		/// <returns>残り体力に応じた0から3の値</returns>
 		protected int CalculateScore(float remainingHealth, float maxHealth)
 		{
 			float normalizedHealth = remainingHealth / maxHealth;

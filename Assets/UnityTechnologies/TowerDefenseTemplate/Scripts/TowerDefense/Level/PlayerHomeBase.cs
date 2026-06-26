@@ -7,37 +7,37 @@ using UnityEngine;
 namespace TowerDefense.Level
 {
 	/// <summary>
-	/// A class representing the home base that players must defend
+	/// プレイヤーが守らなければならない本拠地を表すクラス
 	/// </summary>
 	public class PlayerHomeBase : DamageableBehaviour
 	{
 		/// <summary>
-		/// The particle system when an attack is charging
+		///攻撃がチャージ中のパーティクルシステム
 		/// </summary>
 		public ParticleSystem chargePfx;
 
 		/// <summary>
-		/// Sound to play when charge effect starts
+		/// チャージ効果開始時に鳴る音
 		/// </summary>
 		public RandomAudioSource chargeSound;
 		
 		/// <summary>
-		/// The particle system for an attack
+		/// 攻撃用のパーティクル システム
 		/// </summary>
 		public ParticleSystem attackPfx;
 		
 		/// <summary>
-		/// Sound to play when attack effect starts
+		/// 攻撃エフェクト開始時に鳴る音
 		/// </summary>
 		public RandomAudioSource attackSound;
 
 		/// <summary>
-		/// The current Agents within the home base attack zone
+		/// 本拠地攻撃ゾーン内の現在のエージェント
 		/// </summary>
 		protected List<Agent> m_CurrentAgentsInside = new List<Agent>();
 
 		/// <summary>
-		/// Subscribes to damaged event
+		/// 破損したイベントをサブスクライブします
 		/// </summary>
 		protected virtual void Start()
 		{
@@ -45,7 +45,7 @@ namespace TowerDefense.Level
 		}
 
 		/// <summary>
-		/// Unsubscribes to damaged event
+		/// 破損したイベントの登録を解除する
 		/// </summary>
 		protected virtual void OnDestroy()
 		{
@@ -53,7 +53,7 @@ namespace TowerDefense.Level
 		}
 
 		/// <summary>
-		/// Plays <see cref="attackPfx"/> if assigned
+		/// <see cref="attackPfx"/>が設定されていれば再生します
 		/// </summary>
 		protected virtual void OnDamaged(HealthChangeInfo obj)
 		{
@@ -68,8 +68,8 @@ namespace TowerDefense.Level
 		}
 		
 		/// <summary>
-		/// Adds triggered Agent to tracked Agents, subscribes to Agent's
-		/// removed event and plays pfx
+		/// トリガーされたエージェントを追跡対象のエージェントに追加し、エージェントのサブスクライブします
+		/// イベントを削除し、PFX を再生します
 		/// </summary>
 		/// <param name="other">Triggered collider</param>
 		void OnTriggerEnter(Collider other)
@@ -92,8 +92,8 @@ namespace TowerDefense.Level
 		}
 		
 		/// <summary>
-		/// If the entity that has entered the collider
-		/// has an <see cref="Agent"/> component on it
+		/// コライダーに入ったエンティティの場合
+		/// が付いています <see cref="Agent"/> その上のコンポーネント
 		/// </summary>
 		void OnTriggerExit(Collider other)
 		{
@@ -106,7 +106,7 @@ namespace TowerDefense.Level
 		}
 		
 		/// <summary>
-		/// Removes Agent from tracked <see cref="m_CurrentAgentsInside"/>
+		/// 追跡対象からエージェントを削除します <see cref="m_CurrentAgentsInside"/>
 		/// </summary>
 		void OnAgentRemoved(DamageableBehaviour targetable)
 		{
@@ -116,11 +116,11 @@ namespace TowerDefense.Level
 		}
 
 		/// <summary>
-		/// Removes <paramref name="agent"/> from <see cref="m_CurrentAgentsInside"/> and stops pfx 
-		/// if there are no more <see cref="Agent"/>s
+		/// <paramref name="agent"/>を<see cref="m_CurrentAgentsInside"/>から削除し、pfxを停止します
+		/// もうなくなったら <see cref="Agent"/>s
 		/// </summary>
 		/// <param name="agent">
-		/// The agent to remove
+		/// 削除するエージェント
 		/// </param>
 		void RemoveTarget(Agent agent)
 		{

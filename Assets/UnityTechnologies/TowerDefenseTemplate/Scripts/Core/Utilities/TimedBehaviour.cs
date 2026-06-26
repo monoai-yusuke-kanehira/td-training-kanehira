@@ -4,19 +4,19 @@ using UnityEngine;
 namespace Core.Utilities
 {
 	/// <summary>
-	/// Abstract based class for helping with timing in MonoBehaviours
+	/// MonoBehaviourでタイミング処理を扱いやすくする抽象基底クラス
 	/// </summary>
 	public abstract class TimedBehaviour : MonoBehaviour
 	{
 		/// <summary>
-		/// List of active timers
+		/// アクティブなタイマーのリスト
 		/// </summary>
 		readonly List<Timer> m_ActiveTimers = new List<Timer>();
 
 		/// <summary>
-		/// Adds the timer to list  of active timers
+		/// タイマーをアクティブなタイマーのリストへ追加する
 		/// </summary>
-		/// <param name="newTimer">the  timer to be added to the list of active timers</param>
+		/// <param name="newTimer">アクティブなタイマーのリストへ追加するタイマー</param>
 		protected void StartTimer(Timer newTimer)
 		{
 			if (m_ActiveTimers.Contains(newTimer))
@@ -30,9 +30,9 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Removes timer from list of active timers
+		/// アクティブなタイマーのリストからタイマーを削除する
 		/// </summary>
-		/// <param name="timer">the timer to be removed from the list of active timers</param>
+		/// <param name="timer">アクティブなタイマーのリストから削除するタイマー</param>
 		protected void PauseTimer(Timer timer)
 		{
 			if (m_ActiveTimers.Contains(timer))
@@ -42,9 +42,9 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Resets and removes the timer
+		/// タイマーをリセットして削除する
 		/// </summary>
-		/// <param name="timer">the timer to be stopped</param>
+		/// <param name="timer">停止するタイマー</param>
 		protected void StopTimer(Timer timer)
 		{
 			timer.Reset();
@@ -52,7 +52,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Iterates through the list of active timers and ticks
+		/// アクティブなタイマーのリストを走査してTickを進める
 		/// </summary>
 		protected virtual void Update()
 		{

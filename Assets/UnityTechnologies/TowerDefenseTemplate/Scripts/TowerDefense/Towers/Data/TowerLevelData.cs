@@ -3,43 +3,43 @@
 namespace TowerDefense.Towers.Data
 {
 	/// <summary>
-	/// Data container for settings per tower level
+	/// Towerレベルごとの設定を保持するデータコンテナ
 	/// </summary>
 	[CreateAssetMenu(fileName = "TowerData.asset", menuName = "TowerDefense/Tower Configuration", order = 1)]
 	public class TowerLevelData : ScriptableObject
 	{
 		/// <summary>
-		/// A description of the tower for displaying on the UI
+		/// UIに表示するTowerの説明
 		/// </summary>
 		public string description;
 
 		/// <summary>
-		/// A description of the tower for displaying on the UI
+		/// UIに表示するTowerの説明
 		/// </summary>
 		public string upgradeDescription;
 
 		/// <summary>
-		/// The cost to upgrade to this level
+		/// このレベルへアップグレードするコスト
 		/// </summary>
 		public int cost;
 
 		/// <summary>
-		/// The sell cost of the tower
+		/// Towerの売却コスト
 		/// </summary>
 		public int sell;
 
 		/// <summary>
-		/// The max health
+		/// 最大体力
 		/// </summary>
 		public int maxHealth;
 
 		/// <summary>
-		/// The starting health
+		/// 開始時の体力
 		/// </summary>
 		public int startingHealth;
 
 		/// <summary>
-		/// The tower icon
+		/// Towerのアイコン
 		/// </summary>
 		public Sprite icon;
 	}

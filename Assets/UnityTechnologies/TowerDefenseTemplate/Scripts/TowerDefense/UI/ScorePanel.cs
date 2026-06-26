@@ -4,21 +4,21 @@ using UnityEngine.UI;
 namespace TowerDefense.UI
 {
 	/// <summary>
-	/// UI object to display final score
+	/// 最終スコアを表示するUIオブジェクト
 	/// </summary>
 	public class ScorePanel : MonoBehaviour
 	{
 		/// <summary>
-		/// Objects that represent the stars
+		/// 星を表すオブジェクト
 		/// </summary>
 		public Image[] starImages;
 
 		public Sprite achievedStarSprite;
 
 		/// <summary>
-		/// Show the correct number of stars for the score
+		/// スコアに応じた正しい数の星を表示する
 		/// </summary>
-		/// <param name="score">The final score</param>
+		/// <param name="score">最終スコア</param>
 		public void SetStars(int score)
 		{
 			if (score <= 0)

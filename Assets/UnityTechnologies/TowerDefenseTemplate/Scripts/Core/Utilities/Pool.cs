@@ -6,36 +6,36 @@ using Object = UnityEngine.Object;
 namespace Core.Utilities
 {
 	/// <summary>
-	/// Maintains a pool of objects
+	/// オブジェクトのpoolを管理する
 	/// </summary>
 	public class Pool<T>
 	{
 		/// <summary>
-		/// Our factory function
+		/// このpoolの生成関数
 		/// </summary>
 		protected Func<T> m_Factory;
 
 		/// <summary>
-		/// Our resetting function
+		/// このpoolのリセット関数
 		/// </summary>
 		protected readonly Action<T> m_Reset;
 
 		/// <summary>
-		/// A list of all m_Available items
+		/// 利用可能な全アイテムのリスト
 		/// </summary>
 		protected readonly List<T> m_Available;
 
 		/// <summary>
-		/// A list of all items managed by the pool
+		/// poolが管理する全アイテムのリスト
 		/// </summary>
 		protected readonly List<T> m_All;
 
 		/// <summary>
-		/// Create a new pool with a given number of starting elements
+		/// 指定された数の初期要素を持つ新しいpoolを作成する
 		/// </summary>
-		/// <param name="factory">The function that creates pool objects</param>
-		/// <param name="reset">Function to use to m_Reset items when retrieving from the pool</param>
-		/// <param name="initialCapacity">The number of elements to seed the pool with</param>
+		/// <param name="factory">pool用オブジェクトを作成する関数</param>
+		/// <param name="reset">poolから取得するときにアイテムをリセットするための関数</param>
+		/// <param name="initialCapacity">poolにあらかじめ用意する要素数</param>
 		public Pool(Func<T> factory, Action<T> reset, int initialCapacity)
 		{
 			if (factory == null)
@@ -55,26 +55,26 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Creates a new blank pool
+		/// 空の新しいpoolを作成する
 		/// </summary>
-		/// <param name="factory">The function that creates pool objects</param>
+		/// <param name="factory">pool用オブジェクトを作成する関数</param>
 		public Pool(Func<T> factory)
 			: this(factory, null, 0)
 		{
 		}
 
 		/// <summary>
-		/// Create a new pool with a given number of starting elements
+		/// 指定された数の初期要素を持つ新しいpoolを作成する
 		/// </summary>
-		/// <param name="factory">The function that creates pool objects</param>
-		/// <param name="initialCapacity">The number of elements to seed the pool with</param>
+		/// <param name="factory">pool用オブジェクトを作成する関数</param>
+		/// <param name="initialCapacity">poolにあらかじめ用意する要素数</param>
 		public Pool(Func<T> factory, int initialCapacity)
 			: this(factory, null, initialCapacity)
 		{
 		}
 
 		/// <summary>
-		/// Gets an item from the pool, growing it if necessary
+		/// poolからアイテムを取得し、必要ならpoolを拡張する
 		/// </summary>
 		/// <returns></returns>
 		public virtual T Get()
@@ -83,9 +83,9 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Gets an item from the pool, growing it if necessary, and with a specified m_Reset function
+		/// 指定したリセット関数を使い、必要ならpoolを拡張してアイテムを取得する
 		/// </summary>
-		/// <param name="resetOverride">A function to use to m_Reset the given object</param>
+		/// <param name="resetOverride">指定したオブジェクトのリセットに使う関数</param>
 		public virtual T Get(Action<T> resetOverride)
 		{
 			if (m_Available.Count == 0)
@@ -110,7 +110,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Gets whether or not this pool contains a specified item
+		/// このpoolが指定したアイテムを含んでいるかを取得する
 		/// </summary>
 		public virtual bool Contains(T pooledItem)
 		{
@@ -118,7 +118,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Return an item to the pool
+		/// アイテムをpoolへ返す
 		/// </summary>
 		public virtual void Return(T pooledItem)
 		{
@@ -135,7 +135,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Return all items to the pool
+		/// すべてのアイテムをpoolへ返す
 		/// </summary>
 		public virtual void ReturnAll()
 		{
@@ -143,7 +143,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Returns all items to the pool, and calls a delegate on each one
+		/// すべてのアイテムをpoolへ返し、それぞれにdelegateを呼び出す
 		/// </summary>
 		public virtual void ReturnAll(Action<T> preReturn)
 		{
@@ -162,7 +162,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Grow the pool by a given number of elements
+		/// 指定した数だけpoolの要素を増やす
 		/// </summary>
 		public void Grow(int amount)
 		{
@@ -173,7 +173,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Returns an object to the m_Available list. Does not check for consistency
+		/// オブジェクトをm_Availableリストへ返す。整合性チェックは行わない
 		/// </summary>
 		protected virtual void ReturnToPoolInternal(T element)
 		{
@@ -181,7 +181,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Adds a new element to the pool
+		/// poolに新しい要素を追加する
 		/// </summary>
 		protected virtual T AddNewElement()
 		{
@@ -193,7 +193,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Dummy factory that returns the default T value
+		/// Tのデフォルト値を返すダミーの生成関数
 		/// </summary>		
 		protected static T DummyFactory()
 		{
@@ -202,43 +202,43 @@ namespace Core.Utilities
 	}
 
 	/// <summary>
-	/// A variant pool that takes Unity components. Automatically enables and disables them as necessary
+	/// Unityコンポーネントを扱うpoolの派生版。必要に応じて自動的に有効化、無効化する
 	/// </summary>
 	public class UnityComponentPool<T> : Pool<T>
 		where T : Component
 	{
 		/// <summary>
-		/// Create a new pool with a given number of starting elements
+		/// 指定された数の初期要素を持つ新しいpoolを作成する
 		/// </summary>
-		/// <param name="factory">The function that creates pool objects</param>
-		/// <param name="reset">Function to use to reset items when retrieving from the pool</param>
-		/// <param name="initialCapacity">The number of elements to seed the pool with</param>
+		/// <param name="factory">pool用オブジェクトを作成する関数</param>
+		/// <param name="reset">poolから取得するときにアイテムをリセットするための関数</param>
+		/// <param name="initialCapacity">poolにあらかじめ用意する要素数</param>
 		public UnityComponentPool(Func<T> factory, Action<T> reset, int initialCapacity)
 			: base(factory, reset, initialCapacity)
 		{
 		}
 
 		/// <summary>
-		/// Creates a new blank pool
+		/// 空の新しいpoolを作成する
 		/// </summary>
-		/// <param name="factory">The function that creates pool objects</param>
+		/// <param name="factory">pool用オブジェクトを作成する関数</param>
 		public UnityComponentPool(Func<T> factory)
 			: base(factory)
 		{
 		}
 
 		/// <summary>
-		/// Create a new pool with a given number of starting elements
+		/// 指定された数の初期要素を持つ新しいpoolを作成する
 		/// </summary>
-		/// <param name="factory">The function that creates pool objects</param>
-		/// <param name="initialCapacity">The number of elements to seed the pool with</param>
+		/// <param name="factory">pool用オブジェクトを作成する関数</param>
+		/// <param name="initialCapacity">poolにあらかじめ用意する要素数</param>
 		public UnityComponentPool(Func<T> factory, int initialCapacity)
 			: base(factory, initialCapacity)
 		{
 		}
 
 		/// <summary>
-		/// Retrieve an enabled element from the pool
+		/// 有効化された要素をpoolから取得する
 		/// </summary>
 		public override T Get(Action<T> resetOverride)
 		{
@@ -250,7 +250,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Automatically disable returned object
+		/// 返却されたオブジェクトを自動的に無効化する
 		/// </summary>
 		protected override void ReturnToPoolInternal(T element)
 		{
@@ -260,7 +260,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Keep newly created objects disabled
+		/// 新しく作成したオブジェクトを無効化したままにする
 		/// </summary>
 		protected override T AddNewElement()
 		{
@@ -273,42 +273,42 @@ namespace Core.Utilities
 	}
 
 	/// <summary>
-	/// A variant pool that takes Unity game objects. Automatically enables and disables them as necessary
+	/// UnityのGameObjectを扱うpoolの派生版。必要に応じて自動的に有効化、無効化する
 	/// </summary>
 	public class GameObjectPool : Pool<GameObject>
 	{
 		/// <summary>
-		/// Create a new pool with a given number of starting elements
+		/// 指定された数の初期要素を持つ新しいpoolを作成する
 		/// </summary>
-		/// <param name="factory">The function that creates pool objects</param>
-		/// <param name="reset">Function to use to reset items when retrieving from the pool</param>
-		/// <param name="initialCapacity">The number of elements to seed the pool with</param>
+		/// <param name="factory">pool用オブジェクトを作成する関数</param>
+		/// <param name="reset">poolから取得するときにアイテムをリセットするための関数</param>
+		/// <param name="initialCapacity">poolにあらかじめ用意する要素数</param>
 		public GameObjectPool(Func<GameObject> factory, Action<GameObject> reset, int initialCapacity)
 			: base(factory, reset, initialCapacity)
 		{
 		}
 
 		/// <summary>
-		/// Creates a new blank pool
+		/// 空の新しいpoolを作成する
 		/// </summary>
-		/// <param name="factory">The function that creates pool objects</param>
+		/// <param name="factory">pool用オブジェクトを作成する関数</param>
 		public GameObjectPool(Func<GameObject> factory)
 			: base(factory)
 		{
 		}
 
 		/// <summary>
-		/// Create a new pool with a given number of starting elements
+		/// 指定された数の初期要素を持つ新しいpoolを作成する
 		/// </summary>
-		/// <param name="factory">The function that creates pool objects</param>
-		/// <param name="initialCapacity">The number of elements to seed the pool with</param>
+		/// <param name="factory">pool用オブジェクトを作成する関数</param>
+		/// <param name="initialCapacity">poolにあらかじめ用意する要素数</param>
 		public GameObjectPool(Func<GameObject> factory, int initialCapacity)
 			: base(factory, initialCapacity)
 		{
 		}
 
 		/// <summary>
-		/// Retrieve an enabled element from the pool
+		/// 有効化された要素をpoolから取得する
 		/// </summary>
 		public override GameObject Get(Action<GameObject> resetOverride)
 		{
@@ -320,7 +320,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Automatically disable returned object
+		/// 返却されたオブジェクトを自動的に無効化する
 		/// </summary>
 		protected override void ReturnToPoolInternal(GameObject element)
 		{
@@ -330,7 +330,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Keep newly created objects disabled
+		/// 新しく作成したオブジェクトを無効化したままにする
 		/// </summary>
 		protected override GameObject AddNewElement()
 		{
@@ -343,12 +343,12 @@ namespace Core.Utilities
 	}
 
 	/// <summary>
-	/// Variant pool that automatically instantiates objects from a given Unity gameobject prefab
+	/// 指定されたUnity GameObject prefabからオブジェクトを自動生成するpoolの派生版
 	/// </summary>
 	public class AutoGameObjectPrefabPool : GameObjectPool
 	{
 		/// <summary>
-		/// Create our new prefab item clone
+		/// 新しいprefabアイテムの複製を作成する
 		/// </summary>
 		GameObject PrefabFactory()
 		{
@@ -362,68 +362,68 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Our base prefab
+		/// 元になるprefab
 		/// </summary>
 		protected readonly GameObject m_Prefab;
 
 		/// <summary>
-		/// Initialisation method for objects
+		/// オブジェクトの初期化メソッド
 		/// </summary>
 		protected readonly Action<GameObject> m_Initialize;
 
 		/// <summary>
-		/// Create a new pool for the given Unity prefab
+		/// 指定されたUnity prefab用の新しいpoolを作成する
 		/// </summary>
-		/// <param name="prefab">The prefab we're cloning</param>
+		/// <param name="prefab">複製元のprefab</param>
 		public AutoGameObjectPrefabPool(GameObject prefab)
 			: this(prefab, null, null, 0)
 		{
 		}
 
 		/// <summary>
-		/// Create a new pool for the given Unity prefab
+		/// 指定されたUnity prefab用の新しいpoolを作成する
 		/// </summary>
-		/// <param name="prefab">The prefab we're cloning</param>
-		/// <param name="initialize">An initialisation function to call after creating prefabs</param>
+		/// <param name="prefab">複製元のprefab</param>
+		/// <param name="initialize">prefab作成後に呼び出す初期化関数</param>
 		public AutoGameObjectPrefabPool(GameObject prefab, Action<GameObject> initialize)
 			: this(prefab, initialize, null, 0)
 		{
 		}
 
 		/// <summary>
-		/// Create a new pool for the given Unity prefab
+		/// 指定されたUnity prefab用の新しいpoolを作成する
 		/// </summary>
-		/// <param name="prefab">The prefab we're cloning</param>
-		/// <param name="initialize">An initialisation function to call after creating prefabs</param>
-		/// <param name="reset">Function to use to reset items when retrieving from the pool</param>
+		/// <param name="prefab">複製元のprefab</param>
+		/// <param name="initialize">prefab作成後に呼び出す初期化関数</param>
+		/// <param name="reset">poolから取得するときにアイテムをリセットするための関数</param>
 		public AutoGameObjectPrefabPool(GameObject prefab, Action<GameObject> initialize, Action<GameObject> reset)
 			: this(prefab, initialize, reset, 0)
 		{
 		}
 
 		/// <summary>
-		/// Create a new pool for the given Unity prefab with a given number of starting elements
+		/// 指定された数の初期要素を持つ、指定されたUnity prefab用の新しいpoolを作成する
 		/// </summary>
-		/// <param name="prefab">The prefab we're cloning</param>
-		/// <param name="initialCapacity">The number of elements to seed the pool with</param>
+		/// <param name="prefab">複製元のprefab</param>
+		/// <param name="initialCapacity">poolにあらかじめ用意する要素数</param>
 		public AutoGameObjectPrefabPool(GameObject prefab, int initialCapacity)
 			: this(prefab, null, null, initialCapacity)
 		{
 		}
 
 		/// <summary>
-		/// Create a new pool for the given Unity prefab
+		/// 指定されたUnity prefab用の新しいpoolを作成する
 		/// </summary>
-		/// <param name="prefab">The prefab we're cloning</param>
-		/// <param name="initialize">An initialisation function to call after creating prefabs</param>
-		/// <param name="reset">Function to use to reset items when retrieving from the pool</param>
-		/// <param name="initialCapacity">The number of elements to seed the pool with</param>
+		/// <param name="prefab">複製元のprefab</param>
+		/// <param name="initialize">prefab作成後に呼び出す初期化関数</param>
+		/// <param name="reset">poolから取得するときにアイテムをリセットするための関数</param>
+		/// <param name="initialCapacity">poolにあらかじめ用意する要素数</param>
 		public AutoGameObjectPrefabPool(GameObject prefab, Action<GameObject> initialize, Action<GameObject> reset,
 		                                int initialCapacity)
 			: base(DummyFactory, reset, 0)
 		{
-			// Pass 0 to initial capacity because we need to set ourselves up first
-			// We then call Grow again ourselves
+			// 先に自分自身を設定する必要があるため、初期容量には0を渡す
+			// その後、自分でGrowをもう一度呼び出す
 			m_Initialize = initialize;
 			m_Prefab = prefab;
 			m_Factory = PrefabFactory;
@@ -435,13 +435,13 @@ namespace Core.Utilities
 	}
 
 	/// <summary>
-	/// Variant pool that automatically instantiates objects from a given Unity component prefab
+	/// 指定されたUnityコンポーネントprefabからオブジェクトを自動生成するpoolの派生版
 	/// </summary>
 	public class AutoComponentPrefabPool<T> : UnityComponentPool<T>
 		where T : Component
 	{
 		/// <summary>
-		/// Create our new prefab item clone
+		/// 新しいprefabアイテムの複製を作成する
 		/// </summary>
 		T PrefabFactory()
 		{
@@ -455,67 +455,67 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Our base prefab
+		/// 元になるprefab
 		/// </summary>
 		protected readonly T m_Prefab;
 
 		/// <summary>
-		/// Initialisation method for objects
+		/// オブジェクトの初期化メソッド
 		/// </summary>
 		protected readonly Action<T> m_Initialize;
 
 		/// <summary>
-		/// Create a new pool for the given Unity prefab
+		/// 指定されたUnity prefab用の新しいpoolを作成する
 		/// </summary>
-		/// <param name="prefab">The prefab we're cloning</param>
+		/// <param name="prefab">複製元のprefab</param>
 		public AutoComponentPrefabPool(T prefab)
 			: this(prefab, null, null, 0)
 		{
 		}
 
 		/// <summary>
-		/// Create a new pool for the given Unity prefab
+		/// 指定されたUnity prefab用の新しいpoolを作成する
 		/// </summary>
-		/// <param name="prefab">The prefab we're cloning</param>
-		/// <param name="initialize">An initialisation function to call after creating prefabs</param>
+		/// <param name="prefab">複製元のprefab</param>
+		/// <param name="initialize">prefab作成後に呼び出す初期化関数</param>
 		public AutoComponentPrefabPool(T prefab, Action<T> initialize)
 			: this(prefab, initialize, null, 0)
 		{
 		}
 
 		/// <summary>
-		/// Create a new pool for the given Unity prefab
+		/// 指定されたUnity prefab用の新しいpoolを作成する
 		/// </summary>
-		/// <param name="prefab">The prefab we're cloning</param>
-		/// <param name="initialize">An initialisation function to call after creating prefabs</param>
-		/// <param name="reset">Function to use to reset items when retrieving from the pool</param>
+		/// <param name="prefab">複製元のprefab</param>
+		/// <param name="initialize">prefab作成後に呼び出す初期化関数</param>
+		/// <param name="reset">poolから取得するときにアイテムをリセットするための関数</param>
 		public AutoComponentPrefabPool(T prefab, Action<T> initialize, Action<T> reset)
 			: this(prefab, initialize, reset, 0)
 		{
 		}
 
 		/// <summary>
-		/// Create a new pool for the given Unity prefab with a given number of starting elements
+		/// 指定された数の初期要素を持つ、指定されたUnity prefab用の新しいpoolを作成する
 		/// </summary>
-		/// <param name="prefab">The prefab we're cloning</param>
-		/// <param name="initialCapacity">The number of elements to seed the pool with</param>
+		/// <param name="prefab">複製元のprefab</param>
+		/// <param name="initialCapacity">poolにあらかじめ用意する要素数</param>
 		public AutoComponentPrefabPool(T prefab, int initialCapacity)
 			: this(prefab, null, null, initialCapacity)
 		{
 		}
 
 		/// <summary>
-		/// Create a new pool for the given Unity prefab
+		/// 指定されたUnity prefab用の新しいpoolを作成する
 		/// </summary>
-		/// <param name="prefab">The prefab we're cloning</param>
-		/// <param name="initialize">An initialisation function to call after creating prefabs</param>
-		/// <param name="reset">Function to use to reset items when retrieving from the pool</param>
-		/// <param name="initialCapacity">The number of elements to seed the pool with</param>
+		/// <param name="prefab">複製元のprefab</param>
+		/// <param name="initialize">prefab作成後に呼び出す初期化関数</param>
+		/// <param name="reset">poolから取得するときにアイテムをリセットするための関数</param>
+		/// <param name="initialCapacity">poolにあらかじめ用意する要素数</param>
 		public AutoComponentPrefabPool(T prefab, Action<T> initialize, Action<T> reset, int initialCapacity)
 			: base(DummyFactory, reset, 0)
 		{
-			// Pass 0 to initial capacity because we need to set ourselves up first
-			// We then call Grow again ourselves
+			// 先に自分自身を設定する必要があるため、初期容量には0を渡す
+			// その後、自分でGrowをもう一度呼び出す
 			m_Initialize = initialize;
 			m_Prefab = prefab;
 			m_Factory = PrefabFactory;

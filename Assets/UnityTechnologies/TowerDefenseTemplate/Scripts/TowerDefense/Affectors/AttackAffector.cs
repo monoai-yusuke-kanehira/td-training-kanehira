@@ -10,82 +10,82 @@ using UnityEngine;
 namespace TowerDefense.Affectors
 {
 	/// <summary>
-	/// The common effect for handling firing projectiles to attack
+	/// 攻撃用の弾を発射する処理を扱う共通効果
 	/// 
-	/// Requires an ILauncher but it is not automatically added
-	/// Add an ILauncher implementation to this GameObject before you add this script
+	/// ILauncherが必要だが、自動では追加されない
+	/// このスクリプトを追加する前に、このGameObjectへILauncherの実装を追加する
 	/// </summary>
 	[RequireComponent(typeof(ILauncher))]
 	public class AttackAffector : Affector, ITowerRadiusProvider
 	{
 		/// <summary>
-		/// The projectile used to attack
+		/// 攻撃に使う弾
 		/// </summary>
 		public GameObject projectile;
 
 		/// <summary>
-		/// The list of points to launch the projectiles from
+		/// 弾を発射する位置のリスト
 		/// </summary>
 		public Transform[] projectilePoints;
 
 		/// <summary>
-		/// The reference to the center point where the tower will search from
+		/// タワーが検索を開始する中心点への参照
 		/// </summary>
 		public Transform epicenter;
 
 		/// <summary>
-		/// Configuration for when the tower does splash damage
+		/// タワーが範囲ダメージを与える場合の設定
 		/// </summary>
 		public bool isMultiAttack;
 
 
 		/// <summary>
-		/// The fire rate in fires-per-second
+		/// 1秒あたりの発射回数
 		/// </summary>
 		public float fireRate;
 
 		/// <summary>
-		/// The audio source to play when firing
+		/// 発射時に再生するAudioSource
 		/// </summary>
 		public RandomAudioSource randomAudioSource;
 
 		/// <summary>
-		/// Gets the targetter
+		/// Targetterを取得する
 		/// </summary>
 		public Targetter towerTargetter;
 
 		/// <summary>
-		/// Color of effect radius visualization
+		/// 効果範囲を可視化するときの色
 		/// </summary>
 		public Color radiusEffectColor;
 
 		/// <summary>
-		/// Search condition
+		/// 検索条件
 		/// </summary>
 		public Filter searchCondition;
 
 		/// <summary>
-		/// Fire condition
+		/// 発射条件
 		/// </summary>
 		public Filter fireCondition;
 
 		/// <summary>
-		/// The reference to the attached launcher
+		/// アタッチされているLauncherへの参照
 		/// </summary>
 		protected ILauncher m_Launcher;
 
 		/// <summary>
-		/// The time before firing is possible
+		/// 発射可能になるまでの時間
 		/// </summary>
 		protected float m_FireTimer;
 
 		/// <summary>
-		/// Reference to the current tracked enemy
+		/// 現在追跡している敵への参照
 		/// </summary>
 		protected Targetable m_TrackingEnemy;
 
 		/// <summary>
-		/// Gets the search rate from the targetter
+		/// Targetterから検索頻度を取得する
 		/// </summary>
 		public float searchRate
 		{
@@ -94,7 +94,7 @@ namespace TowerDefense.Affectors
 		}
 
 		/// <summary>
-		/// Gets the targetable
+		/// Targetableを取得する
 		/// </summary>
 		public Targetable trackingEnemy
 		{
@@ -102,7 +102,7 @@ namespace TowerDefense.Affectors
 		}
 
 		/// <summary>
-		/// Gets or sets the attack radius
+		/// 攻撃範囲を取得または設定する
 		/// </summary>
 		public float effectRadius
 		{
@@ -120,7 +120,7 @@ namespace TowerDefense.Affectors
 		}
 
 		/// <summary>
-		/// Initializes the attack affector
+		/// 攻撃Affectorを初期化する
 		/// </summary>
 		public override void Initialize(IAlignmentProvider affectorAlignment)
 		{
@@ -128,7 +128,7 @@ namespace TowerDefense.Affectors
 		}
 
 		/// <summary>
-		/// Initialises the  attack affector with a layer mask
+		/// レイヤーマスクを使って攻撃Affectorを初期化する
 		/// </summary>
 		public override void Initialize(IAlignmentProvider affectorAlignment, LayerMask mask)
 		{
@@ -163,7 +163,7 @@ namespace TowerDefense.Affectors
 		}
 
 		/// <summary>
-		/// Returns the total projectile damage 
+		/// 弾の合計ダメージを返す
 		/// </summary>
 		public float GetProjectileDamage()
 		{
@@ -173,7 +173,7 @@ namespace TowerDefense.Affectors
 		}
 
 		/// <summary>
-		/// Initialise the RepeatingTimer
+		/// RepeatingTimerを初期化する
 		/// </summary>
 		protected virtual void SetUpTimers()
 		{
@@ -182,7 +182,7 @@ namespace TowerDefense.Affectors
 		}
 
 		/// <summary>
-		/// Update the timers
+		/// タイマーを更新する
 		/// </summary>
 		protected virtual void Update()
 		{
@@ -195,7 +195,7 @@ namespace TowerDefense.Affectors
 		}
 
 		/// <summary>
-		/// Fired at every poll of the fire rate timer
+		/// 発射間隔タイマーの各ポーリング時に呼ばれる
 		/// </summary>
 		protected virtual void OnFireTimer()
 		{
@@ -210,7 +210,7 @@ namespace TowerDefense.Affectors
 		}
 
 		/// <summary>
-		/// Common logic when attacking
+		/// 攻撃時の共通処理
 		/// </summary>
 		protected virtual void FireProjectile()
 		{
@@ -235,7 +235,7 @@ namespace TowerDefense.Affectors
 		}
 
 		/// <summary>
-		/// A delegate to compare distances of components
+		/// コンポーネント間の距離を比較するdelegate
 		/// </summary>
 		/// <param name="first"></param>
 		/// <param name="second"></param>
@@ -248,7 +248,7 @@ namespace TowerDefense.Affectors
 
 #if UNITY_EDITOR
 		/// <summary>
-		/// Draws the search area
+		/// 検索範囲を描画する
 		/// </summary>
 		void OnDrawGizmosSelected()
 		{
@@ -258,7 +258,7 @@ namespace TowerDefense.Affectors
 	}
 
 	/// <summary>
-	/// A delegate for boolean calculation logic
+	/// bool値を計算するロジック用のdelegate
 	/// </summary>
 	public delegate bool Filter();
 }

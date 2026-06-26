@@ -5,29 +5,29 @@ using UnityEngine.UI;
 namespace TowerDefense.UI.HUD
 {
 	/// <summary>
-	/// A class for displaying the wave feedback
+	/// ウェーブのフィードバックを表示するクラス
 	/// </summary>
 	[RequireComponent(typeof(Canvas))]
 	public class WaveUI : MonoBehaviour
 	{
 		/// <summary>
-		/// The text element to display information on
+		/// 情報を表示するText要素
 		/// </summary>
 		public Text display;
 
 		public Image waveFillImage;
 
 		/// <summary>
-		/// The total amount of waves for this level
+		/// このレベルのウェーブ総数
 		/// </summary>
 		protected int m_TotalWaves;
 
 		protected Canvas m_Canvas;
 
 		/// <summary>
-		/// cache the total amount of waves
-		/// Update the display 
-		/// and Subscribe to waveChanged
+		/// ウェーブ総数をキャッシュし、
+		/// 表示を更新して
+		/// waveChangedを購読する
 		/// </summary>
 		protected virtual void Start()
 		{
@@ -38,7 +38,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Write the current wave amount to the display
+		/// 現在のウェーブ数を表示に書き込む
 		/// </summary>
 		protected void UpdateDisplay()
 		{
@@ -54,7 +54,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Unsubscribe from events
+		/// イベントの購読を解除する
 		/// </summary>
 		protected void OnDestroy()
 		{

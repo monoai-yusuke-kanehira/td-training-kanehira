@@ -3,22 +3,22 @@
 namespace Core.Economy
 {
 	/// <summary>
-	/// A basic model for in game currency
+	/// ゲーム内通貨の基本モデル
 	/// </summary>
 	public class Currency
 	{
 		/// <summary>
-		/// How much currency there currently is
+		/// 現在所持している通貨量
 		/// </summary>
 		public int currentCurrency { get; private set; }
 
 		/// <summary>
-		/// Occurs when currency changed.
+		/// 通貨が変更されたときに発生します。
 		/// </summary>
 		public event Action currencyChanged;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Core.Economy.Currency" /> class.
+		/// <see cref="Core.Economy.Currency" /> クラスの新しいインスタンスを初期化します。
 		/// </summary>
 		public Currency(int startingCurrency)
 		{
@@ -26,21 +26,21 @@ namespace Core.Economy
 		}
 
 		/// <summary>
-		/// Adds the currency.
+		/// 通貨を追加します。
 		/// </summary>
-		/// <param name="increment">the change in currency</param>
+		/// <param name="increment">通貨の増減量</param>
 		public void AddCurrency(int increment)
 		{
 			ChangeCurrency(increment);
 		}
 
 		/// <summary>
-		/// Method for trying to purchase, returns false for insufficient funds
+		/// 購入を試みるメソッドです。資金が足りない場合はfalseを返します
 		/// </summary>
-		/// <returns><c>true</c>, if purchase was successful i.e. enough currency <c>false</c> otherwise.</returns>
+		/// <returns>通貨が足りていて購入できた場合は <c>true</c>、それ以外の場合は <c>false</c></returns>
 		public bool TryPurchase(int cost)
 		{
-			// Cannot afford this item
+			// このアイテムを購入できません
 			if (!CanAfford(cost))
 			{
 				return false;
@@ -50,18 +50,18 @@ namespace Core.Economy
 		}
 
 		/// <summary>
-		/// Determines if the specified cost is affordable.
+		/// 指定したコストを支払えるかどうかを判定します。
 		/// </summary>
-		/// <returns><c>true</c> if this cost is affordable; otherwise, <c>false</c>.</returns>
+		/// <returns>このコストを支払える場合は <c>true</c>、それ以外の場合は <c>false</c></returns>
 		public bool CanAfford(int cost)
 		{
 			return currentCurrency >= cost;
 		}
 
 		/// <summary>
-		/// Changes the currency.
+		/// 通貨を変更します。
 		/// </summary>
-		/// <param name="increment">the change in currency</param>
+		/// <param name="increment">通貨の増減量</param>
 		protected void ChangeCurrency(int increment)
 		{
 			if (increment != 0)

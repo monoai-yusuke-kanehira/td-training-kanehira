@@ -12,39 +12,39 @@ using UnityEngine.EventSystems;
 namespace TowerDefense.UI.HUD
 {
 	/// <summary>
-	/// A game UI wrapper for a pointer that also contains raycast information
+	/// Raycast情報も持つポインター用のゲームUIラッパー
 	/// </summary>
 	public struct UIPointer
 	{
 		/// <summary>
-		/// The pointer info
+		/// ポインター情報
 		/// </summary>
 		public PointerInfo pointer;
 
 		/// <summary>
-		/// The ray for this pointer
+		/// このポインターのRay
 		/// </summary>
 		public Ray ray;
 
 		/// <summary>
-		/// The raycast hit object into the 3D scene
+		/// 3DシーンへのRaycastでヒットしたオブジェクト
 		/// </summary>
 		public RaycastHit? raycast;
 
 		/// <summary>
-		/// True if this pointer started over a UI element or anything the event system catches
+		/// このポインターがUI要素、またはイベントシステムが検出するものの上で開始された場合はtrue
 		/// </summary>
 		public bool overUI;
 	}
 
 	/// <summary>
-	/// An object that manages user interaction with the game. Its responsibilities deal with
+	/// ゲーム内でのユーザー操作を管理するオブジェクト。主な役割は次のとおり
 	/// <list type="bullet">
 	///     <item>
-	///         <description>Building towers</description>
+	///         <description>タワーを建設する</description>
 	///     </item>
 	///     <item>
-	///         <description>Selecting towers and units</description>
+	///         <description>タワーとユニットを選択する</description>
 	///     </item>
 	/// </list>
 	/// </summary>
@@ -52,127 +52,124 @@ namespace TowerDefense.UI.HUD
 	public class GameUI : Singleton<GameUI>
 	{
 		/// <summary>
-		/// The states the UI can be in
+		/// UIが取り得る状態
 		/// </summary>
 		public enum State
 		{
 			/// <summary>
-			/// The game is in its normal state. Here the player can pan the camera, select units and towers
+			/// ゲームの通常状態。この状態では、プレイヤーはカメラ移動、ユニットやタワーの選択ができる
 			/// </summary>
 			Normal,
 
 			/// <summary>
-			/// The game is in 'build mode'. Here the player can pan the camera, confirm or deny placement
+			/// ゲームが「建設モード」の状態。この状態では、プレイヤーはカメラ移動、配置の確定またはキャンセルができる
 			/// </summary>
 			Building,
 
 			/// <summary>
-			/// The game is Paused. Here, the player can restart the level, or quit to the main menu
+			/// ゲームが一時停止中の状態。この状態では、プレイヤーはレベルの再開始、またはメインメニューへの終了ができる
 			/// </summary>
 			Paused,
 
 			/// <summary>
-			/// The game is over and the level was failed/completed
+			/// ゲームが終了し、レベルが失敗または完了した状態
 			/// </summary>
 			GameOver,
 			
 			/// <summary>
-			/// The game is in 'build mode' and the player is dragging the ghost tower
+			/// ゲームが「建設モード」で、プレイヤーがゴーストタワーをドラッグしている状態
 			/// </summary>
 			BuildingWithDrag
 		}
 
 		/// <summary>
-		/// Gets the current UI state
+		/// 現在のUI状態を取得する
 		/// </summary>
 		public State state { get; private set; }
 
 		/// <summary>
-		/// The currently selected tower
+		/// 現在選択中のタワー
 		/// </summary>
 		public LayerMask placementAreaMask;
 
 		/// <summary>
-		/// The layer for tower selection
+		/// タワー選択用のレイヤー
 		/// </summary>
 		public LayerMask towerSelectionLayer;
 
 		/// <summary>
-		/// The physics layer for moving the ghost around the world
-		/// when the placement is not valid
+		/// 配置が無効なときに、ゴーストをワールド上で動かすための物理レイヤー
 		/// </summary>
 		public LayerMask ghostWorldPlacementMask;
 
 		/// <summary>
-		/// The radius of the sphere cast 
-		/// for checking ghost placement
+		/// ゴースト配置のチェックに使うSphereCastの半径
 		/// </summary>
 		public float sphereCastRadius = 1;
 
 		/// <summary>
-		/// Component that manages the radius visualizers of ghosts and towers
+		/// ゴーストとタワーの射程表示を管理するコンポーネント
 		/// </summary>
 		public RadiusVisualizerController radiusVisualizerController;
 
 		/// <summary>
-		/// The UI controller for displaying individual tower data
+		/// 個別のタワーデータを表示するUIコントローラー
 		/// </summary>
 		public TowerUI towerUI;
 
 		/// <summary>
-		/// The UI controller for displaying tower information
-		/// whilst placing
+		/// 配置中にタワー情報を表示するUIコントローラー
 		/// </summary>
 		public BuildInfoUI buildInfoUI;
 
 		/// <summary>
-		/// Fires when the <see cref="State"/> changes
-		/// should only allow firing when TouchUI is used
+		/// <see cref="State"/> が変わったときに発火する
+		/// TouchUIが使われているときだけ発火できるようにする
 		/// </summary>
 		public event Action<State, State> stateChanged;
 
 		/// <summary>
-		/// Fires off when the ghost was previously not valid but now is due to currency amount change
+		/// 所持通貨の変化により、以前は無効だったゴーストが有効になったときに発火する
 		/// </summary>
 		public event Action ghostBecameValid;
 
 		/// <summary>
-		/// Fires when a tower is selected/deselected
+		/// タワーが選択または選択解除されたときに発火する
 		/// </summary>
 		public event Action<Tower> selectionChanged;
 
 		/// <summary>
-		/// Placement area ghost tower is currently on
+		/// ゴーストタワーが現在乗っている配置エリア
 		/// </summary>
 		IPlacementArea m_CurrentArea;
 
 		/// <summary>
-		/// Grid position ghost tower in on
+		/// ゴーストタワーが現在乗っているグリッド位置
 		/// </summary>
 		IntVector2 m_GridPosition;
 
 		/// <summary>
-		/// Our cached camera reference
+		/// キャッシュ済みのCamera参照
 		/// </summary>
 		Camera m_Camera;
 
 		/// <summary>
-		/// Current tower placeholder. Will be null if not in the <see cref="State.Building" /> state.
+		/// 現在のタワーのプレースホルダー。<see cref="State.Building" /> 状態でない場合はnullになる
 		/// </summary>
 		TowerPlacementGhost m_CurrentTower;
 
 		/// <summary>
-		/// Tracks if the ghost is in a valid location and the player can afford it
+		/// ゴーストが有効な位置にあり、プレイヤーが購入できるかどうかを管理する
 		/// </summary>
 		bool m_GhostPlacementPossible;
 
 		/// <summary>
-		/// Gets the current selected tower
+		/// 現在選択中のタワーを取得する
 		/// </summary>
 		public Tower currentSelectedTower { get; private set; }
 
 		/// <summary>
-		/// Gets whether a tower has been selected
+		/// タワーが選択されているかどうかを取得する
 		/// </summary>
 		public bool isTowerSelected
 		{
@@ -180,7 +177,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Gets whether certain build operations are valid
+		/// 特定の建設操作が有効かどうかを取得する
 		/// </summary>
 		public bool isBuilding
 		{
@@ -191,7 +188,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Cancel placing the ghost
+		/// ゴーストの配置をキャンセルする
 		/// </summary>
 		public void CancelGhostPlacement()
 		{
@@ -211,10 +208,10 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Returns the GameUI to dragging mode with the curent tower
+		/// 現在のタワーを使ってGameUIをドラッグモードに戻す
 		/// </summary>
 		/// /// <exception cref="InvalidOperationException">
-		/// Throws exception when not in build mode
+		/// 建設モードでない場合に例外を投げる
 		/// </exception>
 		public void ChangeToDragMode()
 		{
@@ -226,10 +223,10 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Returns the GameUI to BuildMode with the current tower
+		/// 現在のタワーを使ってGameUIを建設モードに戻す
 		/// </summary>
 		/// <exception cref="InvalidOperationException">
-		/// Throws exception when not in Drag mode
+		/// ドラッグモードでない場合に例外を投げる
 		/// </exception>
 		public void ReturnToBuildMode()
 		{
@@ -242,10 +239,10 @@ namespace TowerDefense.UI.HUD
 
 		
 		/// <summary>
-		/// Changes the state and fires <see cref="stateChanged"/>
+		/// 状態を変更し、<see cref="stateChanged"/> を発火する
 		/// </summary>
-		/// <param name="newState">The state to change to</param>
-		/// <exception cref="ArgumentOutOfRangeException">thrown on an invalid state</exception>
+		/// <param name="newState">変更先の状態</param>
+		/// <exception cref="ArgumentOutOfRangeException">無効な状態の場合に投げられる</exception>
 		void SetState(State newState)
 		{
 			if (state == newState)
@@ -285,7 +282,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Called when the game is over
+		/// ゲーム終了時に呼び出される
 		/// </summary>
 		public void GameOver()
 		{
@@ -293,7 +290,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Pause the game and display the pause menu
+		/// ゲームを一時停止し、ポーズメニューを表示する
 		/// </summary>
 		public void Pause()
 		{
@@ -301,7 +298,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Resume the game and close the pause menu
+		/// ゲームを再開し、ポーズメニューを閉じる
 		/// </summary>
 		public void Unpause()
 		{
@@ -309,13 +306,13 @@ namespace TowerDefense.UI.HUD
 		}
 		
 		/// <summary>
-		/// Changes the mode to drag
+		/// モードをドラッグに変更する
 		/// </summary>
 		/// <param name="towerToBuild">
-		/// The tower to build
+		/// 建設するタワー
 		/// </param>
 		/// <exception cref="InvalidOperationException">
-		/// Throws exception when trying to change to Drag mode when not in Normal Mode
+		/// 通常モードでないときにドラッグモードへ変更しようとした場合に例外を投げる
 		/// </exception>
 		public void SetToDragMode([NotNull] Tower towerToBuild)
 		{
@@ -326,7 +323,7 @@ namespace TowerDefense.UI.HUD
 			
 			if (m_CurrentTower != null)
 			{
-				// Destroy current ghost
+				// 現在のゴーストを破棄する
 				CancelGhostPlacement();
 			}
 			SetUpGhostTower(towerToBuild);
@@ -334,13 +331,13 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Sets the UI into a build state for a given tower
+		/// 指定されたタワー用にUIを建設状態にする
 		/// </summary>
 		/// <param name="towerToBuild">
-		/// The tower to build
+		/// 建設するタワー
 		/// </param>
 		/// <exception cref="InvalidOperationException">
-		/// Throws exception trying to enter Build Mode when not in Normal Mode
+		/// 通常モードでないときに建設モードへ入ろうとした場合に例外を投げる
 		/// </exception>
 		public void SetToBuildMode([NotNull] Tower towerToBuild)
 		{
@@ -351,7 +348,7 @@ namespace TowerDefense.UI.HUD
 			
 			if (m_CurrentTower != null)
 			{
-				// Destroy current ghost
+				// 現在のゴーストを破棄する
 				CancelGhostPlacement();
 			}
 			SetUpGhostTower(towerToBuild);
@@ -359,14 +356,14 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Attempt to position a tower at the given location
+		/// 指定された位置へのタワー配置を試みる
 		/// </summary>
-		/// <param name="pointerInfo">The pointer we're using to position the tower</param>
+		/// <param name="pointerInfo">タワーの配置に使うポインター</param>
 		public void TryPlaceTower(PointerInfo pointerInfo)
 		{
 			UIPointer pointer = WrapPointer(pointerInfo);
 
-			// Do nothing if we're over UI
+			// UIの上にある場合は何もしない
 			if (pointer.overUI)
 			{
 				return;
@@ -375,10 +372,10 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Position the ghost tower at the given pointer
+		/// 指定されたポインター位置にゴーストタワーを配置する
 		/// </summary>
-		/// <param name="pointerInfo">The pointer we're using to position the tower</param>
-		/// <param name="hideWhenInvalid">Optional parameter for configuring if the ghost is hidden when in an invalid location</param>
+		/// <param name="pointerInfo">タワーの配置に使うポインター</param>
+		/// <param name="hideWhenInvalid">無効な位置にあるときにゴーストを非表示にするかどうかを設定する任意パラメーター</param>
 		public void TryMoveGhost(PointerInfo pointerInfo, bool hideWhenInvalid = true)
 		{
 			if (m_CurrentTower == null)
@@ -387,7 +384,7 @@ namespace TowerDefense.UI.HUD
 			}
 
 			UIPointer pointer = WrapPointer(pointerInfo);
-			// Do nothing if we're over UI
+			// UIの上にある場合は何もしない
 			if (pointer.overUI && hideWhenInvalid)
 			{
 				m_CurrentTower.Hide();
@@ -397,7 +394,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Sets up the radius visualizer for a tower or ghost tower
+		/// タワーまたはゴーストタワー用の射程表示を設定する
 		/// </summary>
 		public void SetupRadiusVisualizer(Tower tower, Transform ghost = null)
 		{
@@ -405,7 +402,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Hides the radius visualizer
+		/// 射程表示を非表示にする
 		/// </summary>
 		public void HideRadiusVisualizer()
 		{
@@ -413,13 +410,13 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Activates the tower controller UI with the specific information
+		/// 指定された情報でタワーコントローラーUIを有効にする
 		/// </summary>
 		/// <param name="tower">
-		/// The tower controller information to use
+		/// 使用するタワーコントローラー情報
 		/// </param>
 		/// <exception cref="InvalidOperationException">
-		/// Throws exception when selecting tower when <see cref="State" /> does not equal <see cref="State.Normal" />
+		/// <see cref="State" /> が <see cref="State.Normal" /> でないときにタワーを選択すると例外を投げる
 		/// </exception>
 		public void SelectTower(Tower tower)
 		{
@@ -442,11 +439,11 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Upgrades <see cref="currentSelectedTower" />, if possible
+		/// 可能であれば <see cref="currentSelectedTower" /> をアップグレードする
 		/// </summary>
 		/// <exception cref="InvalidOperationException">
-		/// Throws exception when selecting tower when <see cref="State" /> does not equal <see cref="State.Normal" />
-		/// or <see cref="currentSelectedTower" /> is null
+		/// <see cref="State" /> が <see cref="State.Normal" /> でないとき、または
+		/// <see cref="currentSelectedTower" /> がnullのときにタワーを選択すると例外を投げる
 		/// </exception>
 		public void UpgradeSelectedTower()
 		{
@@ -473,11 +470,11 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Sells <see cref="currentSelectedTower" /> if possible
+		/// 可能であれば <see cref="currentSelectedTower" /> を売却する
 		/// </summary>
 		/// <exception cref="InvalidOperationException">
-		/// Throws exception when selecting tower when <see cref="State" /> does not equal <see cref="State.Normal" />
-		/// or <see cref="currentSelectedTower" /> is null
+		/// <see cref="State" /> が <see cref="State.Normal" /> でないとき、または
+		/// <see cref="currentSelectedTower" /> がnullのときにタワーを選択すると例外を投げる
 		/// </exception>
 		public void SellSelectedTower()
 		{
@@ -499,10 +496,10 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Buys the tower and places it in the place that it currently is
+		/// タワーを購入し、現在の位置に配置する
 		/// </summary>
 		/// <exception cref="InvalidOperationException">
-		/// Throws exception if trying to buy towers in Build Mode
+		/// 建設モードでないときにタワーを購入しようとすると例外を投げる
 		/// </exception>
 		public void BuyTower()
 		{
@@ -523,10 +520,10 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Used to buy the tower during the build phase
-		/// Checks currency and calls <see cref="PlaceGhost" />
+		/// 建設フェーズ中にタワーを購入するときに使う
+		/// 所持通貨を確認し、<see cref="PlaceGhost" /> を呼び出す
 		/// <exception cref="InvalidOperationException">
-		/// Throws exception when not in a build mode or when tower is not a valid position
+		/// 建設モードでない場合、またはタワーが有効な位置にない場合に例外を投げる
 		/// </exception>
 		/// </summary>
 		public void BuyTower(UIPointer pointer)
@@ -554,7 +551,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Deselect the current tower and hides the UI
+		/// 現在のタワーの選択を解除し、UIを非表示にする
 		/// </summary>
 		public void DeselectTower()
 		{
@@ -576,14 +573,14 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Checks the position of the <see cref="m_CurrentTower"/> 
-		/// on the <see cref="m_CurrentArea"/>
+		/// <see cref="m_CurrentArea"/> 上にある
+		/// <see cref="m_CurrentTower"/> の位置を確認する
 		/// </summary>
 		/// <returns>
-		/// True if the placement is valid
+		/// 配置が有効な場合はtrue
 		/// </returns>
 		/// <exception cref="InvalidOperationException">
-		/// Throws exception if the check is done in <see cref="State.Normal"/> state
+		/// <see cref="State.Normal"/> 状態でチェックした場合に例外を投げる
 		/// </exception>
 		public bool IsGhostAtValidPosition()
 		{
@@ -604,13 +601,13 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Checks if buying the ghost tower is possible
+		/// ゴーストタワーを購入できるかどうかを確認する
 		/// </summary>
 		/// <returns>
-		/// True if can purchase
+		/// 購入できる場合はtrue
 		/// </returns>
 		/// <exception cref="InvalidOperationException">
-		/// Throws exception if not in Build Mode or Build With Dragging mode
+		/// 建設モードまたはドラッグ中の建設モードでない場合に例外を投げる
 		/// </exception>
 		public bool IsValidPurchase()
 		{
@@ -630,10 +627,10 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Places a tower where the ghost tower is
+		/// ゴーストタワーがある場所にタワーを配置する
 		/// </summary>
 		/// <exception cref="InvalidOperationException">
-		/// Throws exception if not in Build State or <see cref="m_CurrentTower"/> is not at a valid position
+		/// 建設状態でない場合、または <see cref="m_CurrentTower"/> が有効な位置にない場合に例外を投げる
 		/// </exception>
 		public void PlaceTower()
 		{
@@ -656,13 +653,13 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Calculates whether the given pointer is over the current tower ghost
+		/// 指定されたポインターが現在のタワーゴーストの上にあるかどうかを計算する
 		/// </summary>
 		/// <param name="pointerInfo">
-		/// The information used to check against the <see cref="m_CurrentTower"/>
+		/// <see cref="m_CurrentTower"/> との判定に使う情報
 		/// </param>
 		/// <exception cref="InvalidOperationException">
-		/// Throws an exception if not in Build Mode
+		/// 建設モードでない場合に例外を投げる
 		/// </exception>
 		public bool IsPointerOverGhost(PointerInfo pointerInfo)
 		{
@@ -676,13 +673,13 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Selects a tower beneath the given pointer if there is one
+		/// 指定されたポインターの下にタワーがあれば選択する
 		/// </summary>
 		/// <param name="info">
-		/// The pointer information concerning the selector of the pointer
+		/// ポインターの選択判定に関するポインター情報
 		/// </param>
 		/// <exception cref="InvalidOperationException">
-		/// Throws an exception when not in <see cref="State.Normal"/>
+		/// <see cref="State.Normal"/> でない場合に例外を投げる
 		/// </exception>
 		public void TrySelectTower(PointerInfo info)
 		{
@@ -705,11 +702,11 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Gets the world position of the ghost tower
+		/// ゴーストタワーのワールド座標を取得する
 		/// </summary>
 		/// <exception cref="InvalidOperationException">
-		/// Throws an exception when not in the Build Mode or
-		/// When a ghost tower does not exist
+		/// 建設モードでない場合、または
+		/// ゴーストタワーが存在しない場合に例外を投げる
 		/// </exception>
 		public Vector3 GetGhostPosition()
 		{
@@ -725,10 +722,10 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Moves the ghost to the center of the screen
+		/// ゴーストを画面中央へ移動する
 		/// </summary>
 		/// <exception cref="InvalidOperationException">
-		/// Throws exception when not in build mode
+		/// 建設モードでない場合に例外を投げる
 		/// </exception>
 		public void MoveGhostToCenter()
 		{
@@ -736,7 +733,7 @@ namespace TowerDefense.UI.HUD
 			{
 				throw new InvalidOperationException("Trying to move ghost when not in Build Mode");
 			}
-			// try to find a valid placement 
+			// 有効な配置場所を探す
 			Ray ray = m_Camera.ScreenPointToRay(new Vector2(Screen.width * 0.5f, Screen.height * 0.5f));
 			RaycastHit placementHit;
 
@@ -751,8 +748,8 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Set initial values, cache attached components
-		/// and configure the controls
+		/// 初期値を設定し、アタッチされたコンポーネントをキャッシュして、
+		/// 操作設定を行う
 		/// </summary>
 		protected override void Awake()
 		{
@@ -763,7 +760,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Reset TimeScale if game is paused
+		/// ゲームが一時停止中の場合にTimeScaleをリセットする
 		/// </summary>
 		protected override void OnDestroy()
 		{
@@ -772,7 +769,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Subscribe to the level manager
+		/// レベルマネージャーを購読する
 		/// </summary>
 		protected virtual void OnEnable()
 		{
@@ -783,7 +780,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Unsubscribe from the level manager
+		/// レベルマネージャーの購読を解除する
 		/// </summary>
 		protected virtual void OnDisable()
 		{
@@ -794,7 +791,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Creates a new UIPointer holding data object for the given pointer position
+		/// 指定されたポインター位置のデータを保持する新しいUIPointerを作成する
 		/// </summary>
 		protected UIPointer WrapPointer(PointerInfo pointerInfo)
 		{
@@ -807,16 +804,16 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Checks whether a given pointer is over any UI
+		/// 指定されたポインターが何らかのUIの上にあるかどうかを確認する
 		/// </summary>
-		/// <param name="pointerInfo">The pointer to test</param>
-		/// <returns>True if the event system reports this pointer being over UI</returns>
+		/// <param name="pointerInfo">判定するポインター</param>
+		/// <returns>イベントシステムがこのポインターをUI上にあると判定した場合はtrue</returns>
 		protected bool IsOverUI(PointerInfo pointerInfo)
 		{
 			int pointerId;
 			EventSystem currentEventSystem = EventSystem.current;
 
-			// Pointer id is negative for mouse, positive for touch
+			// ポインターIDはマウスでは負の値、タッチでは正の値になる
 			var cursorInfo = pointerInfo as MouseCursorInfo;
 			var mbInfo = pointerInfo as MouseButtonInfo;
 			var touchInfo = pointerInfo as TouchInfo;
@@ -827,7 +824,7 @@ namespace TowerDefense.UI.HUD
 			}
 			else if (mbInfo != null)
 			{
-				// LMB is 0, but kMouseLeftID = -1;
+				// 左マウスボタンは0だが、kMouseLeftIDは-1
 				pointerId = -mbInfo.mouseButtonId - 1;
 			}
 			else if (touchInfo != null)
@@ -843,11 +840,11 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Move the ghost to the pointer's position
+		/// ゴーストをポインターの位置へ移動する
 		/// </summary>
-		/// <param name="pointer">The pointer to place the ghost at</param>
-		/// <param name="hideWhenInvalid">Optional parameter for whether the ghost should be hidden or not</param>
-		/// <exception cref="InvalidOperationException">If we're not in the correct state</exception>
+		/// <param name="pointer">ゴーストを配置する位置を示すポインター</param>
+		/// <param name="hideWhenInvalid">ゴーストを非表示にするかどうかの任意パラメーター</param>
+		/// <exception cref="InvalidOperationException">正しい状態でない場合</exception>
 		protected void MoveGhost(UIPointer pointer, bool hideWhenInvalid = true)
 		{
 			if (m_CurrentTower == null || !isBuilding)
@@ -856,7 +853,7 @@ namespace TowerDefense.UI.HUD
 					"Trying to position a tower ghost while the UI is not currently in the building state.");
 			}
 
-			// Raycast onto placement layer
+			// 配置レイヤーにRaycastする
 			PlacementAreaRaycast(ref pointer);
 
 			if (pointer.raycast != null)
@@ -871,12 +868,12 @@ namespace TowerDefense.UI.HUD
 
 
 		/// <summary>
-		/// Move ghost with successful raycastHit onto m_PlacementAreaMask
+		/// m_PlacementAreaMaskへのRaycastHitが成功した位置へゴーストを移動する
 		/// </summary>
 		protected virtual void MoveGhostWithRaycastHit(RaycastHit raycast)
 		{
-			// We successfully hit one of our placement areas
-			// Try and get a placement area on the object we hit
+			// 配置エリアのいずれかにヒットした
+			// ヒットしたオブジェクトから配置エリアを取得してみる
 			m_CurrentArea = raycast.collider.GetComponent<IPlacementArea>();
 
 			if (m_CurrentArea == null)
@@ -896,7 +893,7 @@ namespace TowerDefense.UI.HUD
 
 
 		/// <summary>
-		/// Move ghost with the given ray
+		/// 指定されたRayを使ってゴーストを移動する
 		/// </summary>
 		protected virtual void MoveGhostOntoWorld(Ray ray, bool hideWhenInvalid)
 		{
@@ -905,7 +902,7 @@ namespace TowerDefense.UI.HUD
 			if (!hideWhenInvalid)
 			{
 				RaycastHit hit;
-				// check against all layers that the ghost can be on
+				// ゴーストを置けるすべてのレイヤーに対して確認する
 				Physics.SphereCast(ray, sphereCastRadius, out hit, float.MaxValue, ghostWorldPlacementMask);
 				if (hit.collider == null)
 				{
@@ -921,10 +918,10 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Place the ghost at the pointer's position
+		/// ポインターの位置にゴーストを配置する
 		/// </summary>
-		/// <param name="pointer">The pointer to place the ghost at</param>
-		/// <exception cref="InvalidOperationException">If we're not in the correct state</exception>
+		/// <param name="pointer">ゴーストを配置する位置を示すポインター</param>
+		/// <exception cref="InvalidOperationException">正しい状態でない場合</exception>
 		protected void PlaceGhost(UIPointer pointer)
 		{
 			if (m_CurrentTower == null || !isBuilding)
@@ -941,7 +938,7 @@ namespace TowerDefense.UI.HUD
 
 				if (fits == TowerFitStatus.Fits)
 				{
-					// Place the ghost
+					// ゴーストを配置する
 					Tower controller = m_CurrentTower.controller;
 
 					Tower createdTower = Instantiate(controller);
@@ -953,20 +950,20 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Raycast onto tower placement areas
+		/// タワー配置エリアにRaycastする
 		/// </summary>
-		/// <param name="pointer">The pointer we're testing</param>
+		/// <param name="pointer">判定するポインター</param>
 		protected void PlacementAreaRaycast(ref UIPointer pointer)
 		{
 			pointer.raycast = null;
 
 			if (pointer.overUI)
 			{
-				// Pointer is over UI, so no valid position
+				// ポインターがUIの上にあるため、有効な位置ではない
 				return;
 			}
 
-			// Raycast onto placement area layer
+			// 配置エリアレイヤーにRaycastする
 			RaycastHit hit;
 			if (Physics.Raycast(pointer.ray, out hit, float.MaxValue, placementAreaMask))
 			{
@@ -975,7 +972,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Modifies the valid rendering of the ghost tower once there is enough currency
+		/// 所持通貨が十分になったら、ゴーストタワーの有効表示を更新する
 		/// </summary>
 		protected virtual void OnCurrencyChanged()
 		{
@@ -996,7 +993,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Closes the Tower UI on death of tower
+		/// タワーが破壊されたときにTower UIを閉じる
 		/// </summary>
 		protected void OnTowerDied(DamageableBehaviour targetable)
 		{
@@ -1006,10 +1003,10 @@ namespace TowerDefense.UI.HUD
 		}
 		
 		/// <summary>
-		/// Creates and hides the tower and shows the buildInfoUI
+		/// タワーを作成して非表示にし、buildInfoUIを表示する
 		/// </summary>
 		/// <exception cref="ArgumentNullException">
-		/// Throws exception if the <paramref name="towerToBuild"/> is null
+		/// <paramref name="towerToBuild"/> がnullの場合に例外を投げる
 		/// </exception>
 		void SetUpGhostTower([NotNull] Tower towerToBuild)
 		{
@@ -1022,7 +1019,7 @@ namespace TowerDefense.UI.HUD
 			m_CurrentTower.Initialize(towerToBuild);
 			m_CurrentTower.Hide();
 
-			//activate build info
+			// 建設情報を有効にする
 			if (buildInfoUI != null)
 			{
 				buildInfoUI.Show(towerToBuild);

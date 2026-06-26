@@ -4,22 +4,22 @@ using UnityEngine;
 namespace TowerDefense.Level
 {
 	/// <summary>
-	/// Basic implementation of intro: a delay
+	/// イントロの基本実装: ディレイ
 	/// </summary>
 	public class TimedLevelIntro : LevelIntro
 	{
 		/// <summary>
-		/// The delay
+		/// 遅延
 		/// </summary>
 		public float time = 5f;
 
 		/// <summary>
-		/// Timer object used to track the delayed
+		/// 遅延を追跡するために使用されるタイマー オブジェクト
 		/// </summary>
 		protected Timer m_Timer;
 
 		/// <summary>
-		/// Set up the timer and make it fire the SafelyCallIntroCompleted event
+		/// タイマーを設定し、SafelyCallIntroCompleted イベントを発生させます
 		/// </summary>
 		protected void Awake()
 		{
@@ -27,7 +27,7 @@ namespace TowerDefense.Level
 		}
 
 		/// <summary>
-		/// Tick the timer and disable it on completion
+		/// タイマーにチェックを入れ、完了したら無効にします
 		/// </summary>
 		protected void Update()
 		{

@@ -3,7 +3,7 @@
 namespace TowerDefense.UI.HUD
 {
 	/// <summary>
-	/// States the placement tile can be in
+	/// 配置タイルが取り得る状態
 	/// </summary>
 	public enum PlacementTileState
 	{
@@ -12,25 +12,25 @@ namespace TowerDefense.UI.HUD
 	}
 	
 	/// <summary>
-	/// Simple class to illustrate tile placement locations
+	/// タイルの配置場所を示すためのシンプルなクラス
 	/// </summary>
 	public class PlacementTile : MonoBehaviour
 	{
 		/// <summary>
-		/// Material to use when this tile is empty
+		/// このタイルが空のときに使用するMaterial
 		/// </summary>
 		public Material emptyMaterial;
 		/// <summary>
-		/// Material to use when this tile is filled
+		/// このタイルが埋まっているときに使用するMaterial
 		/// </summary>
 		public Material filledMaterial;
 		/// <summary>
-		/// The renderer whose material we're changing
+		/// Materialを変更するRenderer
 		/// </summary>
 		public Renderer tileRenderer;
 
 		/// <summary>
-		/// Update the state of this placement tile
+		/// この配置タイルの状態を更新する
 		/// </summary>
 		public void SetState(PlacementTileState newState)
 		{

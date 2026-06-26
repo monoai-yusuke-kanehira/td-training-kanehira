@@ -3,28 +3,28 @@
 namespace TowerDefense.UI
 {
 	/// <summary>
-	/// A class for controlling conditional motion of the canvas
+	/// 条件に応じたCanvasの移動を制御するクラス
 	/// </summary>
 	[RequireComponent(typeof(Canvas))]
 	public class MovingCanvas : MonoBehaviour
 	{
 		/// <summary>
-		/// The RectTransform used to check against the screen bounds
+		/// 画面範囲との照合に使用するRectTransform
 		/// </summary>
 		public RectTransform content;
 
 		/// <summary>
-		/// To offset the position the canvas is placed at
+		/// Canvasを配置する位置をオフセットするための値
 		/// </summary>
 		public Vector2 offset;
 
 		/// <summary>
-		/// The attached canvas
+		/// アタッチされているCanvas
 		/// </summary>
 		Canvas m_Canvas;
 
 		/// <summary>
-		/// Property for disabling and enabling the attached canvas
+		/// アタッチされているCanvasの有効/無効を切り替えるプロパティ
 		/// </summary>
 		public bool canvasEnabled
 		{
@@ -47,10 +47,10 @@ namespace TowerDefense.UI
 		}
 
 		/// <summary>
-		/// Try to move the canvas based on <see cref="content"/>'s rect
+		/// <see cref="content"/> のrectに基づいてCanvasの移動を試みる
 		/// </summary>
 		/// <param name="position">
-		/// The position to move to
+		/// 移動先の位置
 		/// </param>
 		public void TryMove(Vector3 position)
 		{
@@ -78,7 +78,7 @@ namespace TowerDefense.UI
 		}
 
 		/// <summary>
-		/// Cache the attached canvas
+		/// アタッチされているCanvasをキャッシュする
 		/// </summary>
 		protected virtual void Awake()
 		{

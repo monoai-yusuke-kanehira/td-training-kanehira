@@ -6,48 +6,48 @@ using UnityEngine;
 namespace TowerDefense.Effects
 {
 	/// <summary>
-	/// Class for spawning and managing effects on this projectile. Used for effects that should persist
-	/// a little longer after a projectile is destroyed/repooled. Creates the effect on enable, moves it to 
-	/// follow us every frame while we're active.
+	/// この発射体の生成と効果の管理のためのクラス。持続する必要がある効果に使用されます
+	/// 発射体が破壊/再プールされた後、少し時間がかかります。イネーブル時にエフェクトを作成し、次の場所に移動します 
+	/// 有効な間は毎フレームこのオブジェクトを追従させます。
 	/// 
-	/// On disable, it'll try and find a SelfDestroyTimer on the effect to trigger its destruction, otherwise
-	/// repools it immediately.
+	/// 無効にすると、効果の破壊をトリガーするための SelfDestroyTimer を見つけようとします。それ以外の場合は、
+	/// すぐに再プールします
 	/// </summary>
 	[RequireComponent(typeof(IProjectile))]
 	public class ProjectileEffect : MonoBehaviour
 	{
 		/// <summary>
-		/// Preafb that gets spawned when this projectile fires
+		/// この発射体が発射されたときに生成される Preafb
 		/// </summary>
 		public GameObject effectPrefab;
 
 		/// <summary>
-		/// Transform the effect follows
+		/// エフェクトを次のように変換します
 		/// </summary>
 		public Transform followTransform;
 
 		/// <summary>
-		/// Cached spawned effect
+		/// 生成済みエフェクトのキャッシュです
 		/// </summary>
 		GameObject m_SpawnedEffect;
 		
 		/// <summary>
-		/// Cached destruction timer on the spawned object
+		/// スポーンされたオブジェクトのキャッシュされた破壊タイマー
 		/// </summary>
 		SelfDestroyTimer m_DestroyTimer;
 
 		/// <summary>
-		/// Cached poolable effect on the spawned object
+		/// スポーンされたオブジェクトに対するキャッシュされたプール可能なエフェクト
 		/// </summary>
 		PoolableEffect m_Resetter;
 
 		/// <summary>
-		/// Cached projectile
+		/// Projectileのキャッシュです
 		/// </summary>
 		IProjectile m_Projectile;
 
 		/// <summary>
-		/// Register projectile fire events
+		/// 発射物発射イベントを登録する
 		/// </summary>
 		protected virtual void Awake()
 		{
@@ -60,7 +60,7 @@ namespace TowerDefense.Effects
 		}
 
 		/// <summary>
-		/// Unregister delegates
+		/// 代理人の登録を解除する
 		/// </summary>
 		protected virtual void OnDestroy()
 		{
@@ -68,7 +68,7 @@ namespace TowerDefense.Effects
 		}
 
 		/// <summary>
-		/// Spawn our effect
+		/// エフェクトを生成する
 		/// </summary>
 		protected virtual void OnFired()
 		{
@@ -79,7 +79,7 @@ namespace TowerDefense.Effects
 				m_SpawnedEffect.transform.position = followTransform.position;
 				m_SpawnedEffect.transform.rotation = followTransform.rotation;
 				
-				// Make sure to disable timer if it's on initially, so it doesn't destroy this object
+				// このオブジェクトが破壊されないように、タイマーが最初にオンになっている場合は必ず無効にしてください
 				m_DestroyTimer = m_SpawnedEffect.GetComponent<SelfDestroyTimer>();
 				if (m_DestroyTimer != null)
 				{
@@ -94,12 +94,12 @@ namespace TowerDefense.Effects
 		}
 
 		/// <summary>
-		/// Make effect follow us
+		/// エフェクトをこのオブジェクトに追従させます
 		/// </summary>
 		protected virtual void Update()
 		{
-			// Make the effect follow our position.
-			// We don't reparent it because it should not be disabled when we are
+			// 効果が私たちの立場に従うようにします
+			// 親化したときに無効にしてはいけないため、親化はしません
 			if (m_SpawnedEffect != null)
 			{
 				m_SpawnedEffect.transform.position = followTransform.position;
@@ -107,7 +107,7 @@ namespace TowerDefense.Effects
 		}
 
 		/// <summary>
-		/// Destroy and start destruction of effect
+		///破壊して効果破壊開始
 		/// </summary>
 		protected virtual void OnDisable()
 		{
@@ -116,7 +116,7 @@ namespace TowerDefense.Effects
 				return;
 			}
 			
-			// Initiate destruction timer
+			// 破壊タイマーを開始する
 			if (m_DestroyTimer != null)
 			{
 				m_DestroyTimer.enabled = true;
@@ -128,7 +128,7 @@ namespace TowerDefense.Effects
 			}
 			else
 			{
-				// Repool immediately
+				// すぐに再プールします
 				Poolable.TryPool(m_SpawnedEffect);
 			}
 

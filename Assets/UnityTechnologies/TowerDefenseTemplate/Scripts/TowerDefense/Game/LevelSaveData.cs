@@ -3,7 +3,7 @@
 namespace TowerDefense.Game
 {
 	/// <summary>
-	/// A calss to save level data
+	/// レベルデータを保存するためのコール
 	/// </summary>
 	[Serializable]
 	public class LevelSaveData

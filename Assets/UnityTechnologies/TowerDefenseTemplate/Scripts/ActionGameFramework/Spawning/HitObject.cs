@@ -4,8 +4,8 @@ using UnityEngine;
 namespace ActionGameFramework.Spawning
 {
 	/// <summary>
-	/// A hit object is a special type of GameObject that consumes hit info
-	/// e.g. using Damage to scale the size
+	/// HitObject はヒット情報を受け取る特殊な GameObject
+	/// 例: ダメージ量を使ってサイズを変える
 	/// </summary>
 	public abstract class HitObject : MonoBehaviour
 	{

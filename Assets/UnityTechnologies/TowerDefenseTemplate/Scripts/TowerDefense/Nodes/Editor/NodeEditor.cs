@@ -5,7 +5,7 @@ using UnityEngine;
 namespace TowerDefense.Nodes.Editor
 {
 	/// <summary>
-	/// Editor for Node
+	/// Node用のEditor
 	/// </summary>
 	[CustomEditor(typeof(Node))]
 	public class NodeEditor : UnityEditor.Editor
@@ -28,13 +28,13 @@ namespace TowerDefense.Nodes.Editor
 		}
 
 		/// <summary>
-		/// Creates a new AreaMeshCreator object as a child of the node
+		/// Nodeの子として新しいAreaMeshCreatorオブジェクトを作成します
 		/// </summary>
 		protected void AddMeshCreator()
 		{
 			var meshObject = m_Node.GetComponentInChildren<AreaMeshCreator>();
 
-			// AreaMeshCreatorObject already exists so no need to instantiate it again
+			// AreaMeshCreatorObjectはすでに存在するため、再生成する必要はありません
 			if (meshObject != null)
 			{
 				Selection.activeGameObject = meshObject.gameObject;

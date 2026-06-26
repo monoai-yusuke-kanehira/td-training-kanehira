@@ -4,28 +4,28 @@ using UnityEngine;
 namespace Core.Utilities
 {
 	/// <summary>
-	/// Structure to contain cubic coordinates for hexagonal grids. Provides a derived Z coordinate where
-	/// z = x + y, providing a new third axis
+	/// 六角形グリッドのキューブ座標を保持する構造体。派生したZ座標を提供する
+	/// z = x + y として、3つ目の軸を表す
 	/// </summary>
 	public struct HexPoint : IEquatable<HexPoint>
 	{
 		/// <summary>
-		/// X-coordinate of hexagon point
+		/// 六角形上の点のX座標
 		/// </summary>
 		public readonly int x;
 
 		/// <summary>
-		/// Y-coordinate of hexagon point
+		/// 六角形上の点のY座標
 		/// </summary>
 		public readonly int y;
 
 		/// <summary>
-		/// Z-coordinate of hexagon point. This value is derived from x and y
+		/// 六角形上の点のZ座標。この値はxとyから計算される
 		/// </summary>
 		public readonly int z;
 
 		/// <summary>
-		/// Calculates the magnitude of this Hex point vector (its hex distance from the origin
+		/// このHexPointベクトルの大きさ（原点からの六角形距離）を計算する
 		/// </summary>
 		public int magnitude
 		{
@@ -33,7 +33,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Initialize a new hex point with two x,y coordinates
+		/// x、yの2つの座標で新しいHexPointを初期化する
 		/// </summary>
 		public HexPoint(int x, int y)
 		{
@@ -43,7 +43,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Initialized a new hex point with x and z coordinates
+		/// x、z座標から新しいHexPointを初期化する
 		/// </summary>
 		public static HexPoint FromXZ(int x, int z)
 		{
@@ -52,7 +52,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Initialized a new hex point with y and z coordinates
+		/// y、z座標から新しいHexPointを初期化する
 		/// </summary>
 		public static HexPoint FromYZ(int y, int z)
 		{
@@ -75,7 +75,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Simple hash multiplying by two primes
+		/// 2つの素数を掛け合わせるシンプルなハッシュ
 		/// </summary>
 		public override int GetHashCode()
 		{
@@ -91,7 +91,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Rotate the given hex point by 60 degrees counterclockwise, around the origin
+		/// 指定されたHexPointを原点まわりに反時計回りで60度回転する
 		/// </summary>
 		public static HexPoint RotateLeft(HexPoint original)
 		{
@@ -99,7 +99,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Rotate the given hex point by 60 degrees counterclockwise, around the given point
+		/// 指定されたHexPointを指定点まわりに反時計回りで60度回転する
 		/// </summary>
 		public static HexPoint RotateLeft(HexPoint original, HexPoint origin)
 		{
@@ -107,7 +107,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Rotate the given hex point by 60 degrees clockwise, around the origin
+		/// 指定されたHexPointを原点まわりに時計回りで60度回転する
 		/// </summary>
 		public static HexPoint RotateRight(HexPoint original)
 		{
@@ -115,7 +115,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Rotate the given hex point by 60 degrees clockwise, around the given point
+		/// 指定されたHexPointを指定点まわりに時計回りで60度回転する
 		/// </summary>
 		public static HexPoint RotateRight(HexPoint original, HexPoint origin)
 		{
@@ -123,7 +123,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Rotate the given hex point by 120 degrees counterclockwise, around the origin
+		/// 指定されたHexPointを原点まわりに反時計回りで120度回転する
 		/// </summary>
 		public static HexPoint RotateLeft120(HexPoint original)
 		{
@@ -131,7 +131,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Rotate the given hex point by 120 degrees counterclockwise, around the the given point
+		/// 指定されたHexPointを指定点まわりに反時計回りで120度回転する
 		/// </summary>
 		public static HexPoint RotateLeft120(HexPoint original, HexPoint origin)
 		{
@@ -139,7 +139,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Rotate the given hex point by 120 degrees clockwise, around the origin
+		/// 指定されたHexPointを原点まわりに時計回りで120度回転する
 		/// </summary>
 		public static HexPoint RotateRight120(HexPoint original)
 		{
@@ -147,7 +147,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Rotate the given hex point by 120 degrees clockwise, around the the given point
+		/// 指定されたHexPointを指定点まわりに時計回りで120度回転する
 		/// </summary>
 		public static HexPoint RotateRight120(HexPoint original, HexPoint origin)
 		{
@@ -155,7 +155,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Rotate the given hex point 180 degrees around the origin
+		/// 指定されたHexPointを原点まわりに180度回転する
 		/// </summary>
 		public static HexPoint Rotate180(HexPoint original)
 		{
@@ -163,7 +163,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Rotate the given hex point 180 degrees around the the given point
+		/// 指定されたHexPointを指定点まわりに180度回転する
 		/// </summary>
 		public static HexPoint Rotate180(HexPoint original, HexPoint origin)
 		{
@@ -171,7 +171,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Reflect the given hex point around the x-axis
+		/// 指定されたHexPointをx軸で反転する
 		/// </summary>
 		public static HexPoint ReflectX(HexPoint original)
 		{
@@ -182,7 +182,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Reflect the given hex point around the line where y is the given value
+		/// 指定されたHexPointを、yが指定値となる直線で反転する
 		/// </summary>
 		public static HexPoint ReflectX(HexPoint original, int y)
 		{
@@ -192,7 +192,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Reflect the given hex point around the y-axis
+		/// 指定されたHexPointをy軸で反転する
 		/// </summary>
 		public static HexPoint ReflectY(HexPoint original)
 		{
@@ -203,7 +203,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Reflect the given hex point around the line where x is the given value
+		/// 指定されたHexPointを、xが指定値となる直線で反転する
 		/// </summary>
 		public static HexPoint ReflectY(HexPoint original, int x)
 		{
@@ -213,7 +213,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Reflect the given hex point around the z-axis
+		/// 指定されたHexPointをz軸で反転する
 		/// </summary>
 		public static HexPoint ReflectZ(HexPoint original)
 		{
@@ -224,7 +224,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Reflect the given hex point around the line where z is the given value
+		/// 指定されたHexPointを、zが指定値となる直線で反転する
 		/// </summary>
 		public static HexPoint ReflectZ(HexPoint original, int z)
 		{
@@ -233,8 +233,8 @@ namespace Core.Utilities
 			return ReflectZ(original - offset) + offset;
 		}
 		
-		// Math operators and conversions
-		// Equality operators
+		// 数学演算子と変換
+		// 等価演算子
 		public static bool operator ==(HexPoint left, HexPoint right)
 		{
 			return left.Equals(right);
@@ -245,7 +245,7 @@ namespace Core.Utilities
 			return !left.Equals(right);
 		}
 		
-		// Conversion to and from IntVector2
+		// IntVector2との相互変換
 		public static explicit operator IntVector2(HexPoint hexPoint)
 		{
 			return new IntVector2(hexPoint.x, hexPoint.y);
@@ -256,7 +256,7 @@ namespace Core.Utilities
 			return new HexPoint(vector.x, vector.y);
 		}
 		
-		// Math operators
+		// 数学演算子
 		public static HexPoint operator +(HexPoint left, HexPoint right)
 		{
 			return new HexPoint(left.x + right.x, left.y + right.y);

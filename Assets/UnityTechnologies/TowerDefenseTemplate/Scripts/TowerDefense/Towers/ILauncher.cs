@@ -5,45 +5,45 @@ using UnityEngine;
 namespace TowerDefense.Towers
 {
 	/// <summary>
-	/// A class that allows the TowerConfiguration to delegate
-	/// different firing logic this component
+	/// TowerConfigurationが委譲できるようにするクラス
+	/// 異なる発射ロジックをこのコンポーネントへ渡します
 	/// </summary>
 	public interface ILauncher
 	{
 		/// <summary>
-		/// The method for crafting the firing logic for the tower
+		/// Towerの発射ロジックを組み立てるためのメソッド
 		/// </summary>
 		/// <param name="enemy">
-		/// The enemy that the tower is targeting
+		/// Towerが狙っている敵
 		/// </param>
 		/// <param name="attack">
-		/// The projectile component used to attack the enemy
+		/// 敵を攻撃するために使うProjectileコンポーネント
 		/// </param>
 		/// <param name="firingPoint"></param>
 		void Launch(Targetable enemy, GameObject attack, Transform firingPoint);
 
 		/// <summary>
-		/// The method for crafting the firing logic for the tower
+		/// Towerの発射ロジックを組み立てるためのメソッド
 		/// </summary>
 		/// <param name="enemy">
-		/// The enemy that the tower is targeting
+		/// Towerが狙っている敵
 		/// </param>
 		/// <param name="attack">
-		/// The projectile component used to attack the enemy
+		/// 敵を攻撃するために使うProjectileコンポーネント
 		/// </param>
 		/// <param name="firingPoints">
-		/// A list of firing points to fire from
+		/// 発射元として使う発射ポイントのリスト
 		/// </param>
 		void Launch(Targetable enemy, GameObject attack, Transform[] firingPoints);
 
 		/// <summary>
-		/// The method for crafting firing logic at multiple enemies
+		/// 複数の敵に対する発射ロジックを組み立てるためのメソッド
 		/// </summary>
 		/// <param name="enemies">
-		/// The collection of enemies to attack
+		/// 攻撃対象の敵コレクション
 		/// </param>
 		/// <param name="attack">
-		/// The projectile component used to attack the enemy
+		/// 敵を攻撃するために使うProjectileコンポーネント
 		/// </param>
 		/// <param name="firingPoints"></param>
 		void Launch(List<Targetable> enemies, GameObject attack, Transform[] firingPoints);

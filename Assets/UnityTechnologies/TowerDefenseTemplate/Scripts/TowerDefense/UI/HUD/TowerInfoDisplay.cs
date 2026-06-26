@@ -5,55 +5,55 @@ using UnityEngine.UI;
 namespace TowerDefense.UI.HUD
 {
 	/// <summary>
-	/// Used to display infomation about a tower using Unity UI
+	/// Unity UIを使ってタワーの情報を表示するために使用する
 	/// </summary>
 	public class TowerInfoDisplay : MonoBehaviour
 	{
 		/// <summary>
-		/// The text component for the name
+		/// 名前用のTextコンポーネント
 		/// </summary>
 		public Text towerName;
 
 		/// <summary>
-		/// The text component for the description
+		/// 説明用のTextコンポーネント
 		/// </summary>
 		public Text description;
 
 		/// <summary>
-		/// The text component for the description
+		/// DPS用のTextコンポーネント
 		/// </summary>
 		public Text dps;
 
 		/// <summary>
-		/// The text component for the level
+		/// レベル用のTextコンポーネント
 		/// </summary>
 		public Text level;
 
 		/// <summary>
-		/// The text component for the health
+		/// 体力用のTextコンポーネント
 		/// </summary>
 		public Text health;
 
 		/// <summary>
-		/// The text component for the dimensions
+		/// サイズ用のTextコンポーネント
 		/// </summary>
 		public Text dimensions;
 
 		/// <summary>
-		/// The text component for the dimensions
+		/// アップグレード費用用のTextコンポーネント
 		/// </summary>
 		public Text upgradeCost;
 
 		/// <summary>
-		/// The text component for the dimensions
+		/// 売却価格用のTextコンポーネント
 		/// </summary>
 		public Text sellPrice;
 
 		/// <summary>
-		/// Draws the tower data on to the canvas, if the relevant text components are populated
+		/// 関連するTextコンポーネントが設定されている場合、タワーデータをCanvasに描画する
 		/// </summary>
 		/// <param name="tower">
-		/// The tower to gain info from
+		/// 情報を取得するタワー
 		/// </param>
 		public void Show(Tower tower)
 		{
@@ -62,10 +62,10 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Draws the tower data on to the canvas, if the relevant text components are populated
+		/// 関連するTextコンポーネントが設定されている場合、タワーデータをCanvasに描画する
 		/// </summary>
-		/// <param name="tower">The tower to gain info from</param>
-		/// <param name="levelOfTower">The level of the tower</param>
+		/// <param name="tower">情報を取得するタワー</param>
+		/// <param name="levelOfTower">タワーのレベル</param>
 		public void Show(Tower tower, int levelOfTower)
 		{
 			if (levelOfTower >= tower.levels.Length)
@@ -89,7 +89,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Draws the text if the text component is populated
+		/// Textコンポーネントが設定されている場合、テキストを描画する
 		/// </summary>
 		/// <param name="textBox"></param>
 		/// <param name="text"></param>

@@ -4,34 +4,34 @@ using UnityEngine;
 namespace TowerDefense.Affectors
 {
 	/// <summary>
-	/// A class for providing information on to whether
-	/// the children classes effects are valid
+	/// 派生クラスの効果が有効かどうかを判断するための
+	/// 情報を提供するクラス
 	/// </summary>
 	public abstract class Affector : MonoBehaviour
 	{
 		/// <summary>
-		/// Short description for affector for displaying in the UI
+		/// UIに表示するAffectorの短い説明
 		/// </summary>
 		public string description;
 
 		/// <summary>
-		/// Gets or sets the alignment
+		/// 所属情報を取得または設定する
 		/// </summary>
 		public IAlignmentProvider alignment { get; protected set; }
 
 		/// <summary>
-		/// The physics mask to check against
+		/// 判定対象にする物理マスク
 		/// </summary>
 		public LayerMask enemyMask { get; protected set; }
 
 		/// <summary>
-		/// Initializes the effect with search data
+		/// 検索用データを使って効果を初期化する
 		/// </summary>
 		/// <param name="affectorAlignment">
-		/// The alignment of the effect for search purposes
+		/// 検索に使う効果の所属情報
 		/// </param>
 		/// <param name="mask">
-		/// The physics layer of to search for
+		/// 検索対象にする物理レイヤー
 		/// </param>
 		public virtual void Initialize(IAlignmentProvider affectorAlignment, LayerMask mask)
 		{
@@ -40,10 +40,10 @@ namespace TowerDefense.Affectors
 		}
 
 		/// <summary>
-		/// Initializes the effect with search data
+		/// 検索用データを使って効果を初期化する
 		/// </summary>
 		/// <param name="affectorAlignment">
-		/// The alignment of the effect for search purposes
+		/// 検索に使う効果の所属情報
 		/// </param>
 		public virtual void Initialize(IAlignmentProvider affectorAlignment)
 		{

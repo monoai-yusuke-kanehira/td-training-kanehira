@@ -4,71 +4,71 @@ using UnityEngine;
 namespace TowerDefense.UI.HUD
 {
 	/// <summary>
-	/// Tower placement "ghost" that indicates the position of the tower to be placed and its validity for placement.
-	/// This is built with mouse in mind for testing, but it should be possible to abstract a lot of this into a child 
-	/// class for the purposes of a touch UI.
+	/// 配置するタワーの位置と、その配置が有効かどうかを示すタワー配置用の「ゴースト」。
+	/// テスト用にマウス操作を想定して作られているが、タッチUI向けには多くの処理を子クラスへ
+	/// 抽象化できるはず。
 	/// 
-	/// Should exist on its own layer to ensure best placement.
+	/// 最適な配置判定のため、専用のレイヤーに置く必要がある。
 	/// </summary>
 	[RequireComponent(typeof(Collider))]
 	public class TowerPlacementGhost : MonoBehaviour
 	{
 		/// <summary>
-		/// The tower we represent
+		/// このゴーストが表すタワー
 		/// </summary>
 		public Tower controller { get; private set; }
 
 		/// <summary>
-		/// Prefab used to visualize effect radius of tower
+		/// タワーの効果範囲を可視化するために使用するPrefab
 		/// </summary>
 		public GameObject radiusVisualizer;
 
 		/// <summary>
-		/// Offset height for radius visualizer
+		/// 範囲ビジュアライザーの高さオフセット
 		/// </summary>
 		public float radiusVisualizerHeight = 0.02f;
 
 		/// <summary>
-		/// Movement damping factor
+		/// 移動の減衰係数
 		/// </summary>
 		public float dampSpeed = 0.075f;
 
 		/// <summary>
-		/// The two materials used to represent valid and invalid placement, respectively
+		/// 有効な配置と無効な配置をそれぞれ表すために使用する2つのMaterial
 		/// </summary>
 		public Material material;
 		
 		public Material invalidPositionMaterial;
 
 		/// <summary>
-		/// The list of attached mesh renderers 
+		/// アタッチされているMeshRendererの一覧
 		/// </summary>
 		protected MeshRenderer[] m_MeshRenderers;
 
 		/// <summary>
-		/// Movement velocity for smooth damping
+		/// スムーズな減衰に使う移動速度
 		/// </summary>
 		protected Vector3 m_MoveVel;
 
 		/// <summary>
-		/// Target world position
+		/// 目標のワールド座標
 		/// </summary>
 		protected Vector3 m_TargetPosition;
 
 		/// <summary>
-		/// True if we're at a valid world position
+		/// 有効なワールド座標にいる場合はtrue
 		/// </summary>
 		protected bool m_ValidPos;
 
 		/// <summary>
-		/// The attached the collider
+		/// アタッチされているCollider
 		/// </summary>
 		public Collider ghostCollider { get; private set; }
 
 		/// <summary>
-		/// Initialize this ghost
+		/// このゴーストを初期化する
 		/// </summary>
-		/// <param name="tower">The tower controller we're a ghost of</param>
+		/// <param name="tower">このゴーストが表すタワーコントローラー</param>
 		public virtual void Initialize(Tower tower)
 		{
 			m_MeshRenderers = GetComponentsInChildren<MeshRenderer>();
@@ -83,7 +83,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Hide this ghost
+		/// このゴーストを非表示にする
 		/// </summary>
 		public virtual void Hide()
 		{
@@ -91,7 +91,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Show this ghost
+		/// このゴーストを表示する
 		/// </summary>
 		public virtual void Show()
 		{
@@ -105,19 +105,18 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Moves this ghost to a given world position
+		/// このゴーストを指定されたワールド座標へ移動する
 		/// </summary>
-		/// <param name="worldPosition">The new position to move to in world space</param>
-		/// <param name="rotation">The new rotation to adopt, in world space</param>
-		/// <param name="validLocation">Whether or not this position is valid. Ghost may display differently
-		/// over invalid locations</param>
+		/// <param name="worldPosition">移動先となる新しいワールド座標</param>
+		/// <param name="rotation">適用する新しいワールド回転</param>
+		/// <param name="validLocation">この位置が有効かどうか。無効な位置ではゴーストの表示が変わる場合がある</param>
 		public virtual void Move(Vector3 worldPosition, Quaternion rotation, bool validLocation)
 		{
 			m_TargetPosition = worldPosition;
 
 			if (!m_ValidPos)
 			{
-				// Immediately move to the given position
+				// 指定された位置へ即座に移動する
 				m_ValidPos = true;
 				transform.position = m_TargetPosition;
 			}
@@ -131,7 +130,7 @@ namespace TowerDefense.UI.HUD
 
 
 		/// <summary>
-		/// Damp the movement of the ghost
+		/// ゴーストの移動を減衰させる
 		/// </summary>
 		protected virtual void Update()
 		{

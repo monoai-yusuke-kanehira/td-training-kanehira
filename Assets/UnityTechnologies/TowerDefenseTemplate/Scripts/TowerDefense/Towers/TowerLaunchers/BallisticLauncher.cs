@@ -7,26 +7,26 @@ using UnityEngine;
 namespace TowerDefense.Towers.TowerLaunchers
 {
 	/// <summary>
-	/// Implementation of the tower launcher for Ballistic Projectiles
+	/// Ballistic Projectile用Tower Launcherの実装
 	/// </summary>
 	public class BallisticLauncher : Launcher
 	{
 		/// <summary>
-		/// The particle system used for providing launch feedback
+		/// 発射フィードバックに使うParticle System
 		/// </summary>
 		public ParticleSystem fireParticleSystem;
 
 		/// <summary>
-		/// Launches a single projectile at a single enemy from a single firing point
+		/// 1つの発射ポイントから1体の敵へ1つのProjectileを発射します
 		/// </summary>
 		/// <param name="enemy">
-		/// The enemy to target
+		/// 狙う敵
 		/// </param>
 		/// <param name="projectile">
-		/// The projectile to attack
+		/// 攻撃に使うProjectile
 		/// </param>
 		/// <param name="firingPoint">
-		/// The point to fire from
+		/// 発射元の点
 		/// </param>
 		public override void Launch(Targetable enemy, GameObject projectile, Transform firingPoint)
 		{
@@ -41,7 +41,7 @@ namespace TowerDefense.Towers.TowerLaunchers
 			Vector3 targetPoint;
 			if (ballisticProjectile.fireMode == BallisticFireMode.UseLaunchSpeed)
 			{
-				// use speed
+				// 速度を使います
 				targetPoint = Ballistics.CalculateBallisticLeadingTargetPointWithSpeed(
 					startPosition,
 					enemy.position, enemy.velocity,
@@ -49,7 +49,7 @@ namespace TowerDefense.Towers.TowerLaunchers
 			}
 			else
 			{
-				// use angle
+				// 角度を使います
 				targetPoint = Ballistics.CalculateBallisticLeadingTargetPointWithAngle(
 					startPosition,
 					enemy.position, enemy.velocity, ballisticProjectile.firingAngle,

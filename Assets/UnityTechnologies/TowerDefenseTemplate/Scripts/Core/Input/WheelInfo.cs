@@ -1,12 +1,12 @@
 namespace Core.Input
 {
 	/// <summary>
-	/// Information about a zoom action (usually mouse-wheel or button based)
+	/// ズーム操作に関する情報（通常はマウスホイールまたはボタン操作）
 	/// </summary>
 	public struct WheelInfo
 	{
 		/// <summary>
-		/// Amount of zoom
+		/// ズーム量
 		/// </summary>
 		public float zoomAmount;
 	}

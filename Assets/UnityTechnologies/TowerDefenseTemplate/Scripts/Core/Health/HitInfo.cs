@@ -3,7 +3,7 @@
 namespace Core.Health
 {
 	/// <summary>
-	/// Damage info - a class required by some damage listeners
+	/// ダメージ情報。一部のダメージリスナーで必要なクラス
 	/// </summary>
 	public struct HitInfo
 	{
@@ -11,28 +11,28 @@ namespace Core.Health
 		readonly Vector3 m_DamagePoint;
 
 		/// <summary>
-		/// Gets or sets the health change info.
+		/// 体力変化情報を取得または設定します。
 		/// </summary>
-		/// <value>The health change info.</value>
+		/// <value>体力変化情報。</value>
 		public HealthChangeInfo healthChangeInfo
 		{
 			get { return m_HealthChangeInfo; }
 		}
 
 		/// <summary>
-		/// Gets or sets the damage point.
+		/// ダメージ位置を取得または設定します。
 		/// </summary>
-		/// <value>The damage point.</value>
+		/// <value>ダメージ位置。</value>
 		public Vector3 damagePoint
 		{
 			get { return m_DamagePoint; }
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="HitInfo" /> struct.
+		/// <see cref="HitInfo" /> 構造体の新しいインスタンスを初期化します。
 		/// </summary>
-		/// <param name="info">The health change info</param>
-		/// <param name="damageLocation">Damage point.</param>
+		/// <param name="info">体力変化情報</param>
+		/// <param name="damageLocation">ダメージ位置。</param>
 		public HitInfo(HealthChangeInfo info, Vector3 damageLocation)
 		{
 			m_DamagePoint = damageLocation;

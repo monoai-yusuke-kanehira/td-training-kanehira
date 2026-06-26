@@ -13,9 +13,9 @@ namespace TowerDefense.MeshCreator
 		}
 
 		/// <summary>
-		/// Triangulates the mesh
+		/// メッシュを三角形分割します
 		/// </summary>
-		/// <returns>Array of triangle indices</returns>
+		/// <returns>三角形インデックスの配列</returns>
 		public int[] Triangulate()
 		{
 			List<int> indices = new List<int>();
@@ -94,9 +94,9 @@ namespace TowerDefense.MeshCreator
 		}
 
 		/// <summary>
-		/// Area of the triangle
+		/// 三角形の面積
 		/// </summary>
-		/// <returns>Area of triangel</returns>
+		/// <returns>三角形の面積</returns>
 		float Area()
 		{
 			int n = m_Points.Count;

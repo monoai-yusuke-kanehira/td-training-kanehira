@@ -4,7 +4,7 @@ using UnityEngine.PostProcessing;
 namespace TowerDefense.Cameras
 {
 	/// <summary>
-	/// Simple component to select lower quality post processing configurations on mobile
+	/// モバイル上で低品質の後処理構成を選択するためのシンプルなコンポーネント
 	/// </summary>
 	[RequireComponent(typeof(PostProcessingBehaviour))]
 	public class PostProcessorConfigurationSelector : MonoBehaviour

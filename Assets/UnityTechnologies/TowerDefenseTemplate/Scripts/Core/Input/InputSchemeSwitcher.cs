@@ -3,28 +3,28 @@
 namespace Core.Input
 {
 	/// <summary>
-	/// Base component that switches between active input schemes
+	/// 有効な入力スキームを切り替える基底コンポーネント
 	/// </summary>
 	[DisallowMultipleComponent]
 	public class InputSchemeSwitcher : MonoBehaviour
 	{
 		/// <summary>
-		/// The attached input schemes
+		/// アタッチされている入力スキーム
 		/// </summary>
 		protected InputScheme[] m_InputSchemes;
 
 		/// <summary>
-		/// The default scheme based on the platform
+		/// プラットフォームに基づくデフォルトスキーム
 		/// </summary>
 		protected InputScheme m_DefaultScheme;
 
 		/// <summary>
-		/// The current scheme activated
+		/// 現在有効なスキーム
 		/// </summary>
 		protected InputScheme m_CurrentScheme;
 
 		/// <summary>
-		/// Cache the schemes and activate the default
+		/// スキームをキャッシュし、デフォルトを有効化します
 		/// </summary>
 		protected virtual void Awake()
 		{
@@ -47,7 +47,7 @@ namespace Core.Input
 		}
 
 		/// <summary>
-		/// Checks the different schemes and activates them if needed
+		/// 各スキームを確認し、必要に応じて有効化します
 		/// </summary>
 		protected virtual void Update()
 		{

@@ -3,28 +3,28 @@
 namespace Core.Game
 {
 	/// <summary>
-	/// Element describing a level
+	/// レベルを表す要素
 	/// </summary>
 	[Serializable]
 	public class LevelItem
 	{
 		/// <summary>
-		/// The id - used in persistence
+		/// ID。永続化で使用されます
 		/// </summary>
 		public string id;
 
 		/// <summary>
-		/// The human readable level name
+		/// 人が読めるレベル名
 		/// </summary>
 		public string name;
 
 		/// <summary>
-		/// The description of the level - flavour text
+		/// レベルの説明文
 		/// </summary>
 		public string description;
 
 		/// <summary>
-		/// The name of the scene to load
+		/// 読み込むシーン名
 		/// </summary>
 		public string sceneName;
 	}

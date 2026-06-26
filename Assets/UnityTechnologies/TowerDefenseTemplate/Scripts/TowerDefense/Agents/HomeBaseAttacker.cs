@@ -7,40 +7,40 @@ using UnityEngine;
 namespace TowerDefense.Agents
 {
 	/// <summary>
-	/// A component that attacks a home base when an agent reaches it 
+	/// エージェントが本拠地に到達すると、本拠地を攻撃するコンポーネント 
 	/// </summary>
 	[RequireComponent(typeof(Agent))]
 	public class HomeBaseAttacker : MonoBehaviour 
 	{
 		/// <summary>
-		/// How long the agent charges for before it attacks
-		/// the home base
+		/// エージェントが攻撃するまでの充電時間
+		/// ホームベース
 		/// </summary>
 		public float homeBaseAttackChargeTime = 0.5f;
 
 		/// <summary>
-		/// Timer used to stall attack to the home base
+		/// 本塁への攻撃を遅らせるために使用されるタイマー
 		/// </summary>
 		protected Timer m_HomeBaseAttackTimer;
 
 		/// <summary>
-		/// If the agent has reached the Player Home Base and is charging an attack
+		/// エージェントがプレイヤーのホームベースに到着し、攻撃を仕掛けている場合
 		/// </summary>
 		protected bool m_IsChargingHomeBaseAttack;
 		
 		/// <summary>
-		/// The DamageableBehaviour on the home base 
+		/// ホームベースでのDamageableBehaviour 
 		/// </summary>
 		protected DamageableBehaviour m_FinalDestinationDamageableBehaviour;
 
 		/// <summary>
-		/// The agent component attached to this gameObject
+		/// このゲームオブジェクトにアタッチされたエージェント コンポーネント
 		/// </summary>
 		public Agent agent { get; protected set; }
 
 		/// <summary>
-		/// Fired on completion of <see cref="m_HomeBaseAttackTimer"/>
-		/// Applies damage to the homebase
+		/// 完了時に解雇される <see cref="m_HomeBaseAttackTimer"/>
+		/// 本拠地にダメージを与える
 		/// </summary>
 		protected void AttackHomeBase()
 		{
@@ -54,11 +54,11 @@ namespace TowerDefense.Agents
 		}
 
 		/// <summary>
-		/// Ticks the attack timer
+		/// 攻撃タイマーを刻む
 		/// </summary>
 		protected virtual void Update () 
 		{
-			// Update HomeBaseAttack Timer
+			// ホームベースアタックタイマーを更新する
 			if (m_IsChargingHomeBaseAttack)
 			{
 				m_HomeBaseAttackTimer.Tick(Time.deltaTime);
@@ -66,7 +66,7 @@ namespace TowerDefense.Agents
 		}
 
 		/// <summary>
-		/// Caches the attached Agent and subscribes to the destinationReached event
+		/// 接続されたエージェントをキャッシュし、destinationReached イベントをサブスクライブします
 		/// </summary>
 		protected virtual void Awake()
 		{
@@ -76,7 +76,7 @@ namespace TowerDefense.Agents
 		}
 
 		/// <summary>
-		/// Unsubscribes from the destinationReached event
+		/// destinationReached イベントのサブスクライブを解除します
 		/// </summary>
 		protected virtual void OnDestroy()
 		{
@@ -88,7 +88,7 @@ namespace TowerDefense.Agents
 		}
 
 		/// <summary>
-		/// Stops the attack on the home base
+		/// 本塁攻撃を阻止する
 		/// </summary>
 		void OnDied(DamageableBehaviour damageableBehaviour)
 		{
@@ -96,14 +96,14 @@ namespace TowerDefense.Agents
 		}
 
 		/// <summary>
-		/// Fired then the agent reached its final node,
-		/// Starts the attack timer
+		/// エージェントが最終ノードに到達したときに起動され、
+		/// アタックタイマーを開始します
 		/// </summary>
 		/// <param name="homeBase"></param>
 		void OnDestinationReached (Node homeBase)
 		{
 			m_FinalDestinationDamageableBehaviour = homeBase.GetComponent<DamageableBehaviour>();
-			// start timer 
+			// タイマーを開始します 
 			if (m_HomeBaseAttackTimer == null)
 			{
 				m_HomeBaseAttackTimer = new Timer(homeBaseAttackChargeTime, AttackHomeBase);

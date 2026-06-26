@@ -3,42 +3,42 @@ using UnityEngine;
 namespace Core.Input
 {
 	/// <summary>
-	/// Class to track information about an active pointer input
+	/// アクティブなポインター入力の情報を管理するクラス
 	/// </summary>
 	public class PointerActionInfo : PointerInfo
 	{
 		/// <summary>
-		/// Position where the input started
+		/// 入力が始まった位置
 		/// </summary>
 		public Vector2 startPosition;
 
 		/// <summary>
-		/// Flick velocity is a moving average of deltas
+		/// フリック速度は移動量の移動平均
 		/// </summary>
 		public Vector2 flickVelocity;
 
 		/// <summary>
-		/// Total movement for this pointer, since being held down
+		/// 押されてからの、このポインターの合計移動量
 		/// </summary>
 		public float totalMovement;
 
 		/// <summary>
-		/// Time hold started
+		/// ホールドが始まった時刻
 		/// </summary>
 		public float startTime;
 
 		/// <summary>
-		/// Has this input been dragged?
+		/// この入力がドラッグされたか
 		/// </summary>
 		public bool isDrag;
 
 		/// <summary>
-		/// Is this input holding?
+		/// この入力がホールド中か
 		/// </summary>
 		public bool isHold;
 
 		/// <summary>
-		/// Was this input previously holding, then dragged?
+		/// この入力がホールド後にドラッグされたか
 		/// </summary>
 		public bool wasHold;
 	}

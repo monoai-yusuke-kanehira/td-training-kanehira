@@ -9,13 +9,13 @@ using UnityEngine.UI;
 namespace TowerDefense.UI.HUD
 {
 	/// <summary>
-	/// A button controller for spawning towers
+	/// タワーを生成するためのボタンコントローラー
 	/// </summary>
 	[RequireComponent(typeof(RectTransform))]
 	public class TowerSpawnButton : MonoBehaviour, IDragHandler
 	{
 		/// <summary>
-		/// The text attached to the button
+		/// ボタンにアタッチされているText
 		/// </summary>
 		public Text buttonText;
 
@@ -30,34 +30,34 @@ namespace TowerDefense.UI.HUD
 		public Color energyInvalidColor;
 
 		/// <summary>
-		/// Fires when the button is tapped
+		/// ボタンがタップされたときに発火する
 		/// </summary>
 		public event Action<Tower> buttonTapped;
 
 		/// <summary>
-		/// Fires when the pointer is outside of the button bounds
-		/// and still down
+		/// ポインターがボタン範囲の外にあり、
+		/// まだ押下中のときに発火する
 		/// </summary>
 		public event Action<Tower> draggedOff;
 		
 		/// <summary>
-		/// The tower controller that defines the button
+		/// ボタンの内容を定義するタワーコントローラー
 		/// </summary>
 		Tower m_Tower;
 
 		/// <summary>
-		/// Cached reference to level currency
+		/// レベルの通貨へのキャッシュ済み参照
 		/// </summary>
 		Currency m_Currency;
 
 		/// <summary>
-		/// The attached rect transform
+		/// アタッチされているRectTransform
 		/// </summary>
 		RectTransform m_RectTransform;
 
 		/// <summary>
-		/// Checks if the pointer is out of bounds
-		/// and then fires the draggedOff event
+		/// ポインターが範囲外にあるか確認し、
+		/// draggedOffイベントを発火する
 		/// </summary>
 		public virtual void OnDrag(PointerEventData eventData)
 		{
@@ -71,10 +71,10 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Define the button information for the tower
+		/// タワー用のボタン情報を定義する
 		/// </summary>
 		/// <param name="towerData">
-		/// The tower to initialize the button with
+		/// ボタンの初期化に使用するタワー
 		/// </param>
 		public void InitializeButton(Tower towerData)
 		{
@@ -104,7 +104,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Cache the rect transform
+		/// RectTransformをキャッシュする
 		/// </summary>
 		protected virtual void Awake()
 		{
@@ -112,7 +112,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Unsubscribe from events
+		/// イベントの購読を解除する
 		/// </summary>
 		protected virtual void OnDestroy()
 		{
@@ -123,7 +123,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// The click for when the button is tapped
+		/// ボタンがタップされたときのクリック処理
 		/// </summary>
 		public void OnClick()
 		{
@@ -134,7 +134,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Update the button's button state based on cost
+		/// コストに基づいてボタンの状態を更新する
 		/// </summary>
 		void UpdateButton()
 		{
@@ -143,7 +143,7 @@ namespace TowerDefense.UI.HUD
 				return;
 			}
 
-			// Enable button
+			// ボタンを有効にする
 			if (m_Currency.CanAfford(m_Tower.purchaseCost) && !buyButton.interactable)
 			{
 				buyButton.interactable = true;

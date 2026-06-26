@@ -5,7 +5,7 @@ using UnityEngine.UI;
 namespace TowerDefense.UI
 {
 	/// <summary>
-	/// Simple options menu for setting volumes 
+	/// 音量を設定するためのシンプルなオプションメニュー
 	/// </summary>
 	public class OptionsMenu : SimpleMainMenuPage
 	{
@@ -16,7 +16,7 @@ namespace TowerDefense.UI
 		public Slider musicSlider;
 
 		/// <summary>
-		/// Event fired when sliders change
+		/// スライダーが変更されたときに発火するイベント
 		/// </summary>
 		public void UpdateVolumes()
 		{
@@ -30,7 +30,7 @@ namespace TowerDefense.UI
 		}
 
 		/// <summary>
-		/// Set initial slider values
+		/// スライダーの初期値を設定する
 		/// </summary>
 		public override void Show()
 		{
@@ -57,7 +57,7 @@ namespace TowerDefense.UI
 		}
 
 		/// <summary>
-		/// Persist volumes to data store
+		/// 音量をデータストアへ保存する
 		/// </summary>
 		public override void Hide()
 		{
@@ -73,7 +73,7 @@ namespace TowerDefense.UI
 		}
 
 		/// <summary>
-		/// Retrieve values from sliders
+		/// スライダーから値を取得する
 		/// </summary>
 		void GetSliderVolumes(out float masterVolume, out float sfxVolume, out float musicVolume)
 		{

@@ -11,38 +11,38 @@ namespace TowerDefense.Input
 	public class TowerDefenseTouchInput : TouchInput
 	{
 		/// <summary>
-		/// A percentage of the screen where panning occurs while dragging
+		/// ドラッグ中にパンが発生する画面の割合
 		/// </summary>
 		[Range(0, 0.5f)]
 		public float panAreaScreenPercentage = 0.2f;
 
 		/// <summary>
-		/// The object that holds the confirmation buttons
+		/// 確認ボタンを保持するオブジェクト
 		/// </summary>
 		public MovingCanvas confirmationButtons;
 
 		/// <summary>
-		/// The object that holds the invalid selection
+		/// 無効な選択を保持するオブジェクト
 		/// </summary>
 		public MovingCanvas invalidButtons;
 
 		/// <summary>
-		/// The attached Game UI object
+		/// 添付されたゲーム UI オブジェクト
 		/// </summary>
 		GameUI m_GameUI;
 
 		/// <summary>
-		/// Keeps track of whether or not the ghost tower is selected
+		/// ゴーストタワーが選択されているかどうかを追跡します
 		/// </summary>
 		bool m_IsGhostSelected;
 
 		/// <summary>
-		/// The pointer at the edge of the screen
+		/// 画面端のポインタ
 		/// </summary>
 		TouchInfo m_DragPointer;
 
 		/// <summary>
-		/// Called by the confirm button on the UI
+		/// UI の確認ボタンによって呼び出されます
 		/// </summary>
 		public void OnTowerPlacementConfirmation()
 		{
@@ -55,7 +55,7 @@ namespace TowerDefense.Input
 		}
 
 		/// <summary>
-		/// Called by the close button on the UI
+		/// UI の閉じるボタンによって呼び出されます
 		/// </summary>
 		public void Cancel()
 		{
@@ -65,7 +65,7 @@ namespace TowerDefense.Input
 		}
 
 		/// <summary>
-		/// Register input events
+		/// 入力イベントの登録
 		/// </summary>
 		protected override void OnEnable()
 		{
@@ -76,21 +76,21 @@ namespace TowerDefense.Input
 			m_GameUI.stateChanged += OnStateChanged;
 			m_GameUI.ghostBecameValid += OnGhostBecameValid;
 
-			// Register tap event
+			// タップイベントを登録する
 			if (InputController.instanceExists)
 			{
 				InputController.instance.tapped += OnTap;
 				InputController.instance.startedDrag += OnStartDrag;
 			}
 
-			// disable pop ups
+			// ポップアップを無効にします
 			confirmationButtons.canvasEnabled = false;
 			invalidButtons.canvasEnabled = false;
 		
 		}
 
 		/// <summary>
-		/// Deregister input events
+		/// 入力イベントの登録を解除します
 		/// </summary>
 		protected override void OnDisable()
 		{
@@ -117,7 +117,7 @@ namespace TowerDefense.Input
 		}
 
 		/// <summary>
-		/// Hide UI 
+		/// UIを非表示にします
 		/// </summary>
 		protected virtual void Awake()
 		{
@@ -132,13 +132,13 @@ namespace TowerDefense.Input
 		}
 
 		/// <summary>
-		/// Decay flick
+		/// フリックの勢いを減衰させます
 		/// </summary>
 		protected override void Update()
 		{
 			base.Update();
 
-			// Edge pan
+			// 画面端でパンします
 			if (m_DragPointer != null)
 			{
 				EdgePan();
@@ -166,13 +166,13 @@ namespace TowerDefense.Input
 		}
 
 		/// <summary>
-		/// Called on input press
+		/// 入力を押すと呼び出されます
 		/// </summary>
 		protected override void OnPress(PointerActionInfo pointer)
 		{
 			base.OnPress(pointer);
 			var touchInfo = pointer as TouchInfo;
-			// Press starts on a ghost? Then we can pick it up
+			// 幽霊にプレスが始まる？それなら拾ってみよう
 			if (touchInfo != null)
 			{
 				if (m_GameUI.state == State.Building)
@@ -187,17 +187,17 @@ namespace TowerDefense.Input
 		}
 
 		/// <summary>
-		/// Called on input release, for flicks
+		/// フリックの場合、入力リリース時に呼び出されます
 		/// </summary>
 		protected override void OnRelease(PointerActionInfo pointer)
 		{
-			// Override normal behaviour. We only want to do flicks if there's no ghost selected
-			// For this reason, we intentionally do not call base
+			// 通常の動作をオーバーライドします。ゴーストが選択されていない場合にのみフリックを実行したい
+			// このため、意図的にbaseを呼び出しません
 			var touchInfo = pointer as TouchInfo;
 
 			if (touchInfo != null)
 			{
-				// Show UI on release
+				// リリース時に UI を表示する
 				if (m_GameUI.isBuilding)
 				{
 					Vector2 screenPoint = cameraRig.cachedCamera.WorldToScreenPoint(m_GameUI.GetGhostPosition());
@@ -220,13 +220,13 @@ namespace TowerDefense.Input
 				}
 				if (!m_IsGhostSelected && cameraRig != null)
 				{
-					// Do normal base behaviour here
+					// ここで通常の基本動作を実行します
 					DoReleaseFlick(pointer);
 				}
 				
 				m_IsGhostSelected = false;
 
-				// Reset m_DragPointer if released
+				// 解放された場合は m_DragPointer をリセット
 				if (m_DragPointer != null && m_DragPointer.touchId == touchInfo.touchId)
 				{
 					m_DragPointer = null;
@@ -235,8 +235,8 @@ namespace TowerDefense.Input
 		}
 
 		/// <summary>
-		/// Called on tap,
-		/// calls confirmation of tower placement
+		/// タップで呼び出され、
+		/// タワーの配置の確認を呼び出します
 		/// </summary>
 		protected virtual void OnTap(PointerActionInfo pointerActionInfo)
 		{
@@ -267,7 +267,7 @@ namespace TowerDefense.Input
 		}
 
 		/// <summary>
-		/// Assigns the drag pointer and sets the UI into drag mode
+		/// ドラッグ ポインターを割り当て、UI をドラッグ モードに設定します
 		/// </summary>
 		/// <param name="pointer"></param>
 		protected virtual void OnStartDrag(PointerActionInfo pointer)
@@ -285,16 +285,16 @@ namespace TowerDefense.Input
 		
 
 		/// <summary>
-		/// Called when we drag
+		/// ドラッグすると呼び出されます
 		/// </summary>
 		protected override void OnDrag(PointerActionInfo pointer)
 		{
-			// Override normal behaviour. We only want to pan if there's no ghost selected
-			// For this reason, we intentionally do not call base
+			// 通常の動作をオーバーライドします。ゴーストが選択されていない場合にのみパンしたい
+			// このため、意図的にbaseを呼び出しません
 			var touchInfo = pointer as TouchInfo;
 			if (touchInfo != null)
 			{
-				// Try to pick up the tower if it was dragged off
+				// タワーが引きずり落とされた場合は拾ってみてください
 				if (m_IsGhostSelected)
 				{
 					m_GameUI.TryMoveGhost(pointer, false);
@@ -306,7 +306,7 @@ namespace TowerDefense.Input
 				}
 				else
 				{
-					// Do normal base behaviour only if no ghost selected
+					// ゴーストが選択されていない場合にのみ、通常の基本動作を実行します
 					if (cameraRig != null)
 					{
 						DoDragPan(pointer);
@@ -325,7 +325,7 @@ namespace TowerDefense.Input
 		}
 
 		/// <summary>
-		/// Drags the ghost
+		/// 幽霊を引きずる
 		/// </summary>
 		void DragGhost(TouchInfo touchInfo)
 		{
@@ -345,7 +345,7 @@ namespace TowerDefense.Input
 		}
 
 		/// <summary>
-		/// pans at the edge of the screen
+		/// 画面の端でパンします
 		/// </summary>
 		void EdgePan()
 		{
@@ -355,19 +355,19 @@ namespace TowerDefense.Input
 		
 
 		/// <summary>
-		/// If the new state is <see cref="GameUI.State.Building"/> then move the ghost to the center of the screen
+		/// 新しい状態が次の場合 <see cref="GameUI.State.Building"/> 次にゴーストを画面の中央に移動します
 		/// </summary>
 		/// <param name="previousState">
-		/// The previous the GameUI was is in
+		/// 以前の GameUI は次のとおりです
 		/// </param>
 		/// <param name="currentState">
-		/// The new state the GameUI is in
+		/// GameUI の新しい状態
 		/// </param>
 		void OnStateChanged(State previousState, State currentState)
 		{
-			// Early return for two reasons
-			// 1. We are not moving into Build Mode
-			// 2. We are not actually touching
+			// 2 つの理由により早期復帰
+			// 1. ビルドモードには移行しません
+			// 2.実際には触れていない
 			if (UnityInput.touchCount == 0)
 			{
 				return;
@@ -385,11 +385,11 @@ namespace TowerDefense.Input
 		}
 
 		/// <summary>
-		/// Displays the correct confirmation buttons when the tower has become valid
+		/// タワーが有効になったときに正しい確認ボタンを表示します
 		/// </summary>
 		void OnGhostBecameValid()
 		{
-			// this only needs to be done if the invalid buttons are already on screen
+			// これは、無効なボタンがすでに画面上にある場合にのみ実行する必要があります
 			if (!invalidButtons.canvasEnabled)
 			{
 				return;

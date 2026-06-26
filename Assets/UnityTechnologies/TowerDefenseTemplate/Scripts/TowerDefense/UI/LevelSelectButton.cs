@@ -8,18 +8,18 @@ using UnityEngine.UI;
 namespace TowerDefense.UI
 {
 	/// <summary>
-	/// The button for selecting a level
+	/// レベルを選択するためのボタン
 	/// </summary>
 	[RequireComponent(typeof(Button))]
 	public class LevelSelectButton : MonoBehaviour, ISelectHandler
 	{
 		/// <summary>
-		/// Reference to the required button component
+		/// 必要なButtonコンポーネントへの参照
 		/// </summary>
 		protected Button m_Button;
 
 		/// <summary>
-		/// The UI text element that displays the name of the level
+		/// レベル名を表示するUIのText要素
 		/// </summary>
 		public Text titleDisplay;
 		
@@ -32,12 +32,12 @@ namespace TowerDefense.UI
 		protected MouseScroll m_MouseScroll;
 
 		/// <summary>
-		/// The data concerning the level this button displays
+		/// このボタンが表示するレベルに関するデータ
 		/// </summary>
 		protected LevelItem m_Item;
 
 		/// <summary>
-		/// When the user clicks the button, change the scene
+		/// ユーザーがボタンをクリックしたらシーンを変更する
 		/// </summary>
 		public void ButtonClicked()
 		{
@@ -45,10 +45,10 @@ namespace TowerDefense.UI
 		}
 
 		/// <summary>
-		/// A method for assigning the data from item to the button
+		/// itemのデータをボタンに割り当てるメソッド
 		/// </summary>
 		/// <param name="item">
-		/// The data with the information concerning the level
+		/// レベルに関する情報を持つデータ
 		/// </param>
 		public void Initialize(LevelItem item, MouseScroll mouseScroll)
 		{
@@ -65,7 +65,7 @@ namespace TowerDefense.UI
 		}
 
 		/// <summary>
-		/// Configures the feedback concerning if the player has played
+		/// プレイヤーがプレイ済みかどうかに関するフィードバックを設定する
 		/// </summary>
 		protected void HasPlayedState()
 		{
@@ -82,7 +82,7 @@ namespace TowerDefense.UI
 		}
 
 		/// <summary>
-		/// Changes the scene to the scene name provided by m_Item
+		/// m_Itemで指定されたシーン名へシーンを変更する
 		/// </summary>
 		protected void ChangeScenes()
 		{
@@ -90,7 +90,7 @@ namespace TowerDefense.UI
 		}
 
 		/// <summary>
-		/// Ensure <see cref="m_Button"/> is not null
+		/// <see cref="m_Button"/> がnullでないことを保証する
 		/// </summary>
 		protected void LazyLoad()
 		{
@@ -101,7 +101,7 @@ namespace TowerDefense.UI
 		}
 
 		/// <summary>
-		/// Remove all listeners on the button before destruction
+		/// 破棄前にボタンのすべてのリスナーを削除する
 		/// </summary>
 		protected void OnDestroy()
 		{
@@ -112,9 +112,9 @@ namespace TowerDefense.UI
 		}
 
 		/// <summary>
-		/// Implementation of ISelectHandler
+		/// ISelectHandlerの実装
 		/// </summary>
-		/// <param name="eventData">Select event data</param>
+		/// <param name="eventData">選択イベントのデータ</param>
 		public void OnSelect(BaseEventData eventData)
 		{
 			m_MouseScroll.SelectChild(this);

@@ -3,38 +3,38 @@
 namespace TowerDefense.Economy
 {
 	/// <summary>
-	/// A struct for holding currency change data
+	/// 為替データを保持するための構造体
 	/// </summary>
 	public struct CurrencyChangeInfo
 	{
 		/// <summary>
-		/// The previous value of the currency
+		/// 通貨の以前の価値
 		/// </summary>
 		public readonly int previousCurrency;
 
 		/// <summary>
-		/// The new value of the currency
+		/// 通貨の新しい価値
 		/// </summary>
 		public readonly int currentCurrency;
 
 		/// <summary>
-		/// The difference in amount
+		/// 金額の差額
 		/// </summary>
 		public readonly int difference;
 
 		/// <summary>
-		/// Gets the absolute difference in amount
+		/// 金額の差の絶対値を取得します
 		/// </summary>
 		public readonly int absoluteDifference;
 
 		/// <summary>
-		/// Initializes the CurrencyChangeInfo
+		/// CurrencyChangeInfoを初期化します
 		/// </summary>
 		/// <param name="previous">
-		/// The previous value of the currency
+		/// 通貨の以前の価値
 		/// </param>
 		/// <param name="current">
-		/// The current value of the currency
+		/// 通貨の現在の価値
 		/// </param>
 		public CurrencyChangeInfo(int previous, int current)
 		{

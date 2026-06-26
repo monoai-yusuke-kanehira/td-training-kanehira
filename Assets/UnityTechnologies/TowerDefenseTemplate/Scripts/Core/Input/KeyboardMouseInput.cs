@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
-using UnityEngine.InputSystem; // Añadido para el New Input System
-using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch; // Para evitar conflictos
+using UnityEngine.InputSystem; // New Input System用に追加
+using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch; // 競合を避けるため
 
 namespace Core.Input
 {
     /// <summary>
-    /// Base control scheme for desktop devices, which performs CameraRig motion
-    /// Updated for Unity 6.3 New Input System
+    /// デスクトップ向けの基本操作スキームで、CameraRigを動かします
+    /// 上dated for Unity 6.3 New Input System
     /// </summary>
     public class KeyboardMouseInput : CameraInputScheme
     {
@@ -18,13 +18,13 @@ namespace Core.Input
         {
             get
             {
-                // Verificamos si hay toques activos usando el nuevo sistema
+                // 新しいシステムを使ってアクティブなタッチがあるか確認します
                 if (UnityEngine.InputSystem.EnhancedTouch.Touch.activeTouches.Count > 0)
                 {
                     return false;
                 }
 
-                // anyKey en el nuevo sistema
+                // 新しいシステムでのanyKey
                 bool anyKey = Keyboard.current != null && Keyboard.current.anyKey.isPressed;
                 bool buttonPressedThisFrame = InputController.instance.mouseButtonPressedThisFrame;
                 bool movedMouseThisFrame = InputController.instance.mouseMovedOnThisFrame;
@@ -127,29 +127,29 @@ namespace Core.Input
 
             float zoomRatio = GetPanSpeedForZoomLevel();
             
-            // Reemplazo de GetKey con la nueva API
-            // Izquierda
+            // 新しいAPIでGetKeyを置き換えます
+            // 左
             if (kb.leftArrowKey.isPressed || kb.aKey.isPressed)
             {
                 cameraRig.PanCamera(Vector3.left * Time.deltaTime * mouseEdgePanSpeed * zoomRatio);
                 cameraRig.StopTracking();
             }
 
-            // Derecha
+            // 右
             if (kb.rightArrowKey.isPressed || kb.dKey.isPressed)
             {
                 cameraRig.PanCamera(Vector3.right * Time.deltaTime * mouseEdgePanSpeed * zoomRatio);
                 cameraRig.StopTracking();
             }
 
-            // Abajo
+            // 下
             if (kb.downArrowKey.isPressed || kb.sKey.isPressed)
             {
                 cameraRig.PanCamera(Vector3.back * Time.deltaTime * mouseEdgePanSpeed * zoomRatio);
                 cameraRig.StopTracking();
             }
 
-            // Arriba
+            // 上
             if (kb.upArrowKey.isPressed || kb.wKey.isPressed)
             {
                 cameraRig.PanCamera(Vector3.forward * Time.deltaTime * mouseEdgePanSpeed * zoomRatio);
@@ -187,7 +187,7 @@ namespace Core.Input
 
             float zoomChange = cameraRig.zoomDist / prevZoomDist;
 
-            // ScreenPointToRay usando la posición del ratón del nuevo sistema
+            // 新しいシステムのマウス位置を使ってScreenPointToRayを呼び出します
             Ray ray = cameraRig.cachedCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
             Vector3 worldPos = Vector3.zero;

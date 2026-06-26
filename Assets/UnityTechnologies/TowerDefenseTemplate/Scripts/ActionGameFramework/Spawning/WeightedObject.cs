@@ -4,19 +4,19 @@ using UnityEngine;
 namespace ActionGameFramework.Spawning
 {
 	/// <summary>
-	/// Weighted hit object.
-	/// This is so that individual objects can be given a higher probability of selection
+	/// 重み付き HitObject。
+	/// 個別のオブジェクトが選ばれやすくなるように確率を上げるために使う
 	/// </summary>
 	[Serializable]
 	public class WeightedObject
 	{
 		/// <summary>
-		/// The game object.
+		/// 対象の GameObject
 		/// </summary>
 		public GameObject gameObject;
 
 		/// <summary>
-		/// The weight - used to ensure that individual objects can be given a higher probability of selection
+		/// 重み。個別のオブジェクトが選ばれる確率を高くするために使う
 		/// </summary>
 		public int weight = 1;
 	}

@@ -6,48 +6,48 @@ using UnityEngine;
 namespace TowerDefense.Economy
 {
 	/// <summary>
-	/// A class for currency gain
+	/// 通貨獲得のためのクラス
 	/// </summary>
 	[Serializable]
 	public class CurrencyGainer
 	{
 		/// <summary>
-		/// The amount gained with the gain rate
+		/// ゲインレートで得られる金額
 		/// </summary>
 		public int constantCurrencyAddition;
 
 		/// <summary>
-		/// The speed of currency gain in units-per-second
+		/// 通貨上昇の速度 (単位/秒)
 		/// </summary>
 		[Header("The Gain Rate in additions-per-second")]
 		public float constantCurrencyGainRate;
 
 		/// <summary>
-		/// Event for when the currency is changed
+		/// 通貨変更時のイベント
 		/// </summary>
 		public event Action<CurrencyChangeInfo> currencyChanged;
 
 		/// <summary>
-		/// The timer for constant currency gain
+		/// 一定の通貨利益を得るタイマー
 		/// </summary>
 		protected RepeatingTimer m_GainTimer;
 
 		/// <summary>
-		/// Gets the currency that this CurrencyGainer modifes
+		/// この CurrencyGainer が変更する通貨を取得します
 		/// </summary>
 		public Currency currency { get; private set; }
 
 		/// <summary>
-		/// Initializes the currency gainer with new data
+		/// 新しいデータで通貨ゲインを初期化します
 		/// </summary>
 		/// <param name="currencyController">
-		/// The currency controller to modify with this currency gainer
+		/// この通貨獲得者で変更する通貨コントローラ
 		/// </param>
 		/// <param name="gainAddition">
-		/// The currency gained with each addition
+		/// 追加するたびに得られる通貨
 		/// </param>
 		/// <param name="gainRate">
-		/// The rate of gain
+		/// 増加率
 		/// </param>
 		public void Initialize(Currency currencyController, int gainAddition, float gainRate)
 		{
@@ -57,7 +57,7 @@ namespace TowerDefense.Economy
 		}
 
 		/// <summary>
-		/// Initializes the currency gainer
+		/// 通貨ゲインを初期化します
 		/// </summary>
 		public void Initialize(Currency currencyController)
 		{
@@ -66,10 +66,10 @@ namespace TowerDefense.Economy
 		}
 
 		/// <summary>
-		/// For updating the gain timer
+		/// ゲインタイマー更新用
 		/// </summary>
 		/// <param name="deltaTime">
-		/// The change in time to update the timer
+		/// タイマー更新時間の変更
 		/// </param>
 		public void Tick(float deltaTime)
 		{
@@ -81,10 +81,10 @@ namespace TowerDefense.Economy
 		}
 
 		/// <summary>
-		/// Sets the currency gain rate and activates the timer
+		/// 通貨のゲインレートを設定し、タイマーをアクティブにします
 		/// </summary>
 		/// <param name="currencyGainRate">
-		/// The amount to set the constant gain rate to
+		/// コンスタントゲインレートを設定する量
 		/// </param>
 		public void UpdateGainRate(float currencyGainRate)
 		{
@@ -104,7 +104,7 @@ namespace TowerDefense.Economy
 		}
 
 		/// <summary>
-		/// Increase the currency by m_ConstantCurrencyAddition
+		/// m_ConstantCurrencyAddition で通貨を増やします
 		/// </summary>
 		protected void ConstantGain()
 		{

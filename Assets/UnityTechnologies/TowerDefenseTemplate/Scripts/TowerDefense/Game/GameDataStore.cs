@@ -5,17 +5,17 @@ using UnityEngine;
 namespace TowerDefense.Game
 {
 	/// <summary>
-	/// The data store for TD
+	/// TD のデータ ストア
 	/// </summary>
 	public sealed class GameDataStore : GameDataStoreBase
 	{
 		/// <summary>
-		/// A list of level IDs for completed levels
+		/// 完了したレベルのレベル ID のリスト
 		/// </summary>
 		public List<LevelSaveData> completedLevels = new List<LevelSaveData>();
 
 		/// <summary>
-		/// Outputs to debug
+		/// デバッグする出力
 		/// </summary>
 		public override void PreSave()
 		{
@@ -23,7 +23,7 @@ namespace TowerDefense.Game
 		}
 
 		/// <summary>
-		/// Outputs to debug
+		/// デバッグする出力
 		/// </summary>
 		public override void PostLoad()
 		{
@@ -31,9 +31,9 @@ namespace TowerDefense.Game
 		}
 
 		/// <summary>
-		/// Marks a level complete
+		/// レベルを完了としてマークします
 		/// </summary>
-		/// <param name="levelId">The levelId to mark as complete</param>
+		/// <param name="levelId">完了としてマークする levelId</param>
 		/// <param name="starsEarned">Stars earned</param>
 		public void CompleteLevel(string levelId, int starsEarned)
 		{
@@ -49,10 +49,10 @@ namespace TowerDefense.Game
 		}
 
 		/// <summary>
-		/// Determines if a specific level is completed
+		/// 特定のレベルが完了したかどうかを判断します
 		/// </summary>
-		/// <param name="levelId">The level ID to check</param>
-		/// <returns>true if the level is completed</returns>
+		/// <param name="levelId">確認するレベルID</param>
+		/// <returns>レベルが完了している場合は true</returns>
 		public bool IsLevelCompleted(string levelId)
 		{
 			foreach (LevelSaveData level in completedLevels)
@@ -66,7 +66,7 @@ namespace TowerDefense.Game
 		}
 
 		/// <summary>
-		/// Retrieves the star count for a given level
+		/// 指定されたレベルのスター数を取得します
 		/// </summary>
 		public int GetNumberOfStarForLevel(string levelId)
 		{

@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Core.Data
 {
 	/// <summary>
-	/// Json implementation of file saver
+	/// ファイル保存処理のJSON実装
 	/// </summary>
 	public class JsonSaver<T> : FileSaver<T> where T : IDataStore
 	{
@@ -14,7 +14,7 @@ namespace Core.Data
 		}
 
 		/// <summary>
-		/// Save the specified data store
+		/// 指定したデータストアを保存します
 		/// </summary>
 		public override void Save(T data)
 		{
@@ -27,7 +27,7 @@ namespace Core.Data
 		}
 
 		/// <summary>
-		/// Load the specified data store
+		/// 指定したデータストアを読み込みます
 		/// </summary>
 		public override bool Load(out T data)
 		{

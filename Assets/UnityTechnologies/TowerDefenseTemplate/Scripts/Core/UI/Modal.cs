@@ -3,18 +3,18 @@
 namespace Core.UI
 {
 	/// <summary>
-	/// Abstract base class for all modals
+	/// すべてのモーダルの抽象基底クラス
 	/// </summary>
 	[RequireComponent(typeof(CanvasGroup))]
 	public abstract class Modal : MonoBehaviour
 	{
 		/// <summary>
-		/// The attached CanvasGroup
+		/// アタッチされているCanvasGroup
 		/// </summary>
 		public CanvasGroup canvasGroup;
 
 		/// <summary>
-		/// Closes the modal
+		/// モーダルを閉じる
 		/// </summary>
 		public virtual void CloseModal()
 		{
@@ -23,7 +23,7 @@ namespace Core.UI
 		}
 
 		/// <summary>
-		/// Shows the modal
+		/// モーダルを表示する
 		/// </summary>
 		public virtual void Show()
 		{
@@ -33,7 +33,7 @@ namespace Core.UI
 		}
 
 		/// <summary>
-		/// Allows interactions
+		/// 操作できるようにする
 		/// </summary>
 		protected virtual void EnableInteractivity()
 		{
@@ -41,7 +41,7 @@ namespace Core.UI
 		}
 
 		/// <summary>
-		/// Turns off interactions
+		/// 操作できないようにする
 		/// </summary>
 		protected virtual void DisableInteractivity()
 		{
@@ -49,7 +49,7 @@ namespace Core.UI
 		}
 
 		/// <summary>
-		/// Lazy loads the canvas group into the local variable
+		/// CanvasGroupを遅延取得してローカル変数に設定する
 		/// </summary>
 		protected virtual void LazyLoad()
 		{

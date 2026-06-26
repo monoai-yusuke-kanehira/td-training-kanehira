@@ -4,33 +4,33 @@ using UnityEngine;
 namespace Core.Health
 {
 	/// <summary>
-	/// Simple class to instantiate a ParticleSystem on a given Damageable's death
+	/// 指定したDamageableの死亡時にParticleSystemを生成するシンプルなクラス
 	/// </summary>
 	public class DeathEffect : MonoBehaviour
 	{
 		/// <summary>
-		/// The DamageableBehaviour that will be used to assign the damageable
+		/// Damageableの割り当てに使うDamageableBehaviour
 		/// </summary>
 		[Tooltip("This field does not need to be populated here, it can be set up in code using AssignDamageable")]
 		public DamageableBehaviour damageableBehaviour;
 		
 		/// <summary>
-		/// Death particle system
+		/// 死亡時のParticleSystem
 		/// </summary>
 		public ParticleSystem deathParticleSystemPrefab;
 
 		/// <summary>
-		/// World space offset of the <see cref="deathParticleSystemPrefab"/> position
+		/// <see cref="deathParticleSystemPrefab"/> の位置に加えるワールド空間オフセット
 		/// </summary>
 		public Vector3 deathEffectOffset;
 
 		/// <summary>
-		/// The damageable
+		/// 対象の Damageable
 		/// </summary>
 		protected Damageable m_Damageable;
 
 		/// <summary>
-		/// Subscribes to the damageable's died event
+		/// damageableのdiedイベントを購読します
 		/// </summary>
 		/// <param name="damageable"></param>
 		public void AssignDamageable(Damageable damageable)
@@ -44,7 +44,7 @@ namespace Core.Health
 		}
 
 		/// <summary>
-		/// If damageableBehaviour is populated, assigns the damageable
+		/// damageableBehaviourが設定されている場合、damageableを割り当てます
 		/// </summary>
 		protected virtual void Awake () 
 		{
@@ -55,7 +55,7 @@ namespace Core.Health
 		}
 
 		/// <summary>
-		/// Instantiate a death particle system
+		/// 死亡時のParticleSystemを生成します
 		/// </summary>
 		void OnDied(HealthChangeInfo healthChangeInfo)
 		{

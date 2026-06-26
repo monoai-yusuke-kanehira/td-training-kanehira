@@ -1,22 +1,22 @@
 ï»¿namespace TowerDefense.Towers.Placement
 {
 	/// <summary>
-	/// Enum representing the state of how a tower fits into a placement area
+	/// Tower‚ª”z’uƒGƒŠƒA‚Éû‚Ü‚éó‘Ô‚ğ•\‚·Enum
 	/// </summary>
 	public enum TowerFitStatus
 	{
 		/// <summary>
-		/// Tower fits in this location
+		/// ‚±‚ÌˆÊ’u‚ÉTower‚ğ”z’u‚Å‚«‚Ü‚·
 		/// </summary>
 		Fits,
 
 		/// <summary>
-		/// Tower overlaps another tower in the placement area
+		/// ”z’uƒGƒŠƒA“à‚Ì•Ê‚ÌTower‚Æd‚È‚Á‚Ä‚¢‚Ü‚·
 		/// </summary>
 		Overlaps,
 
 		/// <summary>
-		/// Tower exceeds bounds of the placement area
+		/// Tower‚ª”z’uƒGƒŠƒA‚Ì”ÍˆÍ‚ğ’´‚¦‚Ä‚¢‚Ü‚·
 		/// </summary>
 		OutOfBounds
 	}

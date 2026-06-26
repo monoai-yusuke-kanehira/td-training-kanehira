@@ -6,62 +6,62 @@ using UnityEngine;
 namespace TowerDefense.Towers.Placement
 {
 	/// <summary>
-	/// A tower placement location made from a grid.
-	/// Its origin is centered in the middle of the lower-right cell. It can be oriented in any direction
+	/// グリッドで構成されたTower配置場所。
+	/// 原点は右下セルの中央にあります。任意の向きに回転できます
 	/// </summary>
 	[RequireComponent(typeof(BoxCollider))]
 	public class TowerPlacementGrid : MonoBehaviour, IPlacementArea
 	{
 		/// <summary>
-		/// Prefab used to visualise the grid
+		/// グリッド表示に使用するPrefab
 		/// </summary>
 		public PlacementTile placementTilePrefab;
 		
 		/// <summary>
-		/// Visualisation prefab to instantiate on mobile platforms
+		/// モバイル環境で生成する表示用Prefab
 		/// </summary>
 		public PlacementTile placementTilePrefabMobile;
 
 		/// <summary>
-		/// The dimensions of the grid 
+		/// グリッドの寸法
 		/// </summary>
 		public IntVector2 dimensions;
 
 		/// <summary>
-		/// Size of the edge of a cell
+		/// セル1辺のサイズ
 		/// </summary>
 		[Tooltip("The size of the edge of one grid cell for this area. Should match the physical grid size of towers")]
 		public float gridSize = 1;
 
 		/// <summary>
-		/// Inverted grid size, to multiply with
+		/// 乗算に使うグリッドサイズの逆数
 		/// </summary>
 		float m_InvGridSize;
 
 		/// <summary>
-		/// Array of available cells
+		/// 利用可能なセルの配列
 		/// </summary>
 		bool[,] m_AvailableCells;
 
 		/// <summary>
-		/// Array of <see cref="PlacementTile"/>s
+		/// <see cref="PlacementTile"/>の配列
 		/// </summary>
 		PlacementTile[,] m_Tiles;
 
 		/// <summary>
-		/// Converts a location in world space into local grid coordinates.
+		/// ワールド空間の位置をローカルのグリッド座標に変換します。
 		/// </summary>
-		/// <param name="worldLocation"><see cref="Vector3"/> indicating world space coordinates to convert.</param>
-		/// <param name="sizeOffset"><see cref="IntVector2"/> indicating size of object to center.</param>
-		/// <returns><see cref="IntVector2"/> containing the grid coordinates corresponding to this location.</returns>
+		/// <param name="worldLocation">変換するワールド空間座標を示す<see cref="Vector3"/>。</param>
+		/// <param name="sizeOffset">中央に合わせるオブジェクトのサイズを示す<see cref="IntVector2"/>。</param>
+		/// <returns>この位置に対応するグリッド座標を含む<see cref="IntVector2"/>。</returns>
 		public IntVector2 WorldToGrid(Vector3 worldLocation, IntVector2 sizeOffset)
 		{
 			Vector3 localLocation = transform.InverseTransformPoint(worldLocation);
 
-			// Scale by inverse grid size
+			// グリッドサイズの逆数でスケールします
 			localLocation *= m_InvGridSize;
 
-			// Offset by half size
+			// 半分のサイズ分だけオフセットします
 			var offset = new Vector3(sizeOffset.x * 0.5f, 0.0f, sizeOffset.y * 0.5f);
 			localLocation -= offset;
 
@@ -72,14 +72,14 @@ namespace TowerDefense.Towers.Placement
 		}
 
 		/// <summary>
-		/// Returns the world coordinates corresponding to a grid location.
+		/// グリッド位置に対応するワールド座標を返します。
 		/// </summary>
-		/// <param name="gridPosition">The coordinate in grid space</param>
-		/// <param name="sizeOffset"><see cref="IntVector2"/> indicating size of object to center.</param>
-		/// <returns>Vector3 containing world coordinates for specified grid cell.</returns>
+		/// <param name="gridPosition">グリッド空間での座標</param>
+		/// <param name="sizeOffset">中央に合わせるオブジェクトのサイズを示す<see cref="IntVector2"/>。</param>
+		/// <returns>指定したグリッドセルのワールド座標を含むVector3。</returns>
 		public Vector3 GridToWorld(IntVector2 gridPosition, IntVector2 sizeOffset)
 		{
-			// Calculate scaled local position
+			// スケール済みのローカル位置を計算します
 			Vector3 localPos = new Vector3(gridPosition.x + (sizeOffset.x * 0.5f), 0, gridPosition.y + (sizeOffset.y * 0.5f)) *
 			                   gridSize;
 
@@ -87,14 +87,14 @@ namespace TowerDefense.Towers.Placement
 		}
 
 		/// <summary>
-		/// Tests whether the indicated cell range represents a valid placement location.
+		/// 指定したセル範囲が有効な配置場所かテストします。
 		/// </summary>
-		/// <param name="gridPos">The grid location</param>
-		/// <param name="size">The size of the item</param>
-		/// <returns>Whether the indicated range is valid for placement.</returns>
+		/// <param name="gridPos">グリッド上の位置</param>
+		/// <param name="size">アイテムのサイズ</param>
+		/// <returns>指定した範囲が配置に有効かどうか。</returns>
 		public TowerFitStatus Fits(IntVector2 gridPos, IntVector2 size)
 		{
-			// If the tile size of the tower exceeds the dimensions of the placement area, immediately decline placement.
+			// Towerのタイルサイズが配置エリアの寸法を超える場合、すぐに配置不可にします。
 			if ((size.x > dimensions.x) || (size.y > dimensions.y))
 			{
 				return TowerFitStatus.OutOfBounds;
@@ -102,14 +102,14 @@ namespace TowerDefense.Towers.Placement
 
 			IntVector2 extents = gridPos + size;
 
-			// Out of range of our bounds
+			// 範囲外です
 			if ((gridPos.x < 0) || (gridPos.y < 0) ||
 			    (extents.x > dimensions.x) || (extents.y > dimensions.y))
 			{
 				return TowerFitStatus.OutOfBounds;
 			}
 
-			// Ensure there are no existing towers within our tile silhuette.
+			// Towerの占有タイル内に既存のTowerがないことを確認します。
 			for (int y = gridPos.y; y < extents.y; y++)
 			{
 				for (int x = gridPos.x; x < extents.x; x++)
@@ -121,40 +121,40 @@ namespace TowerDefense.Towers.Placement
 				}
 			}
 
-			// If we've got this far, we've got a valid position.
+			// ここまで到達した場合、有効な位置です。
 			return TowerFitStatus.Fits;
 		}
 
 		/// <summary>
-		/// Sets a cell range as being occupied by a tower.
+		/// セル範囲をTowerが占有中として設定します。
 		/// </summary>
-		/// <param name="gridPos">The grid location</param>
-		/// <param name="size">The size of the item</param>
+		/// <param name="gridPos">グリッド上の位置</param>
+		/// <param name="size">アイテムのサイズ</param>
 		public void Occupy(IntVector2 gridPos, IntVector2 size)
 		{
 			IntVector2 extents = gridPos + size;
 
-			// Validate the dimensions and size
+			// 寸法とサイズを検証します
 			if ((size.x > dimensions.x) || (size.y > dimensions.y))
 			{
 				throw new ArgumentOutOfRangeException("size", "Given dimensions do not fit in our grid");
 			}
 
-			// Out of range of our bounds
+			// 範囲外です
 			if ((gridPos.x < 0) || (gridPos.y < 0) ||
 			    (extents.x > dimensions.x) || (extents.y > dimensions.y))
 			{
 				throw new ArgumentOutOfRangeException("gridPos", "Given footprint is out of range of our grid");
 			}
 
-			// Fill those positions
+			// 該当する位置を埋めます
 			for (int y = gridPos.y; y < extents.y; y++)
 			{
 				for (int x = gridPos.x; x < extents.x; x++)
 				{
 					m_AvailableCells[x, y] = true;
 					
-					// If there's a placement tile, clear it
+					// 配置タイルがある場合はクリアします
 					if (m_Tiles != null && m_Tiles[x, y] != null)
 					{
 						m_Tiles[x, y].SetState(PlacementTileState.Filled);
@@ -164,35 +164,35 @@ namespace TowerDefense.Towers.Placement
 		}
 
 		/// <summary>
-		/// Removes a tower from a grid, setting its cells as unoccupied.
+		/// グリッドからTowerを取り除き、そのセルを未使用に設定します。
 		/// </summary>
-		/// <param name="gridPos">The grid location</param>
-		/// <param name="size">The size of the item</param>
+		/// <param name="gridPos">グリッド上の位置</param>
+		/// <param name="size">アイテムのサイズ</param>
 		public void Clear(IntVector2 gridPos, IntVector2 size)
 		{
 			IntVector2 extents = gridPos + size;
 
-			// Validate the dimensions and size
+			// 寸法とサイズを検証します
 			if ((size.x > dimensions.x) || (size.y > dimensions.y))
 			{
 				throw new ArgumentOutOfRangeException("size", "Given dimensions do not fit in our grid");
 			}
 
-			// Out of range of our bounds
+			// 範囲外です
 			if ((gridPos.x < 0) || (gridPos.y < 0) ||
 			    (extents.x > dimensions.x) || (extents.y > dimensions.y))
 			{
 				throw new ArgumentOutOfRangeException("gridPos", "Given footprint is out of range of our grid");
 			}
 
-			// Fill those positions
+			// 該当する位置を埋めます
 			for (int y = gridPos.y; y < extents.y; y++)
 			{
 				for (int x = gridPos.x; x < extents.x; x++)
 				{
 					m_AvailableCells[x, y] = false;
 					
-					// If there's a placement tile, clear it
+					// 配置タイルがある場合はクリアします
 					if (m_Tiles != null && m_Tiles[x, y] != null)
 					{
 						m_Tiles[x, y].SetState(PlacementTileState.Empty);
@@ -202,23 +202,23 @@ namespace TowerDefense.Towers.Placement
 		}
 
 		/// <summary>
-		/// Initialize values
+		/// 値を初期化します
 		/// </summary>
 		protected virtual void Awake()
 		{
 			ResizeCollider();
 
-			// Initialize empty bool array (defaults are false, which is what we want)
+			// 空のbool配列を初期化します（既定値はfalseで、この用途に合っています）
 			m_AvailableCells = new bool[dimensions.x, dimensions.y];
 
-			// Precalculate inverted grid size, to save a division every time we translate coords
+			// 座標変換のたびに除算しなくて済むよう、グリッドサイズの逆数を事前計算します
 			m_InvGridSize = 1 / gridSize;
 
 			SetUpGrid();
 		}
 
 		/// <summary>
-		/// Set collider's size and center
+		/// Colliderのサイズと中心を設定します
 		/// </summary>
 		void ResizeCollider()
 		{
@@ -226,12 +226,12 @@ namespace TowerDefense.Towers.Placement
 			Vector3 size = new Vector3(dimensions.x, 0, dimensions.y) * gridSize;
 			myCollider.size = size;
 
-			// Collider origin is our bottom-left corner
+			// Colliderの原点は左下の角です
 			myCollider.center = size * 0.5f;
 		}
 
 		/// <summary>
-		/// Instantiates Tile Objects to visualise the grid and sets up the <see cref="m_AvailableCells" />
+		/// グリッド表示用のTileオブジェクトを生成し、<see cref="m_AvailableCells" />を設定します
 		/// </summary>
 		protected void SetUpGrid()
 		{		
@@ -244,7 +244,7 @@ namespace TowerDefense.Towers.Placement
 			
 			if (tileToUse != null)
 			{
-				// Create a container that will hold the cells.
+				// セルを保持するコンテナを作成します。
 				var tilesParent = new GameObject("Container");
 				tilesParent.transform.parent = transform;
 				tilesParent.transform.localPosition = Vector3.zero;
@@ -271,20 +271,20 @@ namespace TowerDefense.Towers.Placement
 
 #if UNITY_EDITOR
 		/// <summary>
-		/// On editor/inspector validation, make sure we size our collider correctly.
-		/// Also make sure the collider component is hidden so nobody can mess with its settings to ensure its integrity.
-		/// Also communicates the idea that the user should not need to modify those values ever.
+		/// EditorまたはInspectorでの検証時に、Colliderのサイズが正しいことを確認します。
+		/// また、設定を誤って変更されないようにColliderコンポーネントを非表示にし、整合性を保ちます。
+		/// ユーザーがこれらの値を変更する必要がないことも示します。
 		/// </summary>
 		void OnValidate()
 		{
-			// Validate grid size
+			// グリッドサイズを検証します
 			if (gridSize <= 0)
 			{
 				Debug.LogError("Negative or zero grid size is invalid");
 				gridSize = 1;
 			}
 
-			// Validate dimensions
+			// 寸法を検証します
 			if (dimensions.x <= 0 ||
 			    dimensions.y <= 0)
 			{
@@ -292,14 +292,14 @@ namespace TowerDefense.Towers.Placement
 				dimensions = new IntVector2(Mathf.Max(dimensions.x, 1), Mathf.Max(dimensions.y, 1));
 			}
 
-			// Ensure collider is the correct size
+			// Colliderが正しいサイズになるようにします
 			ResizeCollider();
 
 			GetComponent<BoxCollider>().hideFlags = HideFlags.HideInInspector;
 		}
 
 		/// <summary>
-		/// Draw the grid in the scene view
+		/// Sceneビューにグリッドを描画します
 		/// </summary>
 		void OnDrawGizmos()
 		{
@@ -309,7 +309,7 @@ namespace TowerDefense.Towers.Placement
 			Matrix4x4 originalMatrix = Gizmos.matrix;
 			Gizmos.matrix = transform.localToWorldMatrix;
 
-			// Draw local space flattened cubes
+			// ローカル空間で平らなキューブを描画します
 			for (int y = 0; y < dimensions.y; y++)
 			{
 				for (int x = 0; x < dimensions.x; x++)
@@ -322,7 +322,7 @@ namespace TowerDefense.Towers.Placement
 			Gizmos.matrix = originalMatrix;
 			Gizmos.color = prevCol;
 			
-			// Draw icon too, in center of position
+			// 位置の中央にアイコンも描画します
 			Vector3 center = transform.TransformPoint(new Vector3(gridSize * dimensions.x * 0.5f,
 			                                                      1,
 			                                                      gridSize * dimensions.y * 0.5f));

@@ -1,12 +1,12 @@
 ﻿namespace Core.UI
 {
 	/// <summary>
-	/// Simplest form of a MainMenuPage - the activating/deactivating of a page is instantaneous
+	/// 最もシンプルなMainMenuPage。ページの有効化と無効化を即座に行う
 	/// </summary>
 	public class BasicAnimatingMainMenuPage : AnimatingMainMenuPage
 	{
 		/// <summary>
-		/// BeginDeactivatingPage immediately calls FinishedDeactivatingPage
+		/// BeginDeactivatingPageからすぐにFinishedDeactivatingPageを呼ぶ
 		/// </summary>
 		protected override void BeginDeactivatingPage()
 		{
@@ -14,7 +14,7 @@
 		}
 
 		/// <summary>
-		/// Don't need to do anything here
+		/// ここでは何もしなくてよい
 		/// </summary>
 		protected override void FinishedActivatingPage()
 		{

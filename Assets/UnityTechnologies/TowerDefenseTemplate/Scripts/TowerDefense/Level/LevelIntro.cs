@@ -4,17 +4,17 @@ using UnityEngine;
 namespace TowerDefense.Level
 {
 	/// <summary>
-	/// Abstract base class representing a level intro
+	/// レベルのイントロを表す抽象基本クラス
 	/// </summary>
 	public abstract class LevelIntro : MonoBehaviour
 	{
 		/// <summary>
-		/// Called when the Intro is completed
+		/// イントロが完了すると呼び出されます
 		/// </summary>
 		public event Action introCompleted;
 
 		/// <summary>
-		/// Should be fired by the derived classes to mark that the intro is completed
+		/// イントロが完了したことをマークするために、派生クラスによって起動される必要があります
 		/// </summary>
 		protected void SafelyCallIntroCompleted()
 		{

@@ -1,17 +1,17 @@
 namespace Core.Input
 {
 	/// <summary>
-	/// Information about a pinch gesture
+	/// ピンチ操作に関する情報
 	/// </summary>
 	public struct PinchInfo
 	{
 		/// <summary>
-		/// The first touch involved in the pinch
+		/// ピンチ操作に使われている1つ目のタッチ
 		/// </summary>
 		public TouchInfo touch1;
 
 		/// <summary>
-		/// The second touch involved in the pinch
+		/// ピンチ操作に使われている2つ目のタッチ
 		/// </summary>
 		public TouchInfo touch2;
 	}

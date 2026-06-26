@@ -10,79 +10,79 @@ using UnityEngine.AI;
 namespace TowerDefense.Agents
 {
 	/// <summary>
-	/// An agent will follow a path of nodes
+	/// エージェントはノードのパスをたどります
 	/// </summary>
 	[RequireComponent(typeof(NavMeshAgent)), RequireComponent(typeof(AttackAffector))]
 	public abstract class Agent : Targetable
 	{	
 		/// <summary>
-		/// A means of keeping track of the agent along its path
+		/// エージェントの経路に沿ってエージェントを追跡する手段
 		/// </summary>
 		public enum State
 		{
 			/// <summary>
-			/// When the agent is on a path that is not blocked
+			/// エージェントが遮断されていないパス上にある場合
 			/// </summary>
 			OnCompletePath,
 
 			/// <summary>
-			/// When the agent is on a path is blocked
+			/// エージェントがパス上にある場合はブロックされます
 			/// </summary>
 			OnPartialPath,
 
 			/// <summary>
-			/// When the agent has reached the end of a blocked path
+			/// エージェントがブロックされたパスの終点に到達したとき
 			/// </summary>
 			Attacking,
 
 			/// <summary>
-			/// For flying agents, when they move over obstacles
+			/// 飛行エージェントの場合、障害物を越えて移動するとき
 			/// </summary>
 			PushingThrough,
 			
 			/// <summary>
-			/// When the agent has completed their path
+			/// エージェントがパスを完了したとき
 			/// </summary>
 			PathComplete
 		}
 
 		/// <summary>
-		/// Event fired when agent reached its final node
+		/// エージェントが最終ノードに到達したときに発生するイベント
 		/// </summary>
 		public event Action<Node> destinationReached;
 
 		/// <summary>
-		/// Position offset for an applied affect
+		/// 適用されたエフェクトの位置オフセット
 		/// </summary>
 		public Vector3 appliedEffectOffset = Vector3.zero;
 		
 		/// <summary>
-		/// Scale adjustment for an applied affect
+		/// 適用されたエフェクトのスケール調整
 		/// </summary>
 		public float appliedEffectScale = 1;
 
 		/// <summary>
-		/// The NavMeshAgent component attached to this
+		/// これにアタッチされた NavMeshAgent コンポーネント
 		/// </summary>
 		protected NavMeshAgent m_NavMeshAgent;
 
 		/// <summary>
-		/// The Current node that the agent must navigate to
+		/// エージェントが移動する必要がある現在のノード
 		/// </summary>
 		protected Node m_CurrentNode;
 
 		/// <summary>
-		/// Reference to the level manager
+		/// レベルマネージャーへの参照
 		/// </summary>
 		protected LevelManager m_LevelManager;
 
 		/// <summary>
-		/// Stores the Destination to the next node so we don't need to get new random positions every time
+		/// 目的地を次のノードに保存するため、毎回新しいランダムな位置を取得する必要がありません
 		/// </summary>
 		protected Vector3 m_Destination;
 		
 		/// <summary>
-		/// Gets the attached nav mesh agent velocity
+		/// アタッチされたナビゲーション メッシュ エージェントの速度を取得します
 		/// </summary>
 		public override Vector3 velocity
 		{
@@ -90,12 +90,12 @@ namespace TowerDefense.Agents
 		}
 		
 		/// <summary>
-		/// The current state of the agent along the path
+		/// パスに沿ったエージェントの現在の状態
 		/// </summary>
 		public State state { get; protected set; }
 
 		/// <summary>
-		/// Accessor to <see cref="m_NavMeshAgent"/>
+		/// へのアクセサ <see cref="m_NavMeshAgent"/>
 		/// </summary>
 		public NavMeshAgent navMeshNavMeshAgent
 		{
@@ -104,7 +104,7 @@ namespace TowerDefense.Agents
 		}
 
 		/// <summary>
-		/// The area mask of the attached nav mesh agent
+		/// アタッチされたナビゲーション メッシュ エージェントのエリア マスク
 		/// </summary>
 		public int navMeshMask
 		{
@@ -112,15 +112,15 @@ namespace TowerDefense.Agents
 		}
 
 		/// <summary>
-		/// Gets this agent's original movement speed
+		/// このエージェントの本来の移動速度を取得します
 		/// </summary>
 		public float originalMovementSpeed { get; private set; }
 
 		/// <summary>
-		/// Checks if the path is blocked
+		/// パスがブロックされているかどうかを確認します
 		/// </summary>
 		/// <value>
-		/// The status of the agent's path
+		/// エージェントのパスのステータス
 		/// </value>
 		protected virtual bool isPathBlocked
 		{
@@ -128,7 +128,7 @@ namespace TowerDefense.Agents
 		}
 
 		/// <summary>
-		/// Is the Agent close enough to its destination?
+		/// エージェントは目的地に十分近いですか?
 		/// </summary>
 		protected virtual bool isAtDestination
 		{
@@ -136,16 +136,16 @@ namespace TowerDefense.Agents
 		}
 
 		/// <summary>
-		/// Sets the node to navigate to
+		/// 移動先のノードを設定します
 		/// </summary>
-		/// <param name="node">The node that the agent will navigate to</param>
+		/// <param name="node">エージェントが移動するノード</param>
 		public virtual void SetNode(Node node)
 		{
 			m_CurrentNode = node;
 		}
 
 		/// <summary>
-		/// Stops the navMeshAgent and attempts to return to pool
+		/// navMeshAgent を停止し、プールに戻ろうとします
 		/// </summary>
 		public override void Remove()
 		{
@@ -162,7 +162,7 @@ namespace TowerDefense.Agents
 		}
 
 		/// <summary>	
-		/// Setup all the necessary parameters for this agent from configuration data
+		/// 構成データからこのエージェントに必要なすべてのパラメータをセットアップします
 		/// </summary>
 		public virtual void Initialize()
 		{
@@ -178,11 +178,11 @@ namespace TowerDefense.Agents
 		}
 
 		/// <summary>
-		/// Finds the next node in the path
+		/// パス内の次のノードを検索します
 		/// </summary>
 		public virtual void GetNextNode(Node currentlyEnteredNode)
 		{
-			// Don't do anything if the calling node is the same as the m_CurrentNode
+			// 呼び出し元のノードが m_CurrentNode と同じ場合は何もしません
 			if (m_CurrentNode != currentlyEnteredNode)
 			{
 				return;
@@ -210,7 +210,7 @@ namespace TowerDefense.Agents
 		}
 
 		/// <summary>
-		/// Moves the agent to a position in the <see cref="Agent.m_CurrentNode" />
+		/// エージェントを次の位置に移動します <see cref="Agent.m_CurrentNode" />
 		/// </summary>
 		public virtual void MoveToNode()
 		{
@@ -221,7 +221,7 @@ namespace TowerDefense.Agents
 		}
 
 		/// <summary>
-		/// The logic for what happens when the destination is reached
+		/// 目的地に到着したときに何が起こるかのロジック
 		/// </summary>
 		public virtual void HandleDestinationReached()
 		{
@@ -233,7 +233,7 @@ namespace TowerDefense.Agents
 		}
 		
 		/// <summary>
-		/// Lazy Load, if necesaary and ensure the NavMeshAgent is disabled
+		/// 必要に応じて Lazy Load し、NavMeshAgent が無効になっていることを確認します
 		/// </summary>
 		protected override void Awake()
 		{
@@ -243,40 +243,40 @@ namespace TowerDefense.Agents
 		}
 		
 		/// <summary>
-		/// Updates the agent in its different states, 
-		/// Reset destination when path is stale
+		/// エージェントをさまざまな状態で更新します 
+		/// パスが古い場合に宛先をリセット
 		/// </summary>
 		protected virtual void Update()
 		{
-			// Update behaviour for different states
+			// さまざまな状態の動作を更新する
 			PathUpdate();
 			
-			// If the path becomes invalid, repath the agent to the destination
+			// パスが無効になった場合は、エージェントのパスを宛先に再設定します
 			bool validStalePath = m_NavMeshAgent.isOnNavMesh && m_NavMeshAgent.enabled &&
 			                      (!m_NavMeshAgent.hasPath && !m_NavMeshAgent.pathPending);
 			if (validStalePath)
 			{
-				// Compare against squared stopping distance on agent.
-				// We intentionally do not pre-square this value so that it can be changed at runtime dynamically
+				// エージェントの停止距離の 2 乗と比較します
+				// 実行中に動的に変更できるよう、この値はあえて事前に二乗しません
 				float squareStoppingDistance = m_NavMeshAgent.stoppingDistance * m_NavMeshAgent.stoppingDistance;
 				if (Vector3.SqrMagnitude(m_Destination - transform.position) < squareStoppingDistance &&
 				    m_CurrentNode.GetNextNode() != null)
 				{
-					// Proceed if we're at our destination
+					// 目的地に着いたら先に進みます
 					GetNextNode(m_CurrentNode);
 				}
 				else
 				{
-					// Otherwise try repath
+					// そうでなければ経路の再計算を試します
 					m_NavMeshAgent.SetDestination(m_Destination);
 				}
 			}
 		}
 
 		/// <summary>
-		/// Set the NavMeshAgent's destination
+		/// NavMeshAgent の宛先を設定します
 		/// </summary>
-		/// <param name="nextPoint">The position to navigate to</param>
+		/// <param name="nextPoint">移動先の位置</param>
 		protected virtual void NavigateTo(Vector3 nextPoint)
 		{
 			LazyLoad();
@@ -287,7 +287,7 @@ namespace TowerDefense.Agents
 		}
 
 		/// <summary>
-		/// This is a lazy way of caching several components utilised by the Agent
+		/// これは、エージェントによって使用されるいくつかのコンポーネントをキャッシュする遅延的な方法です
 		/// </summary>
 		protected virtual void LazyLoad()
 		{
@@ -303,7 +303,7 @@ namespace TowerDefense.Agents
 		}
 
 		/// <summary>
-		/// Move along the path, change to <see cref="Agent.State.OnPartialPath" />
+		/// パスに沿って移動し、次のように変更します <see cref="Agent.State.OnPartialPath" />
 		/// </summary>
 		protected virtual void OnCompletePathUpdate()
 		{
@@ -314,19 +314,19 @@ namespace TowerDefense.Agents
 		}
 
 		/// <summary>
-		/// Peforms the relevant path update
+		/// 関連するパスの更新を実行します
 		/// </summary>
 		protected abstract void PathUpdate();
 
 		/// <summary>
-		/// The behaviour for when the agent has been blocked
+		/// エージェントがブロックされた場合の動作
 		/// </summary>
 		protected abstract void OnPartialPathUpdate();
 		
 		
 #if UNITY_EDITOR
 		/// <summary>
-		/// Draw the agent's path
+		/// エージェントのパスを描画します
 		/// </summary>
 		protected virtual void OnDrawGizmosSelected()
 		{

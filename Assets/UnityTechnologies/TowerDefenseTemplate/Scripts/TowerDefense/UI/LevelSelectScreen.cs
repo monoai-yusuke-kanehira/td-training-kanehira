@@ -8,23 +8,23 @@ using UnityEngine.UI;
 namespace TowerDefense.UI
 {
 	/// <summary>
-	/// A manager for the level select user interface
+	/// レベル選択ユーザーインターフェースのマネージャー
 	/// </summary>
 	public class LevelSelectScreen : SimpleMainMenuPage
 	{
 		/// <summary>
-		/// The button to instantiate that 
-		/// represents the level select buttons
+		/// レベル選択ボタンとして
+		/// インスタンス化するボタン
 		/// </summary>
 		public LevelSelectButton selectionPrefab;
 
 		/// <summary>
-		/// The layout group to instantiate the buttons in
+		/// ボタンをインスタンス化する先のLayoutGroup
 		/// </summary>
 		public LayoutGroup layout;
 
 		/// <summary>
-		/// A buffer for the levels panel
+		/// レベルパネル用のバッファ
 		/// </summary>
 		public Transform rightBuffer;
 
@@ -39,14 +39,14 @@ namespace TowerDefense.UI
 		public string exitCameraAnim;
 
 		/// <summary>
-		/// The reference to the list of levels to display
+		/// 表示するレベル一覧への参照
 		/// </summary>
 		protected LevelList m_LevelList;
 		
 		protected List<Button> m_Buttons = new List<Button>();
 
 		/// <summary>
-		/// Instantiate the buttons
+		/// ボタンをインスタンス化する
 		/// </summary>
 		protected virtual void Start()
 		{
@@ -88,13 +88,13 @@ namespace TowerDefense.UI
 		}
 
 		/// <summary>
-		/// Create and Initialise a Level select button based on item
+		/// itemに基づいてレベル選択ボタンを作成し、初期化する
 		/// </summary>
 		/// <param name="item">
-		/// The level data
+		/// レベルデータ
 		/// </param>
 		/// <returns>
-		/// The initialised button
+		/// 初期化済みのボタン
 		/// </returns>
 		protected LevelSelectButton CreateButton(LevelItem item)
 		{
@@ -104,7 +104,7 @@ namespace TowerDefense.UI
 		}
 
 		/// <summary>
-		/// Play camera animations
+		/// カメラアニメーションを再生する
 		/// </summary>
 		public override void Show()
 		{
@@ -117,7 +117,7 @@ namespace TowerDefense.UI
 		}
 
 		/// <summary>
-		/// Return camera to normal position
+		/// カメラを通常位置に戻す
 		/// </summary>
 		public override void Hide()
 		{
@@ -130,11 +130,11 @@ namespace TowerDefense.UI
 		}
 
 		/// <summary>
-		/// Sets up the navigation for a selectable
+		/// Selectableのナビゲーションを設定する
 		/// </summary>
-		/// <param name="selectable">Selectable to set up</param>
-		/// <param name="left">Select on left</param>
-		/// <param name="right">Select on right</param>
+		/// <param name="selectable">設定対象のSelectable</param>
+		/// <param name="left">左側で選択する対象</param>
+		/// <param name="right">右側で選択する対象</param>
 		void SetUpNavigation(Selectable selectable, Selectable left, Selectable right)
 		{
 			Navigation navigation = selectable.navigation;

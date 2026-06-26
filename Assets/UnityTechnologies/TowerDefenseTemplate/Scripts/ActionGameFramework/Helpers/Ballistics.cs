@@ -4,21 +4,21 @@ using UnityEngine;
 namespace ActionGameFramework.Helpers
 {
 	/// <summary>
-	/// Helper class to assist with calculation of common projectile ballistics problems.
+	/// Projectile の一般的な弾道計算を補助するヘルパークラス
 	/// </summary>
 	public static class Ballistics
 	{
 		/// <summary>
-		/// Calculates the initial velocity of a linear projectile aimed at a given world coordinate.
+		/// 指定したワールド座標を狙う直線 Projectile の初速を計算する
 		/// </summary>
-		/// <param name="firePosition">Starting point of the projectile.</param>
-		/// <param name="targetPosition">Intended target point of the projectile.</param>
-		/// <param name="launchSpeed">Initial speed of the projectile.</param>
-		/// <returns>Vector3 describing initial velocity for this projectile. Vector3.zero if no solution.</returns>
+		/// <param name="firePosition">Projectile の開始位置。</param>
+		/// <param name="targetPosition">Projectile が狙う目標位置。</param>
+		/// <param name="launchSpeed">Projectile の初速。</param>
+		/// <returns>この Projectile の初速を表す Vector3。解がない場合は Vector3.zero。</returns>
 		public static Vector3 CalculateLinearFireVector(Vector3 firePosition, Vector3 targetPosition,
 		                                                float launchSpeed)
 		{
-			// If we're starting with a zero initial velocity, we give the vector a tiny base magnitude
+			// 初速が 0 の場合は、ベクトルにごく小さな基準の大きさを与える
 			if (Mathf.Abs(launchSpeed) < float.Epsilon)
 			{
 				launchSpeed = 0.001f;
@@ -28,14 +28,13 @@ namespace ActionGameFramework.Helpers
 		}
 
 		/// <summary>
-		/// Calculates the time taken for a linear projectile to reach the specified destination, with a given
-		/// start speed and acceleration.
+		/// 指定した開始速度と加速度で、直線 Projectile が目的地に到達するまでの時間を計算する
 		/// </summary>
-		/// <param name="firePosition">Starting point of the projectile.</param>
-		/// <param name="targetPosition">Intended target point of the projectile.</param>
-		/// <param name="launchSpeed">Initial speed of the projectile.</param>
-		/// <param name="acceleration">Post-firing acceleration of the projectile.</param>
-		/// <returns>Time in seconds to complete flight to target.</returns>
+		/// <param name="firePosition">Projectile の開始位置。</param>
+		/// <param name="targetPosition">Projectile が狙う目標位置。</param>
+		/// <param name="launchSpeed">Projectile の初速。</param>
+		/// <param name="acceleration">発射後の Projectile の加速度。</param>
+		/// <returns>目標まで飛行し終えるまでの秒数。</returns>
 		public static float CalculateLinearFlightTime(Vector3 firePosition, Vector3 targetPosition,
 		                                              float launchSpeed, float acceleration)
 		{
@@ -49,21 +48,21 @@ namespace ActionGameFramework.Helpers
 		}
 
 		/// <summary>
-		/// Calculates a leading target point that ensures a linear projectile will impact a moving target.
-		/// Assumes target has constant velocity. Precision can be adjusted parametrically.
+		/// 直線 Projectile が移動中の目標に当たるように、先読みした目標位置を計算する
+		/// 目標は等速で移動すると仮定する。精度はパラメーターで調整できる
 		/// </summary>
-		/// <param name="firePosition">Starting point of the projectile.</param>
-		/// <param name="targetPosition">The current position of the intended target.</param>
-		/// <param name="targetVelocity">Vector representing the velocity of the intended target.</param>
-		/// <param name="launchSpeed">Initial speed of the projectile.</param>
-		/// <param name="acceleration">Post-firing acceleration of the projectile.</param>
-		/// <param name="precision">Number of iterations to approximate the correct position. Higher precision is better for faster targets.</param>
-		/// <returns>Vector3 representing the leading target point.</returns>
+		/// <param name="firePosition">Projectile の開始位置。</param>
+		/// <param name="targetPosition">狙う目標の現在位置。</param>
+		/// <param name="targetVelocity">狙う目標の速度を表す Vector。</param>
+		/// <param name="launchSpeed">Projectile の初速。</param>
+		/// <param name="acceleration">発射後の Projectile の加速度。</param>
+		/// <param name="precision">正しい位置に近づけるための反復回数。速い目標ほど高い精度が有効。</param>
+		/// <returns>先読みした目標位置を表す Vector3。</returns>
 		public static Vector3 CalculateLinearLeadingTargetPoint(Vector3 firePosition, Vector3 targetPosition,
 		                                                        Vector3 targetVelocity, float launchSpeed, float acceleration,
 		                                                        int precision = 2)
 		{
-			// No precision means no leading, so we early-out.
+			// 精度がない場合は先読みしないため、ここで抜ける
 			if (precision <= 0)
 			{
 				return targetPosition;
@@ -83,14 +82,13 @@ namespace ActionGameFramework.Helpers
 		}
 
 		/// <summary>
-		/// Calculates the launch velocity for a parabolic-path projectile to hit a given target point when fired
-		/// at a given angle.
+		/// 指定した角度で発射した放物線軌道 Projectile が目標位置に当たるための発射速度を計算する
 		/// </summary>
-		/// <param name="firePosition">Position from which the projectile is fired.</param>
-		/// <param name="targetPosition">Intended target position.</param>
-		/// <param name="launchAngle">Angle at which the projectile is to be fired.</param>
-		/// <param name="gravity">Gravitational constant (Vertical only. Positive = down)</param>
-		/// <returns>Vector3 representing launch velocity to hit the target. Vector3.zero if no solution.</returns>
+		/// <param name="firePosition">Projectile を発射する位置。</param>
+		/// <param name="targetPosition">狙う目標位置。</param>
+		/// <param name="launchAngle">Projectile を発射する角度。</param>
+		/// <param name="gravity">重力定数（垂直方向のみ。正の値は下向き）</param>
+		/// <returns>目標に当てるための発射速度を表す Vector3。解がない場合は Vector3.zero。</returns>
 		public static Vector3 CalculateBallisticFireVectorFromAngle(Vector3 firePosition, Vector3 targetPosition,
 		                                                            float launchAngle, float gravity)
 		{
@@ -110,7 +108,7 @@ namespace ActionGameFramework.Helpers
 			{
 				float v = num / denom;
 
-				// Flatten aim vector so we can rotate it
+				// 回転できるように照準ベクトルを水平にする
 				Vector3 aimVector = toTarget / targetDistance;
 				aimVector.y = 0;
 				Vector3 rotAxis = Vector3.Cross(aimVector, Vector3.up);
@@ -124,13 +122,13 @@ namespace ActionGameFramework.Helpers
 		}
 
 		/// <summary>
-		/// Calculates the launch velocity for a parabolic-path projectile to hit a given target point when fired
-		/// at a given angle. Uses vertical gravity constant defined in project Physics settings.
+		/// 指定した角度で発射した放物線軌道 Projectile が目標位置に当たるための発射速度を計算する
+		/// プロジェクトの Physics 設定で定義された垂直方向の重力定数を使用する
 		/// </summary>
-		/// <param name="firePosition">Position from which the projectile is fired.</param>
-		/// <param name="targetPosition">Intended target position.</param>
-		/// <param name="launchAngle">Angle at which the projectile is to be fired.</param>
-		/// <returns>Vector3 representing launch velocity to hit the target. Vector3.zero if no solution.</returns>
+		/// <param name="firePosition">Projectile を発射する位置。</param>
+		/// <param name="targetPosition">狙う目標位置。</param>
+		/// <param name="launchAngle">Projectile を発射する角度。</param>
+		/// <returns>目標に当てるための発射速度を表す Vector3。解がない場合は Vector3.zero。</returns>
 		public static Vector3 CalculateBallisticFireVectorFromAngle(Vector3 firePosition, Vector3 targetPosition,
 		                                                            float launchAngle)
 		{
@@ -139,22 +137,21 @@ namespace ActionGameFramework.Helpers
 		}
 
 		/// <summary>
-		/// Calculates the launch velocity for a parabolic-path projectile to hit a given target point when
-		/// fired at a given speed.
+		/// 指定した速度で発射した放物線軌道 Projectile が目標位置に当たるための発射速度を計算する
 		/// </summary>
-		/// <param name="firePosition">Position from which the projectile is fired.</param>
-		/// <param name="targetPosition">Intended target position.</param>
-		/// <param name="launchSpeed">The speed that the projectile is launched at.</param>
-		/// <param name="arcHeight">Preference between parabolic ("underhand") or direct ("overhand") projectile arc.</param>
-		/// <param name="gravity">Gravitational constant (Vertical only. Positive = down)</param>
-		/// <returns>Vector3 representing launch launchSpeed to hit the target. Vector3.zero if no solution.</returns>
+		/// <param name="firePosition">Projectile を発射する位置。</param>
+		/// <param name="targetPosition">狙う目標位置。</param>
+		/// <param name="launchSpeed">Projectile の発射速度。</param>
+		/// <param name="arcHeight">放物線（「下手投げ」）軌道と直線寄り（「上手投げ」）軌道の優先設定。</param>
+		/// <param name="gravity">重力定数（垂直方向のみ。正の値は下向き）</param>
+		/// <returns>目標に当てるための発射速度を表す Vector3。解がない場合は Vector3.zero。</returns>
 		public static Vector3 CalculateBallisticFireVectorFromVelocity(Vector3 firePosition, Vector3 targetPosition,
 		                                                               float launchSpeed, BallisticArcHeight arcHeight,
 		                                                               float gravity)
 		{
 			float theta = CalculateBallisticFireAngle(firePosition, targetPosition, launchSpeed, arcHeight, gravity);
 
-			// If our angle is impossible, we early-out.
+			// 角度が成立しない場合は、ここで抜ける
 			if (float.IsNaN(theta))
 			{
 				return Vector3.zero;
@@ -170,7 +167,7 @@ namespace ActionGameFramework.Helpers
 
 			if (targetDistance > 0f)
 			{
-				// Flatten aim vector so we can rotate it
+				// 回転できるように照準ベクトルを水平にする
 				aimVector = toTarget / targetDistance;
 				aimVector.y = 0;
 			}
@@ -183,14 +180,14 @@ namespace ActionGameFramework.Helpers
 		}
 
 		/// <summary>
-		/// Calculates the launch velocity for a parabolic-path projectile to hit a given target point when
-		/// fired at a given speed. Uses vertical gravity constant defined in project Physics settings.
+		/// 指定した速度で発射した放物線軌道 Projectile が目標位置に当たるための発射速度を計算する
+		/// プロジェクトの Physics 設定で定義された垂直方向の重力定数を使用する
 		/// </summary>
-		/// <param name="firePosition">Position from which the projectile is fired.</param>
-		/// <param name="targetPosition">Intended target position.</param>
-		/// <param name="launchSpeed">The speed that the projectile is launched at.</param>
-		/// <param name="arcHeight">Preference between parabolic ("underhand") or direct ("overhand") projectile arc.</param>
-		/// <returns>Vector3 representing launch launchSpeed to hit the target. Vector3.zero if no solution.</returns>
+		/// <param name="firePosition">Projectile を発射する位置。</param>
+		/// <param name="targetPosition">狙う目標位置。</param>
+		/// <param name="launchSpeed">Projectile の発射速度。</param>
+		/// <param name="arcHeight">放物線（「下手投げ」）軌道と直線寄り（「上手投げ」）軌道の優先設定。</param>
+		/// <returns>目標に当てるための発射速度を表す Vector3。解がない場合は Vector3.zero。</returns>
 		public static Vector3 CalculateBallisticFireVectorFromVelocity(Vector3 firePosition, Vector3 targetPosition,
 		                                                               float launchSpeed, BallisticArcHeight arcHeight)
 		{
@@ -199,14 +196,14 @@ namespace ActionGameFramework.Helpers
 		}
 
 		/// <summary>
-		/// Calculates the angle at which a projectile with a given initial speed must be fired to impact a target.
+		/// 指定した初速の Projectile が目標に当たるために必要な発射角度を計算する
 		/// </summary>
-		/// <param name="firePosition">Position from which the projectile is fired</param>
-		/// <param name="targetPosition">Intended target position.</param>
-		/// <param name="launchSpeed">The speed that the projectile is launched at.</param>
-		/// <param name="arcHeight">Preference between parabolic ("underhand") or direct ("overhand") projectile arc.</param>
-		/// <param name="gravity">Gravitational constant (Vertical only. Positive = down)</param>
-		/// <returns>The required launch angle in degrees. NaN if no valid solution.</returns>
+		/// <param name="firePosition">Projectile を発射する位置。</param>
+		/// <param name="targetPosition">狙う目標位置。</param>
+		/// <param name="launchSpeed">Projectile の発射速度。</param>
+		/// <param name="arcHeight">放物線（「下手投げ」）軌道と直線寄り（「上手投げ」）軌道の優先設定。</param>
+		/// <param name="gravity">重力定数（垂直方向のみ。正の値は下向き）</param>
+		/// <returns>必要な発射角度（度）。有効な解がない場合は NaN。</returns>
 		public static float CalculateBallisticFireAngle(Vector3 firePosition, Vector3 targetPosition,
 		                                                float launchSpeed, BallisticArcHeight arcHeight, float gravity)
 		{
@@ -217,16 +214,16 @@ namespace ActionGameFramework.Helpers
 			float relativeY = targetPosition.y - firePosition.y;
 			float vSquared = launchSpeed * launchSpeed;
 
-			// If the distance to our target is zero, we can assume it's right on top of us (or that we're our own target).
+			// 目標までの距離が 0 の場合、目標が真上にある（または自分自身を狙っている）とみなす
 			if (Mathf.Approximately(targetDistance, 0f))
 			{
-				// If we're preferring a high-angle shot, we just fire straight up.
+				// 高い角度のショットを優先する場合は、真上に発射する
 				if (arcHeight == BallisticArcHeight.UseHigh || arcHeight == BallisticArcHeight.PreferHigh)
 				{
 					return 90f;
 				}
 
-				// If we're doing a low-angle direct shot, we tweak our angle based on relative height of target.
+				// 低い角度の直線的なショットの場合は、目標との相対的な高さに基づいて角度を調整する
 				if (relativeY > 0)
 				{
 					return 90f;
@@ -241,37 +238,37 @@ namespace ActionGameFramework.Helpers
 			float b = Mathf.Sqrt((vSquared * vSquared) -
 			                     (gravity * ((gravity * (targetDistance * targetDistance)) + (2 * relativeY * vSquared))));
 
-			// The "underarm", parabolic arc angle
+			// 「下手投げ」の放物線軌道角度
 			float theta1 = Mathf.Atan((vSquared + b) / (gravity * targetDistance));
 
-			// The "overarm", direct arc angle
+			// 「上手投げ」の直線寄り軌道角度
 			float theta2 = Mathf.Atan((vSquared - b) / (gravity * targetDistance));
 
 			bool theta1Nan = float.IsNaN(theta1);
 			bool theta2Nan = float.IsNaN(theta2);
 
-			// If both are invalid, we early-out with a NaN to indicate no solution.
+			// 両方とも無効な場合は、解がないことを示すため NaN で抜ける
 			if (theta1Nan && theta2Nan)
 			{
 				return float.NaN;
 			}
 
-			// We'll init with the parabolic arc.
+			// 初期値は放物線軌道にする
 			float returnTheta = theta1;
 
-			// If we want to return the direct arc
+			// 直線寄りの軌道を返したい場合
 			if (arcHeight == BallisticArcHeight.UseLow)
 			{
 				returnTheta = theta2;
 			}
 
-			// If we want to return theta1 wherever valid, but will settle for theta2 if theta1 is invalid
+			// theta1 が有効なら返し、無効なら theta2 にする場合
 			if (arcHeight == BallisticArcHeight.PreferHigh)
 			{
 				returnTheta = theta1Nan ? theta2 : theta1;
 			}
 
-			// If we want to return theta2 wherever valid, but will settle for theta1 if theta2 is invalid
+			// theta2 が有効なら返し、無効なら theta1 にする場合
 			if (arcHeight == BallisticArcHeight.PreferLow)
 			{
 				returnTheta = theta2Nan ? theta1 : theta2;
@@ -281,14 +278,14 @@ namespace ActionGameFramework.Helpers
 		}
 
 		/// <summary>
-		/// Calculates the angle at which a projectile with a given initial speed must be fired to impact a target.
-		/// Uses vertical gravity constant defined in project Physics settings.
+		/// 指定した初速の Projectile が目標に当たるために必要な発射角度を計算する
+		/// プロジェクトの Physics 設定で定義された垂直方向の重力定数を使用する
 		/// </summary>
-		/// <param name="firePosition">Position from which the projectile is fired</param>
-		/// <param name="targetPosition">Intended target position.</param>
-		/// <param name="launchSpeed">The speed that the projectile is launched at.</param>
-		/// <param name="arcHeight">Preference between parabolic ("underhand") or direct ("overhand") projectile arc.</param>
-		/// <returns>The required launch angle in degrees. NaN if no valid solution.</returns>
+		/// <param name="firePosition">Projectile を発射する位置。</param>
+		/// <param name="targetPosition">狙う目標位置。</param>
+		/// <param name="launchSpeed">Projectile の発射速度。</param>
+		/// <param name="arcHeight">放物線（「下手投げ」）軌道と直線寄り（「上手投げ」）軌道の優先設定。</param>
+		/// <returns>必要な発射角度（度）。有効な解がない場合は NaN。</returns>
 		public static float CalculateBallisticFireAngle(Vector3 firePosition, Vector3 targetPosition,
 		                                                float launchSpeed, BallisticArcHeight arcHeight)
 		{
@@ -297,14 +294,14 @@ namespace ActionGameFramework.Helpers
 		}
 
 		/// <summary>
-		/// Calculates the amount of time it will take a projectile to complete its arc.
+		/// Projectile が軌道を飛び終えるまでにかかる時間を計算する
 		/// </summary>
-		/// <param name="firePosition">Position from which the projectile is fired</param>
-		/// <param name="targetPosition">Intended target position.</param>
-		/// <param name="launchSpeed">The speed that the projectile is launched at.</param>
-		/// <param name="fireAngle">The angle in degrees that the projectile was fired at.</param>
-		/// <param name="gravity">Gravitational constant (Vertical only. Positive = down)</param>
-		/// <returns>Time in seconds to complete arc to target. NaN if no valid solution.</returns>
+		/// <param name="firePosition">Projectile を発射する位置。</param>
+		/// <param name="targetPosition">狙う目標位置。</param>
+		/// <param name="launchSpeed">Projectile の発射速度。</param>
+		/// <param name="fireAngle">Projectile を発射した角度（度）。</param>
+		/// <param name="gravity">重力定数（垂直方向のみ。正の値は下向き）</param>
+		/// <returns>目標までの軌道を飛び終えるまでの秒数。有効な解がない場合は NaN。</returns>
 		public static float CalculateBallisticFlightTime(Vector3 firePosition, Vector3 targetPosition, float launchSpeed,
 		                                                 float fireAngle, float gravity)
 		{
@@ -342,14 +339,14 @@ namespace ActionGameFramework.Helpers
 		}
 
 		/// <summary>
-		/// Calculates the amount of time it will take a projectile to complete its arc.
-		/// Uses vertical gravity constant defined in project Physics settings.
+		/// Projectile が軌道を飛び終えるまでにかかる時間を計算する
+		/// プロジェクトの Physics 設定で定義された垂直方向の重力定数を使用する
 		/// </summary>
-		/// <param name="firePosition">Position from which the projectile is fired</param>
-		/// <param name="targetPosition">Intended target position.</param>
-		/// <param name="launchSpeed">The speed that the projectile is launched at.</param>
-		/// <param name="fireAngle">The angle in degrees that the projectile was fired at.</param>
-		/// <returns>Time in seconds to complete arc to target. NaN if no valid solution.</returns>
+		/// <param name="firePosition">Projectile を発射する位置。</param>
+		/// <param name="targetPosition">狙う目標位置。</param>
+		/// <param name="launchSpeed">Projectile の発射速度。</param>
+		/// <param name="fireAngle">Projectile を発射した角度（度）。</param>
+		/// <returns>目標までの軌道を飛び終えるまでの秒数。有効な解がない場合は NaN。</returns>
 		public static float CalculateBallisticFlightTime(Vector3 firePosition, Vector3 targetPosition,
 		                                                 float launchSpeed, float fireAngle)
 		{
@@ -358,23 +355,23 @@ namespace ActionGameFramework.Helpers
 		}
 
 		/// <summary>
-		/// Calculates an approximate leading target point to ensure a ballistic projectile will impact a moving target assuming a given launch speed.
-		/// Assumes constant target velocity and constant projectile speed after launch. Precision can be adjusted parametrically.
+		/// 指定した発射速度を前提に、弾道 Projectile が移動中の目標に当たるよう、おおよその先読み目標位置を計算する
+		/// 目標は等速、Projectile は発射後も一定速度で進むと仮定する。精度はパラメーターで調整できる
 		/// </summary>
-		/// <param name="firePosition">Starting point of the projectile.</param>
-		/// <param name="targetPosition">The current position of the intended target.</param>
-		/// <param name="targetVelocity">Vector representing the velocity of the intended target.</param>
-		/// <param name="launchSpeed">Initial speed of the projectile.</param>
-		/// <param name="arcHeight">Preference between parabolic ("underhand") or direct ("overhand") projectile arc.</param>
-		/// <param name="precision">Number of iterations to approximate the correct position. Higher precision is better for faster targets.</param>
-		/// <param name="gravity">Gravitational constant (Vertical only. Positive = down)</param>
-		/// <returns>Vector3 representing the leading target point. Vector3.zero if no solution.</returns>
+		/// <param name="firePosition">Projectile の開始位置。</param>
+		/// <param name="targetPosition">狙う目標の現在位置。</param>
+		/// <param name="targetVelocity">狙う目標の速度を表す Vector。</param>
+		/// <param name="launchSpeed">Projectile の初速。</param>
+		/// <param name="arcHeight">放物線（「下手投げ」）軌道と直線寄り（「上手投げ」）軌道の優先設定。</param>
+		/// <param name="precision">正しい位置に近づけるための反復回数。速い目標ほど高い精度が有効。</param>
+		/// <param name="gravity">重力定数（垂直方向のみ。正の値は下向き）</param>
+		/// <returns>先読みした目標位置を表す Vector3。解がない場合は Vector3.zero。</returns>
 		public static Vector3 CalculateBallisticLeadingTargetPointWithSpeed(Vector3 firePosition, Vector3 targetPosition,
 		                                                                    Vector3 targetVelocity, float launchSpeed,
 		                                                                    BallisticArcHeight arcHeight, float gravity,
 		                                                                    int precision = 2)
 		{
-			// No precision means no leading, so we early-out.
+			// 精度がない場合は先読みしないため、ここで抜ける
 			if (precision <= 1)
 			{
 				return targetPosition;
@@ -400,17 +397,17 @@ namespace ActionGameFramework.Helpers
 		}
 
 		/// <summary>
-		/// Calculates an approximate leading target point to ensure a ballistic projectile will impact a moving target assuming a given launch speed.
-		/// Assumes constant target velocity and constant projectile speed after launch. Precision can be adjusted parametrically.
-		/// Uses vertical gravity constant defined in project Physics settings.
+		/// 指定した発射速度を前提に、弾道 Projectile が移動中の目標に当たるよう、おおよその先読み目標位置を計算する
+		/// 目標は等速、Projectile は発射後も一定速度で進むと仮定する。精度はパラメーターで調整できる
+		/// プロジェクトの Physics 設定で定義された垂直方向の重力定数を使用する
 		/// </summary>
-		/// <param name="firePosition">Starting point of the projectile.</param>
-		/// <param name="targetPosition">The current position of the intended target.</param>
-		/// <param name="targetVelocity">Vector representing the velocity of the intended target.</param>
-		/// <param name="launchSpeed">Initial speed of the projectile.</param>
-		/// <param name="arcHeight">Preference between parabolic ("underhand") or direct ("overhand") projectile arc.</param>
-		/// <param name="precision">Number of iterations to approximate the correct position. Higher precision is better for faster targets.</param>
-		/// <returns>Vector3 representing the leading target point. Vector3.zero if no solution.</returns>
+		/// <param name="firePosition">Projectile の開始位置。</param>
+		/// <param name="targetPosition">狙う目標の現在位置。</param>
+		/// <param name="targetVelocity">狙う目標の速度を表す Vector。</param>
+		/// <param name="launchSpeed">Projectile の初速。</param>
+		/// <param name="arcHeight">放物線（「下手投げ」）軌道と直線寄り（「上手投げ」）軌道の優先設定。</param>
+		/// <param name="precision">正しい位置に近づけるための反復回数。速い目標ほど高い精度が有効。</param>
+		/// <returns>先読みした目標位置を表す Vector3。解がない場合は Vector3.zero。</returns>
 		public static Vector3 CalculateBallisticLeadingTargetPointWithSpeed(Vector3 firePosition, Vector3 targetPosition,
 		                                                                    Vector3 targetVelocity, float launchSpeed,
 		                                                                    BallisticArcHeight arcHeight, int precision = 2)
@@ -420,25 +417,25 @@ namespace ActionGameFramework.Helpers
 		}
 
 		/// <summary>
-		/// Calculates an approximate leading target point to ensure a ballistic projectile will impact a moving target assuming a given launch angle.
-		/// Assumes constant target velocity and constant projectile speed after launch. Precision can be adjusted parametrically.
-		/// Uses vertical gravity constant defined in project Physics settings.
+		/// 指定した発射角度を前提に、弾道 Projectile が移動中の目標に当たるよう、おおよその先読み目標位置を計算する
+		/// 目標は等速、Projectile は発射後も一定速度で進むと仮定する。精度はパラメーターで調整できる
+		/// プロジェクトの Physics 設定で定義された垂直方向の重力定数を使用する
 		/// </summary>
-		/// <param name="firePosition">Starting point of the projectile.</param>
-		/// <param name="targetPosition">The current position of the intended target.</param>
-		/// <param name="targetVelocity">Vector representing the velocity of the intended target.</param>
-		/// <param name="launchAngle">The angle at which the projectile is to be launched.</param>
-		/// <param name="arcHeight">Preference between parabolic ("underhand") or direct ("overhand") projectile arc.</param>
-		/// <param name="gravity">Gravitational constant (Vertical only. Positive = down)</param>
-		/// <param name="precision">Number of iterations to approximate the correct position. Higher precision is better for faster targets.</param>
-		/// <returns>Vector3 representing the leading target point. Vector3.zero if no solution.</returns>
+		/// <param name="firePosition">Projectile の開始位置。</param>
+		/// <param name="targetPosition">狙う目標の現在位置。</param>
+		/// <param name="targetVelocity">狙う目標の速度を表す Vector。</param>
+		/// <param name="launchAngle">Projectile を発射する角度。</param>
+		/// <param name="arcHeight">放物線（「下手投げ」）軌道と直線寄り（「上手投げ」）軌道の優先設定。</param>
+		/// <param name="gravity">重力定数（垂直方向のみ。正の値は下向き）</param>
+		/// <param name="precision">正しい位置に近づけるための反復回数。速い目標ほど高い精度が有効。</param>
+		/// <returns>先読みした目標位置を表す Vector3。解がない場合は Vector3.zero。</returns>
 		public static Vector3 CalculateBallisticLeadingTargetPointWithAngle(Vector3 firePosition,
 		                                                                    Vector3 targetPosition,
 		                                                                    Vector3 targetVelocity, float launchAngle,
 		                                                                    BallisticArcHeight arcHeight, float gravity,
 		                                                                    int precision = 2)
 		{
-			// No precision means no leading, so we early-out.
+			// 精度がない場合は先読みしないため、ここで抜ける
 			if (precision <= 1)
 			{
 				return targetPosition;
@@ -465,17 +462,17 @@ namespace ActionGameFramework.Helpers
 		}
 
 		/// <summary>
-		/// Calculates an approximate leading target point to ensure a ballistic projectile will impact a moving target assuming a given launch angle.
-		/// Assumes constant target velocity and constant projectile speed after launch. Precision can be adjusted parametrically.
-		/// Uses vertical gravity constant defined in project Physics settings.
+		/// 指定した発射角度を前提に、弾道 Projectile が移動中の目標に当たるよう、おおよその先読み目標位置を計算する
+		/// 目標は等速、Projectile は発射後も一定速度で進むと仮定する。精度はパラメーターで調整できる
+		/// プロジェクトの Physics 設定で定義された垂直方向の重力定数を使用する
 		/// </summary>
-		/// <param name="firePosition">Starting point of the projectile.</param>
-		/// <param name="targetPosition">The current position of the intended target.</param>
-		/// <param name="targetVelocity">Vector representing the velocity of the intended target.</param>
-		/// <param name="launchAngle">The angle at which the projectile is to be launched.</param>
-		/// <param name="arcHeight">Preference between parabolic ("underhand") or direct ("overhand") projectile arc.</param>
-		/// <param name="precision">Number of iterations to approximate the correct position. Higher precision is better for faster targets.</param>
-		/// <returns>Vector3 representing the leading target point. Vector3.zero if no solution.</returns>
+		/// <param name="firePosition">Projectile の開始位置。</param>
+		/// <param name="targetPosition">狙う目標の現在位置。</param>
+		/// <param name="targetVelocity">狙う目標の速度を表す Vector。</param>
+		/// <param name="launchAngle">Projectile を発射する角度。</param>
+		/// <param name="arcHeight">放物線（「下手投げ」）軌道と直線寄り（「上手投げ」）軌道の優先設定。</param>
+		/// <param name="precision">正しい位置に近づけるための反復回数。速い目標ほど高い精度が有効。</param>
+		/// <returns>先読みした目標位置を表す Vector3。解がない場合は Vector3.zero。</returns>
 		public static Vector3 CalculateBallisticLeadingTargetPointWithAngle(Vector3 firePosition,
 		                                                                    Vector3 targetPosition,
 		                                                                    Vector3 targetVelocity, float launchAngle,

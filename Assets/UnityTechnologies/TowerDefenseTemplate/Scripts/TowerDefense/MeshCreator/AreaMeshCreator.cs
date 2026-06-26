@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 namespace TowerDefense.MeshCreator
 {
 	/// <summary>
-	/// Creates a Mesh that represents an area
+	/// エリアを表すメッシュを作成します
 	/// </summary>
 	[Serializable]
 	public class AreaMeshCreator : MonoBehaviour
@@ -19,7 +19,7 @@ namespace TowerDefense.MeshCreator
 		public Transform outSidePointsParent;
 
 		/// <summary>
-		/// The parent transform of points in the mesh
+		/// メッシュ内のポイントの親変換
 		/// </summary>
 		public Transform pointsCenter
 		{
@@ -41,7 +41,7 @@ namespace TowerDefense.MeshCreator
 
 #if UNITY_EDITOR
 		/// <summary>
-		/// Gets an array of the Transforms of points in this mesh - only used by editor script
+		/// このメッシュ内のポイントの変換の配列を取得します - エディター スクリプトでのみ使用されます
 		/// </summary>
 		public Transform[] pointsTransforms
 		{
@@ -59,26 +59,26 @@ namespace TowerDefense.MeshCreator
 #endif
 
 		/// <summary>
-		/// Get a list of Vector3s that correspond to the positions of the points in this mesh
+		/// このメッシュ内の点の位置に対応する Vector3 のリストを取得します
 		/// </summary>
-		/// <returns>List of Points</returns>
+		/// <returns>ポイント一覧</returns>
 		public List<Vector3> GetPoints()
 		{
 			return GetChildrenPositions(pointsCenter);
 		}
 
 		/// <summary>
-		/// Gets a random Vector3 that lies inside the mesh object
+		/// メッシュ オブジェクト内にあるランダムな Vector3 を取得します
 		/// </summary>
-		/// <returns>Random point</returns>
+		/// <returns>ランダムポイント</returns>
 		public Vector3 GetRandomPointInside()
 		{
 			return transform.TransformPoint(meshObject.RandomPointInMesh());
 		}
 
 		/// <summary>
-		/// Forces all points to have a local "y" position of 0
-		/// Makes them coplanar
+		/// すべての点のローカル "y" 位置が 0 になるように強制します
+		/// ポイントを同一平面上にそろえます
 		/// </summary>
 		public void ForcePointsFlat()
 		{
@@ -113,7 +113,7 @@ namespace TowerDefense.MeshCreator
 				Vector3 to = pointsCenter.GetChild(i + 1).position;
 				Gizmos.DrawLine(from, to);
 			}
-			// last to first
+			// 最後から最初へ
 			Vector3 last = pointsCenter.GetChild(count - 1).position;
 			Vector3 first = pointsCenter.GetChild(0).position;
 			Gizmos.DrawLine(last, first);
@@ -133,18 +133,18 @@ namespace TowerDefense.MeshCreator
 		public float area;
 
 		/// <summary>
-		/// Represents a Triangle in a mesh
+		/// メッシュ内の三角形を表します
 		/// </summary>
-		/// <param name="v0">First Point</param>
-		/// <param name="v1">Second Point</param>
-		/// <param name="v2">Third Point</param>
+		/// <param name="v0">最初のポイント</param>
+		/// <param name="v1">2 番目のポイント</param>
+		/// <param name="v2">3番目のポイント</param>
 		public Triangle(Vector3 v0, Vector3 v1, Vector3 v2)
 		{
 			this.v0 = v0;
 			this.v1 = v1;
 			this.v2 = v2;
 
-			// Precalculate area
+			// 面積を事前計算します
 			float a = Vector3.Distance(v0, v1), b = Vector3.Distance(v1, v2), c = Vector3.Distance(v2, v0);
 			float s = (a + b + c) / 2;
 			area = Mathf.Sqrt(s * (s - a) * (s - b) * (s - c));
@@ -152,9 +152,9 @@ namespace TowerDefense.MeshCreator
 	}
 
 	/// <summary>
-	/// Contains the triangles of the mesh
-	/// Calculates the mesh area
-	/// Can get a random point within the mesh area
+	/// メッシュの三角形が含まれます
+	/// メッシュ領域を計算します
+	/// メッシュ領域内のランダムな点を取得できます
 	/// </summary>
 	[Serializable]
 	public class MeshObject
@@ -170,9 +170,9 @@ namespace TowerDefense.MeshCreator
 		}
 
 		/// <summary>
-		/// Gets a random point in the mesh
+		/// メッシュ内のランダムな点を取得します
 		/// </summary>
-		/// <returns>Random point</returns>
+		/// <returns>ランダムポイント</returns>
 		public Vector3 RandomPointInMesh()
 		{
 			Triangle randomTriangle = triangles.WeightedSelection(completeArea, t => t.area);

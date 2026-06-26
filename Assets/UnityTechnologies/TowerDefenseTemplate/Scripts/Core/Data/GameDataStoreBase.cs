@@ -1,7 +1,7 @@
 ﻿namespace Core.Data
 {
 	/// <summary>
-	/// Base game data store for GameManager to save, containing only data for saving volumes
+	/// GameManagerが保存する基本データストアです。音量保存用のデータだけを含みます
 	/// </summary>
 	public abstract class GameDataStoreBase : IDataStore
 	{
@@ -12,12 +12,12 @@
 		public float musicVolume = 1;
 
 		/// <summary>
-		/// Called just before we save
+		/// 保存直前に呼び出されます
 		/// </summary>
 		public abstract void PreSave();
 
 		/// <summary>
-		/// Called just after load
+		/// 読み込み直後に呼び出されます
 		/// </summary>
 		public abstract void PostLoad();
 	}

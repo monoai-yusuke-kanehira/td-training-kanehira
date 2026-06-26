@@ -6,28 +6,28 @@ using UnityEngine;
 namespace TowerDefense.Level
 {
 	/// <summary>
-	/// WaveManager - handles wave initialisation and completion
+	/// WaveManager - ウェーブの初期化と完了を処理します
 	/// </summary>
 	public class WaveManager : MonoBehaviour
 	{
 		/// <summary>
-		/// Current wave being used
+		/// 現在使用されている波形
 		/// </summary>
 		protected int m_CurrentIndex;
 
 		/// <summary>
-		/// Whether the WaveManager starts waves on Awake - defaulted to null since the LevelManager should call this function
+		/// WaveManager が Awake で wave を開始するかどうか - LevelManager がこの関数を呼び出す必要があるため、デフォルトは null です
 		/// </summary>
 		public bool startWavesOnAwake;
 
 		/// <summary>
-		/// The waves to run in order
+		/// 順番に走る波
 		/// </summary>
 		[Tooltip("Specify this list in order")]
 		public List<Wave> waves = new List<Wave>();
 
 		/// <summary>
-		/// The current wave number
+		/// 現在の波数
 		/// </summary>
 		public int waveNumber
 		{
@@ -35,7 +35,7 @@ namespace TowerDefense.Level
 		}
 
 		/// <summary>
-		/// The total number of waves
+		/// 波の総数
 		/// </summary>
 		public int totalWaves
 		{
@@ -55,17 +55,17 @@ namespace TowerDefense.Level
 		}
 
 		/// <summary>
-		/// Called when a wave begins
+		/// Wave の開始時に呼び出されます
 		/// </summary>
 		public event Action waveChanged;
 
 		/// <summary>
-		/// Called when all waves are finished
+		/// すべての Wave が終了したときに呼び出されます
 		/// </summary>
 		public event Action spawningCompleted;
 
 		/// <summary>
-		/// Starts the waves
+		/// 波を起こす
 		/// </summary>
 		public virtual void StartWaves()
 		{
@@ -81,7 +81,7 @@ namespace TowerDefense.Level
 		}
 
 		/// <summary>
-		/// Inits the first wave
+		/// 最初のウェーブを開始します
 		/// </summary>
 		protected virtual void Awake()
 		{
@@ -92,7 +92,7 @@ namespace TowerDefense.Level
 		}
 
 		/// <summary>
-		/// Sets up the next wave
+		/// 次のウェーブを設定します
 		/// </summary>
 		protected virtual void NextWave()
 		{
@@ -108,7 +108,7 @@ namespace TowerDefense.Level
 		}
 
 		/// <summary>
-		/// Initialize the current wave
+		/// 現在の波形を初期化します
 		/// </summary>
 		protected virtual void InitCurrentWave()
 		{
@@ -122,7 +122,7 @@ namespace TowerDefense.Level
 		}
 
 		/// <summary>
-		/// Calls spawningCompleted event
+		/// spawningCompleted イベントを呼び出します
 		/// </summary>
 		protected virtual void SafelyCallSpawningCompleted()
 		{

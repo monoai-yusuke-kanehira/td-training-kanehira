@@ -3,29 +3,29 @@
 namespace ActionGameFramework.Audio
 {
 	/// <summary>
-	/// A helper for playing random audio clips
-	/// The randomness is not uniform but rather based on weights
+	/// ランダムな AudioClip を再生するためのヘルパー
+	/// ランダム性は均等ではなく、重みに基づく
 	/// </summary>
 	[RequireComponent(typeof(AudioSource))]
 	public class RandomAudioSource : MonoBehaviour
 	{
 		/// <summary>
-		/// A weighted list of audio clips
+		/// AudioClip の重み付きリスト
 		/// </summary>
 		public WeightedAudioList clips;
 
 		/// <summary>
-		/// Configuration for playing a sound randomly on awake
+		/// OnEnable 時にランダムでサウンドを再生するための設定
 		/// </summary>
 		public bool playOnEnabled;
 
 		/// <summary>
-		/// The attached audio source
+		/// アタッチされている AudioSource
 		/// </summary>
 		protected AudioSource m_Source;
 
 		/// <summary>
-		/// Cache the audio source and play if necessary
+		/// AudioSource をキャッシュし、必要なら再生する
 		/// </summary>
 		protected virtual void OnEnable()
 		{
@@ -40,7 +40,7 @@ namespace ActionGameFramework.Audio
 		}
 
 		/// <summary>
-		/// Plays the random clip using the attached audio source
+		/// アタッチされている AudioSource を使ってランダムなクリップを再生する
 		/// </summary>
 		public virtual void PlayRandomClip()
 		{
@@ -52,9 +52,9 @@ namespace ActionGameFramework.Audio
 		}
 
 		/// <summary>
-		/// Plays the random clip using a specified audio source
+		/// 指定した AudioSource を使ってランダムなクリップを再生する
 		/// </summary>
-		/// <param name="source">Audio source to use</param>
+		/// <param name="source">使用する AudioSource</param>
 		public virtual void PlayRandomClip(AudioSource source)
 		{
 			if (source == null)

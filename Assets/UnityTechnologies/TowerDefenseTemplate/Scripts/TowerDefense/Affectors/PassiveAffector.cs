@@ -6,20 +6,20 @@ using UnityEngine;
 namespace TowerDefense.Affectors
 {
 	/// <summary>
-	/// Abstract class that is used to apply <see cref="AgentEffect"/>s to <see cref="Agent"/>s
+	/// <see cref="Agent"/>に<see cref="AgentEffect"/>を適用するために使う抽象クラス
 	/// </summary>
 	[RequireComponent(typeof(Targetter))]
 	public abstract class PassiveAffector : Affector, ITowerRadiusProvider
 	{
 		/// <summary>
-		/// Color of effect radius visualization
+		/// 効果範囲を可視化するときの色
 		/// </summary>
 		public  Color radiusEffectColor;
 
 		public Targetter towerTargetter;
 
 		/// <summary>
-		/// Gets or sets the attack radius
+		/// 攻撃範囲を取得または設定する
 		/// </summary>
 		public float effectRadius
 		{
@@ -27,7 +27,7 @@ namespace TowerDefense.Affectors
 		}
 
 		/// <summary>
-		/// Gets the color used for effect radius visualisation
+		/// 効果範囲の可視化に使う色を取得する
 		/// </summary>
 		public Color effectColor
 		{
@@ -35,7 +35,7 @@ namespace TowerDefense.Affectors
 		}
 
 		/// <summary>
-		/// Gets the targetter 
+		/// Targetterを取得する
 		/// </summary>
 		public Targetter targetter
 		{

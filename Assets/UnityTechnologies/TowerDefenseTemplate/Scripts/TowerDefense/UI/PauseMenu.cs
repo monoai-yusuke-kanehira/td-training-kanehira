@@ -3,13 +3,13 @@ using TowerDefense.Game;
 using TowerDefense.UI.HUD;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.InputSystem; // Añadido para el New Input System
+using UnityEngine.InputSystem; // New Input System用に追加
 using GameUIState = TowerDefense.UI.HUD.GameUI.State;
 
 namespace TowerDefense.UI
 {
     /// <summary>
-    /// In-game pause menu updated for Unity 6.3
+    /// Unity 6.3向けに更新されたゲーム内ポーズメニュー
     /// </summary>
     public class PauseMenu : MonoBehaviour
     {
@@ -104,7 +104,7 @@ namespace TowerDefense.UI
         }
 
         /// <summary>
-        /// Unpause logic using New Input System
+        /// New Input Systemを使用したポーズ解除処理
         /// </summary>
         protected virtual void Update()
         {
@@ -114,7 +114,7 @@ namespace TowerDefense.UI
                 return;
             }
 
-            // Cambiado: Uso de Keyboard.current para detectar Escape
+            // 変更: Escapeの検出にKeyboard.currentを使用する
             if (Keyboard.current != null && 
                 Keyboard.current.escapeKey.wasPressedThisFrame && 
                 GameUI.instance.state == GameUIState.Paused)

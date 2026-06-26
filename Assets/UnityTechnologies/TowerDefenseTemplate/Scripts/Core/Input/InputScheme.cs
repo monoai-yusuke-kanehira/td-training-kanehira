@@ -3,26 +3,26 @@
 namespace Core.Input
 {
 	/// <summary>
-	/// Base class for any input scheme that knows how and when to activate itself
+	/// いつどのように自身を有効化するかを知っている入力スキームの基底クラス
 	/// </summary>
 	public abstract class InputScheme : MonoBehaviour
 	{
 		/// <summary>
-		/// Gets whether the scheme should be activated or not
+		/// このスキームを有効化すべきかどうかを取得します
 		/// </summary>
 		public abstract bool shouldActivate { get; }
 
 		/// <summary>
-		/// Gets whether this scheme should be default
+		/// このスキームをデフォルトにするべきかどうかを取得します
 		/// </summary>
 		public abstract bool isDefault { get; }
 
 		/// <summary>
-		/// Activate if not already activated
+		/// まだ有効でない場合は有効化します
 		/// </summary>
 		/// <param name="previousScheme">
-		/// The scheme that was previously enabled.
-		/// Will be null on start up.
+		/// 以前有効だったスキーム。
+		/// 起動時はnullになります。
 		/// </param>
 		public virtual void Activate(InputScheme previousScheme)
 		{
@@ -33,11 +33,11 @@ namespace Core.Input
 		}
 
 		/// <summary>
-		/// Deactivate if not already deactivated
+		/// まだ無効でない場合は無効化します
 		/// </summary>
 		/// <param name="nextScheme">
-		/// The next scheme that will be activated.
-		/// Will be null on start up.
+		/// 次に有効化されるスキーム。
+		/// 起動時はnullになります。
 		/// </param>
 		public virtual void Deactivate(InputScheme nextScheme)
 		{

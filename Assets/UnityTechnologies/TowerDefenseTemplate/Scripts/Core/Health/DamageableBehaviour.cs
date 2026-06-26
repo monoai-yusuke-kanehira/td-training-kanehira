@@ -4,26 +4,26 @@ using UnityEngine;
 namespace Core.Health
 {
 	/// <summary>
-	/// Abstract class for any MonoBehaviours that can take damage
+	/// ダメージを受けられるMonoBehaviour用の抽象クラス
 	/// </summary>
 	public class DamageableBehaviour : MonoBehaviour
 	{
 		/// <summary>
-		/// The Damageable object
+		/// Damageableオブジェクト
 		/// </summary>
 		public Damageable configuration;
 
 		/// <summary>
-		/// Gets whether this <see cref="DamageableBehaviour" /> is dead.
+		/// この <see cref="DamageableBehaviour" /> が死亡しているかどうかを取得します。
 		/// </summary>
-		/// <value>True if dead</value>
+		/// <value>死亡している場合は true</value>
 		public bool isDead
 		{
 			get { return configuration.isDead; }
 		}
 
 		/// <summary>
-		/// The position of the transform
+		/// Transformの位置
 		/// </summary>
 		public virtual Vector3 position
 		{
@@ -31,27 +31,27 @@ namespace Core.Health
 		}
 
 		/// <summary>
-		/// Occurs when damage is taken
+		/// ダメージを受けたときに発生します
 		/// </summary>
 		public event Action<HitInfo> hit;
 		
 		/// <summary>
-		/// Event that is fired when this instance is removed, such as when pooled or destroyed
+		/// このインスタンスがプールへ戻されたり破棄されたりして削除されたときに発生するイベント
 		/// </summary>
 		public event Action<DamageableBehaviour> removed;
 		
 		/// <summary>
-		/// Event that is fired when this instance is killed
+		/// このインスタンスが倒されたときに発生するイベント
 		/// </summary>
 		public event Action<DamageableBehaviour> died;
 		
 
 		/// <summary>
-		/// Takes the damage and also provides a position for the damage being dealt
+		/// ダメージを受け、ダメージが発生した位置も受け取ります
 		/// </summary>
-		/// <param name="damageValue">Damage value.</param>
-		/// <param name="damagePoint">Damage point.</param>
-		/// <param name="alignment">Alignment value</param>
+		/// <param name="damageValue">ダメージ量</param>
+		/// <param name="damagePoint">ダメージ位置。</param>
+		/// <param name="alignment">所属情報</param>
 		public virtual void TakeDamage(float damageValue, Vector3 damagePoint, IAlignmentProvider alignment)
 		{
 			HealthChangeInfo info;
@@ -70,7 +70,7 @@ namespace Core.Health
 		}
 
 		/// <summary>
-		/// Kills this damageable
+		/// このDamageableを倒します
 		/// </summary>
 		protected virtual void Kill()
 		{
@@ -80,17 +80,17 @@ namespace Core.Health
 
 
 		/// <summary>
-		/// Removes this damageable without killing it
+		/// 死亡扱いにせず、このDamageableを削除します
 		/// </summary>
 		public virtual void Remove()
 		{
-			// Set health to zero so that this behaviour appears to be dead. This will not fire death events
+			// このBehaviourが死亡状態に見えるよう体力を0にします。死亡イベントは発生しません
 			configuration.SetHealth(0);
 			OnRemoved();
 		}
 
 		/// <summary>
-		/// Fires kill events
+		/// killイベントを発火します
 		/// </summary>
 		void OnDeath()
 		{
@@ -101,7 +101,7 @@ namespace Core.Health
 		}
 		
 		/// <summary>
-		/// Fires the removed event
+		/// removedイベントを発火します
 		/// </summary>
 		void OnRemoved()
 		{
@@ -112,7 +112,7 @@ namespace Core.Health
 		}
 		
 		/// <summary>
-		/// Event fired when Damageable takes critical damage
+		/// Damageableが致命的なダメージを受けたときに発生するイベント
 		/// </summary>
 		void OnConfigurationDied(HealthChangeInfo changeInfo)
 		{

@@ -5,26 +5,26 @@ using UnityEngine;
 namespace TowerDefense.Towers.TowerLaunchers
 {
 	/// <summary>
-	/// An implementation of the tower launcher for hitscan attacks
+	/// Hitscan攻撃用Tower Launcherの実装
 	/// </summary>
 	public class HitscanLauncher : Launcher
 	{
 		/// <summary>
-		/// The particle system used for providing launch feedback
+		/// 発射フィードバックに使うParticle System
 		/// </summary>
 		public ParticleSystem fireParticleSystem;
 
 
 		/// <summary>
-		/// Assigns the correct damage to the hitscan object and
-		/// attacks the enemy immediately.
-		/// Early return if there is not HitscanAttack.cs attached to the attact object
+		/// Hitscanオブジェクトに正しいダメージを設定し、
+		/// 敵を即座に攻撃します。
+		/// 攻撃オブジェクトにHitscanAttack.csがアタッチされていない場合は早期returnします
 		/// </summary>
 		/// <param name="enemy">
-		/// The enemy this tower is targeting
+		/// このTowerが狙っている敵
 		/// </param>
 		/// <param name="attack">
-		/// The attacking component used to damage the enemy
+		/// 敵にダメージを与えるために使う攻撃コンポーネント
 		/// </param>
 		/// <param name="firingPoint"></param>
 		public override void Launch(Targetable enemy, GameObject attack, Transform firingPoint)

@@ -8,108 +8,108 @@ using Random = UnityEngine.Random;
 namespace TowerDefense.Targetting
 {
 	/// <summary>
-	/// Class used to track targets for an affector
+	/// Affector用のターゲットを追跡するクラス
 	/// </summary>
 	public class Targetter : MonoBehaviour
 	{
 		/// <summary>
-		/// Fires when a targetable enters the target collider
+		/// Targetableが対象Colliderに入ったときに発火します
 		/// </summary>
 		public event Action<Targetable> targetEntersRange;
 
 		/// <summary>
-		/// Fires when a targetable exits the target collider
+		/// Targetableが対象Colliderから出たときに発火します
 		/// </summary>
 		public event Action<Targetable> targetExitsRange;
 
 		/// <summary>
-		/// Fires when an appropriate target is found
+		/// 適切なターゲットが見つかったときに発火します
 		/// </summary>
 		public event Action<Targetable> acquiredTarget;
 
 		/// <summary>
-		/// Fires when the current target was lost
+		/// 現在のターゲットを見失ったときに発火します
 		/// </summary>
 		public event Action lostTarget;
 
 		/// <summary>
-		/// The transform to point at the target
+		/// ターゲットへ向けるTransform
 		/// </summary>
 		public Transform turret;
 
 		/// <summary>
-		/// The range of the turret's x rotation
+		/// タレットのX回転範囲
 		/// </summary>
 		public Vector2 turretXRotationRange = new Vector2(0, 359);
 
 		/// <summary>
-		/// If m_Turret rotates freely or only on y;
+		/// m_Turretが自由に回転するか、Y軸だけで回転するか
 		/// </summary>
 		public bool onlyYTurretRotation;
 
 		/// <summary>
-		/// The search rate in searches per second
+		/// 1秒あたりの検索回数
 		/// </summary>
 		public float searchRate;
 
 		/// <summary>
-		/// Y rotation speed while the turret is idle in degrees per second
+		/// タレット待機中のY回転速度（度/秒）
 		/// </summary>
 		public float idleRotationSpeed = 39f;
 
 		/// <summary>
-		/// The time it takes for the tower to correct its x rotation on idle in seconds
+		/// Towerが待機中にX回転を補正するまでの時間（秒）
 		/// </summary>
 		public float idleCorrectionTime = 2.0f;
 
 		/// <summary>
-		/// The collider attached to the targetter
+		/// TargetterにアタッチされたCollider
 		/// </summary>
 		public Collider attachedCollider;
 
 		/// <summary>
-		/// How long the turret waits in its idle form before spinning in seconds
+		/// タレットが回転を始める前に待機状態で待つ時間（秒）
 		/// </summary>
 		public float idleWaitTime = 2.0f;
 
 		/// <summary>
-		/// The current targetables in the collider
+		/// Collider内にいる現在のTargetable
 		/// </summary>
 		protected List<Targetable> m_TargetsInRange = new List<Targetable>();
 
 		/// <summary>
-		/// The seconds until a search is allowed
+		/// 検索が可能になるまでの秒数
 		/// </summary>
 		protected float m_SearchTimer = 0.0f;
 
 		/// <summary>
-		/// The seconds until the tower starts spinning
+		/// Towerが回転を始めるまでの秒数
 		/// </summary>
 		protected float m_WaitTimer = 0.0f;
 
 		/// <summary>
-		/// The current targetable
+		/// 現在のTargetable
 		/// </summary>
 		protected Targetable m_CurrrentTargetable;
 
 		/// <summary>
-		/// Counter used for x rotation correction
+		/// X回転補正に使うカウンター
 		/// </summary>
 		protected float m_XRotationCorrectionTime;
 
 		/// <summary>
-		/// If there was a targetable in the last frame
+		/// 前フレームにTargetableがいたかどうか
 		/// </summary>
 		protected bool m_HadTarget;
 
 		/// <summary>
-		/// How fast this turret is spinning
+		/// このタレットの回転速度
 		/// </summary>
 		protected float m_CurrentRotationSpeed;
 
 		/// <summary>
-		/// returns the radius of the collider whether
-		/// its a sphere or capsule
+		/// Colliderがどちらの種類でも半径を返します
+		/// SphereまたはCapsuleのどちらでも
 		/// </summary>
 		public float effectRadius
 		{
@@ -130,12 +130,12 @@ namespace TowerDefense.Targetting
 		}
 
 		/// <summary>
-		/// The alignment of the affector
+		/// Affectorの属性
 		/// </summary>
 		public IAlignmentProvider alignment;
 
 		/// <summary>
-		/// Returns the current target
+		/// 現在のターゲットを返します
 		/// </summary>
 		public Targetable GetTarget()
 		{
@@ -143,7 +143,7 @@ namespace TowerDefense.Targetting
 		}
 
 		/// <summary>
-		/// Clears the list of current targets and clears all events
+		/// 現在のターゲットリストと全イベントをクリアします
 		/// </summary>
 		public void ResetTargetter()
 		{
@@ -155,7 +155,7 @@ namespace TowerDefense.Targetting
 			acquiredTarget = null;
 			lostTarget = null;
 
-			// Reset turret facing
+			// タレットの向きをリセットします
 			if (turret != null)
 			{
 				turret.localRotation = Quaternion.identity;
@@ -163,8 +163,8 @@ namespace TowerDefense.Targetting
 		}
 
 		/// <summary>
-		/// Returns all the targets within the collider. This list must not be changed as it is the working
-		/// list of the targetter. Changing it could break the targetter
+		/// Collider内のすべてのターゲットを返します。このリストは処理に使っているため変更しないでください
+		/// Targetterのリストです。変更するとTargetterが壊れる可能性があります
 		/// </summary>
 		public List<Targetable> GetAllTargets()
 		{
@@ -172,10 +172,10 @@ namespace TowerDefense.Targetting
 		}
 
 		/// <summary>
-		/// Checks if the targetable is a valid target
+		/// Targetableが有効なターゲットか確認します
 		/// </summary>
 		/// <param name="targetable"></param>
-		/// <returns>true if targetable is vaild, false if not</returns>
+		/// <returns>Targetableが有効ならtrue、そうでなければfalse</returns>
 		protected virtual bool IsTargetableValid(Targetable targetable)
 		{
 			if (targetable == null)
@@ -191,9 +191,9 @@ namespace TowerDefense.Targetting
 		}
 
 		/// <summary>
-		/// On exiting the trigger, a valid targetable is removed from the tracking list.
+		/// Triggerから出たとき、有効なTargetableを追跡リストから削除します。
 		/// </summary>
-		/// <param name="other">The other collider in the collision</param>
+		/// <param name="other">衝突した相手のCollider</param>
 		protected virtual void OnTriggerExit(Collider other)
 		{
 			var targetable = other.GetComponent<Targetable>();
@@ -213,15 +213,15 @@ namespace TowerDefense.Targetting
 			}
 			else
 			{
-				// Only need to remove if we're not our actual target, otherwise OnTargetRemoved will do the work above
+				// 実際のターゲットでない場合だけ削除します。実際のターゲットの場合は上のOnTargetRemovedが処理します
 				targetable.removed -= OnTargetRemoved;
 			}
 		}
  
 		/// <summary>
-		/// On entering the trigger, a valid targetable is added to the tracking list.
+		/// Triggerに入ったとき、有効なTargetableを追跡リストに追加します。
 		/// </summary>
-		/// <param name="other">The other collider in the collision</param>
+		/// <param name="other">衝突した相手のCollider</param>
 		protected virtual void OnTriggerEnter(Collider other)
 		{
 			var targetable = other.GetComponent<Targetable>();
@@ -238,9 +238,9 @@ namespace TowerDefense.Targetting
 		}
 
 		/// <summary>
-		/// Returns the nearest targetable within the currently tracked targetables 
+		/// 現在追跡中のTargetableの中で最も近いものを返します
 		/// </summary>
-		/// <returns>The nearest targetable if there is one, null otherwise</returns>
+		/// <returns>最も近いTargetable。存在しない場合はnull</returns>
 		protected virtual Targetable GetNearestTargetable()
 		{
 			int length = m_TargetsInRange.Count;
@@ -272,7 +272,7 @@ namespace TowerDefense.Targetting
 		}
 
 		/// <summary>
-		/// Starts the search timer
+		/// 検索タイマーを開始します
 		/// </summary>
 		protected virtual void Start()
 		{
@@ -281,7 +281,7 @@ namespace TowerDefense.Targetting
 		}
 
 		/// <summary>
-		/// Checks if any targets are destroyed and aquires a new targetable if appropriate
+		/// 破壊されたターゲットがあるか確認し、必要に応じて新しいTargetableを取得します
 		/// </summary>
 		protected virtual void Update()
 		{
@@ -306,8 +306,8 @@ namespace TowerDefense.Targetting
 		}
 
 		/// <summary>
-		/// Fired by the agents died event or when the current target moves out of range,
-		/// Fires the lostTarget event.
+		/// Agentの死亡イベント、または現在のターゲットが範囲外に出たときに呼ばれます。
+		/// lostTargetイベントを発火します。
 		/// </summary>
 		void OnTargetRemoved(DamageableBehaviour target)
 		{
@@ -323,7 +323,7 @@ namespace TowerDefense.Targetting
 				m_CurrrentTargetable = null;
 				m_XRotationCorrectionTime = 0.0f;
 			}
-			else //wasnt the current target, find and remove from targets list
+			else //現在のターゲットではないため、ターゲットリストから探して削除します
 			{
 				for (int i = 0; i < m_TargetsInRange.Count; i++)
 				{
@@ -337,7 +337,7 @@ namespace TowerDefense.Targetting
 		}
 
 		/// <summary>
-		/// Aims the turret at the current target
+		/// タレットを現在のターゲットへ向けます
 		/// </summary>
 		protected virtual void AimTurret()
 		{
@@ -346,7 +346,7 @@ namespace TowerDefense.Targetting
 				return;
 			}
 
-			if (m_CurrrentTargetable == null) // do idle rotation
+			if (m_CurrrentTargetable == null) // 待機中の回転を行います
 			{
 				if (m_WaitTimer > 0)
 				{
@@ -378,7 +378,7 @@ namespace TowerDefense.Targetting
 				Vector3 direction = targetPosition - turret.position;
 				Quaternion look = Quaternion.LookRotation(direction, Vector3.up);
 				Vector3 lookEuler = look.eulerAngles;
-				// We need to convert the rotation to a -180/180 wrap so that we can clamp the angle with a min/max
+				// 最小値と最大値で角度を制限できるように、回転を-180から180の範囲に変換します
 				float x = Wrap180(lookEuler.x);
 				lookEuler.x = Mathf.Clamp(x, turretXRotationRange.x, turretXRotationRange.y);
 				look.eulerAngles = lookEuler;
@@ -387,7 +387,7 @@ namespace TowerDefense.Targetting
 		}
 
 		/// <summary>
-		/// A simply function to convert an angle to a -180/180 wrap
+		/// 角度を-180から180の範囲に変換するシンプルな関数
 		/// </summary>
 		static float Wrap180(float angle)
 		{

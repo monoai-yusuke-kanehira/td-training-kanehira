@@ -3,7 +3,7 @@
 namespace ActionGameFramework.Projectiles
 {
 	/// <summary>
-	/// A projectile that shoots upwards and then starts homing
+	/// 上向きに発射された後、追尾を開始する Projectile
 	/// </summary>
 	public class WobblingHomingProjectile : HomingLinearProjectile
 	{
@@ -15,47 +15,47 @@ namespace ActionGameFramework.Projectiles
 		}
 
 		/// <summary>
-		/// The time the projectile wobbles upward is randomized from this range
+		/// Projectile が上向きに揺れながら進む時間を、この範囲からランダムに決める
 		/// </summary>
 		public Vector2 wobbleTimeRange = new Vector2(1, 2);
 
 		/// <summary>
-		/// The number of wobble direction changes per second
+		/// 1 秒あたりに揺れ方向が変わる回数
 		/// </summary>
 		public float wobbleDirectionChangeSpeed = 4;
 
 		/// <summary>
-		/// The intensity of the wobble
+		/// 揺れの強さ
 		/// </summary>
 		public float wobbleMagnitude = 7;
 
 		/// <summary>
-		/// The time the projectile takes to turn and home
+		/// Projectile が旋回して追尾に入るまでの時間
 		/// </summary>
 		public float turningTime = 0.5f;
 
 		/// <summary>
-		/// State of projectile
+		/// Projectile の状態
 		/// </summary>
 		State m_State;
 
 		/// <summary>
-		/// Seconds wobbling
+		/// 揺れている経過秒数
 		/// </summary>
 		protected float m_CurrentWobbleTime;
 
 		/// <summary>
-		/// Total time to wobble
+		/// 揺れる合計時間
 		/// </summary>
 		protected float m_WobbleDuration;
 
 		/// <summary>
-		/// Seconds turning to face homing target
+		/// 追尾目標の方向へ旋回している経過秒数
 		/// </summary>
 		protected float m_CurrentTurnTime;
 
 		/// <summary>
-		/// Seconds for current turn
+		/// 現在の旋回にかかった秒数
 		/// </summary>
 		protected float m_WobbleChangeTime;
 
@@ -64,7 +64,7 @@ namespace ActionGameFramework.Projectiles
 
 		protected override void Update()
 		{
-			// regular HomingLinearProjectile behaviour, handles a null homing target
+			// 通常の HomingLinearProjectile の挙動。追尾目標が null の場合も処理する
 			if (m_HomingTarget == null || m_State == State.Targeting)
 			{
 				base.Update();
@@ -72,7 +72,7 @@ namespace ActionGameFramework.Projectiles
 			}
 			switch (m_State)
 			{
-				// wobble the projectile
+				// Projectile を揺らす
 				case State.Wobbling:
 					m_CurrentWobbleTime += Time.deltaTime;
 					if (m_CurrentWobbleTime >= m_WobbleDuration)
@@ -94,7 +94,7 @@ namespace ActionGameFramework.Projectiles
 
 					m_Rigidbody.rotation = Quaternion.LookRotation(m_Rigidbody.linearVelocity);
 					break;
-				// turn the projectile to face the homing target
+				// 追尾目標の方向を向くように Projectile を旋回させる
 				case State.Turning:
 					m_CurrentTurnTime += Time.deltaTime;
 					Quaternion aimDirection = Quaternion.LookRotation(GetHeading());
@@ -110,7 +110,7 @@ namespace ActionGameFramework.Projectiles
 			}
 		}
 
-		// select first wobble vector and set to wobble state
+		// 最初の揺れベクトルを選び、揺れ状態に設定する
 		protected override void Fire(Vector3 firingVector)
 		{
 			m_TargetWobbleVector = new Vector3(Random.Range(-wobbleMagnitude, wobbleMagnitude),

@@ -1,27 +1,27 @@
 ﻿namespace ActionGameFramework.Projectiles
 {
 	/// <summary>
-	/// Ballistic arc calculation priorities/preferences.
+	/// 弾道の放物線計算で使う優先度と設定
 	/// </summary>
 	public enum BallisticArcHeight
 	{
 		/// <summary>
-		/// High "underarm" arc
+		/// 高い「下手投げ」軌道
 		/// </summary>
 		UseHigh,
 
 		/// <summary>
-		/// Low "overarm" arc
+		/// 低い「上手投げ」軌道
 		/// </summary>
 		UseLow,
 
 		/// <summary>
-		/// Use high arc if valid, fall back to low if possible.
+		/// 高い軌道が有効なら使い、可能なら低い軌道にフォールバックする
 		/// </summary>
 		PreferHigh,
 
 		/// <summary>
-		/// Use low arc if valid, fall back to high if possible.
+		/// 低い軌道が有効なら使い、可能なら高い軌道にフォールバックする
 		/// </summary>
 		PreferLow
 	}

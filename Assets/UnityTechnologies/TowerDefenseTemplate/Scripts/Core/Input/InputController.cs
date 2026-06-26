@@ -13,7 +13,7 @@ using TouchPhase = UnityEngine.InputSystem.TouchPhase;
 namespace Core.Input
 {
     /// <summary>
-    /// Class to manage tap/drag/pinch gestures and other controls updated for Unity 6.3
+    /// タップ、ドラッグ、ピンチなどの操作を管理するクラスです。Unity 6.3向けに更新されています
     /// </summary>
     public class InputController : Singleton<InputController>
     {
@@ -50,7 +50,7 @@ namespace Core.Input
         {
             base.Awake();
             
-            // Requerido para usar Touch.activeTouches en el New Input System
+            // New Input SystemでTouch.activeTouchesを使うために必要です
             if (!EnhancedTouchSupport.enabled)
             {
                 EnhancedTouchSupport.Enable();
@@ -182,7 +182,7 @@ namespace Core.Input
             {
                 spunWheel?.Invoke(new WheelInfo
                 {
-                    zoomAmount = (scrollY / 120f) * mouseWheelSensitivity // Normalizado porque el New System usa valores altos
+                    zoomAmount = (scrollY / 120f) * mouseWheelSensitivity // New Systemでは大きな値を使うため正規化します
                 });
             }
         }

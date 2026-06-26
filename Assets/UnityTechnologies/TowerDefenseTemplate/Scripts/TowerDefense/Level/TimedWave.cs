@@ -4,18 +4,18 @@ using UnityEngine;
 namespace TowerDefense.Level
 {
 	/// <summary>
-	/// A wave implementation that triggers the waveCompleted event after an elapsed amount of time
+	/// 一定の時間が経過した後に waveCompleted イベントをトリガーする wave 実装
 	/// </summary>
 	public class TimedWave : Wave
 	{
 		/// <summary>
-		/// The time until the next wave is started
+		/// 次のウェーブが開始されるまでの時間
 		/// </summary>
 		[Tooltip("The time until the next wave is started")]
 		public float timeToNextWave = 10f;
 
 		/// <summary>
-		/// The timer used to start the next wave
+		/// 次のウェーブを開始するために使用されるタイマー
 		/// </summary>
 		protected Timer m_WaveTimer;
 
@@ -25,7 +25,7 @@ namespace TowerDefense.Level
 		}
 
 		/// <summary>
-		/// Initializes the Wave
+		/// ウェーブを初期化します
 		/// </summary>
 		public override void Init()
 		{
@@ -39,7 +39,7 @@ namespace TowerDefense.Level
 		}
 
 		/// <summary>
-		/// Handles spawning the current agent and sets up the next agent for spawning
+		/// 現在のエージェントの生成を処理し、次のエージェントの生成をセットアップします
 		/// </summary>
 		protected override void SpawnCurrent()
 		{

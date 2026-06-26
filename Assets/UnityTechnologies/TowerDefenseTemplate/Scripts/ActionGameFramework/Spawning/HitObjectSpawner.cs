@@ -4,22 +4,22 @@ using UnityEngine;
 namespace ActionGameFramework.Spawning
 {
 	/// <summary>
-	/// Hit object spawner - provides a public method for spawning game objects based on a hit
-	/// The spawned game object may have a HitObject component, which consumes the hit information
+	/// ヒット情報に基づいて GameObject を生成する public メソッドを提供する Spawner
+	/// 生成された GameObject には、ヒット情報を受け取る HitObject コンポーネントが付いている場合がある
 	/// </summary>
 	public abstract class HitObjectSpawner : MonoBehaviour
 	{
 		/// <summary>
-		/// Gets the game object to instantiate.
-		/// This is needed to that we can provide different mechanisms for choosing game objects to instantiate
+		/// 生成する GameObject を取得する
+		/// 生成対象の GameObject を選ぶ仕組みを差し替えられるようにするために必要
 		/// </summary>
-		/// <returns>The game object to instantiate.</returns>
+		/// <returns>生成する GameObject。</returns>
 		protected abstract GameObject GetGameObjectToInstantiate();
 
 		/// <summary>
-		/// The public method for instantiating a hit object - this can be accessed by methods on the DamageableListener
+		/// HitObject を生成する public メソッド。DamageableListener 側のメソッドから呼び出せる
 		/// </summary>
-		/// <param name="hitInfo">Hit info.</param>
+		/// <param name="hitInfo">ヒット情報。</param>
 		public virtual void InstantiateHitObject(HitInfo hitInfo)
 		{
 			GameObject gameObjectToInstantiate = GetGameObjectToInstantiate();

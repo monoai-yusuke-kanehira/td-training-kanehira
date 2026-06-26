@@ -1,17 +1,17 @@
 ﻿namespace Core.UI
 {
 	/// <summary>
-	/// Base interface for menu pages
+	/// メニューページの基底インターフェース
 	/// </summary>
 	public interface IMainMenuPage
 	{
 		/// <summary>
-		/// Deactivates this page
+		/// このページを非表示にする
 		/// </summary>
 		void Hide();
 
 		/// <summary>
-		/// Activates this page
+		/// このページを表示する
 		/// </summary>
 		void Show();
 	}

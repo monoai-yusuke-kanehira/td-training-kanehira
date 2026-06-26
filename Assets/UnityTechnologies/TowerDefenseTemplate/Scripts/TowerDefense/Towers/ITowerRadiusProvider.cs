@@ -4,7 +4,7 @@ using UnityEngine;
 namespace TowerDefense.Towers
 {
 	/// <summary>
-	/// An interface for tower affectors to implement in order to visualize their affect radius
+	/// Tower‚ÌAffector‚ª‰e‹¿”ÍˆÍ‚ð•\Ž¦‚·‚é‚½‚ß‚ÉŽÀ‘•‚·‚éInterface
 	/// </summary>
 	public interface ITowerRadiusProvider
 	{

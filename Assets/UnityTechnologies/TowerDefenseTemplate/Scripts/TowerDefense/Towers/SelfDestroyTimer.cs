@@ -5,27 +5,27 @@ using UnityEngine.Events;
 namespace TowerDefense.Towers
 {
 	/// <summary>
-	/// A helper component for self destruction
+	/// 自壊処理用の補助コンポーネント
 	/// </summary>
 	public class SelfDestroyTimer : MonoBehaviour
 	{
 		/// <summary>
-		/// The time before destruction
+		/// 破棄までの時間
 		/// </summary>
 		public float time = 5;
 
 		/// <summary>
-		/// The controlling timer
+		/// 制御用タイマー
 		/// </summary>
 		public Timer timer;
 		
 		/// <summary>
-		/// The exposed death callback
+		/// 公開されている死亡時コールバック
 		/// </summary>
 		public UnityEvent death;
 
 		/// <summary>
-		/// Potentially initialize the time if necessary
+		/// 必要に応じて時間を初期化します
 		/// </summary>
 		protected virtual void OnEnable()
 		{
@@ -40,7 +40,7 @@ namespace TowerDefense.Towers
 		}
 
 		/// <summary>
-		/// Update the timer
+		/// タイマーを更新します
 		/// </summary>
 		protected virtual void Update()
 		{
@@ -52,7 +52,7 @@ namespace TowerDefense.Towers
 		}
 
 		/// <summary>
-		/// Fires at the end of timer
+		/// タイマー終了時に発火します
 		/// </summary>
 		protected virtual void OnTimeEnd()
 		{

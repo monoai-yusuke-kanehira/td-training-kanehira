@@ -7,38 +7,38 @@ using Random = UnityEngine.Random;
 namespace ActionGameFramework.Health
 {
 	/// <summary>
-	/// A component that does damage to damageables
+	/// Damageable にダメージを与えるコンポーネント
 	/// </summary>
 	public class Damager : MonoBehaviour
 	{
 		/// <summary>
-		/// The amount of damage this damager does
+		/// この Damager が与えるダメージ量
 		/// </summary>
 		public float damage;
 
 		/// <summary>
-		/// The event that fires off when the damager has been damaged
+		/// Damager がダメージを与えたときに発火するイベント
 		/// </summary>
 		public Action<Vector3> hasDamaged;
 
 		/// <summary>
-		/// Random chance to spawn collision projectile prefab
+		/// 衝突時の Projectile Prefab を生成するランダム確率
 		/// </summary>
 		[Range(0, 1)]
 		public float chanceToSpawnCollisionPrefab = 1.0f;
 
 		/// <summary>
-		/// The particle system to fire off when the damager attacks
+		/// Damager が攻撃したときに再生する ParticleSystem
 		/// </summary>
 		public ParticleSystem collisionParticles;
 
 		/// <summary>
-		/// The alignment of the damager
+		/// Damager の所属
 		/// </summary>
 		public SerializableIAlignmentProvider alignment;
 
 		/// <summary>
-		/// Gets the alignment of the damager
+		/// Damager の所属を取得する
 		/// </summary>
 		public IAlignmentProvider alignmentProvider
 		{
@@ -46,11 +46,11 @@ namespace ActionGameFramework.Health
 		}
 
 		/// <summary>
-		/// The logic to set the value of the damage
+		/// ダメージ値を設定する処理
 		/// </summary>
 		/// <param name="damageAmount">
-		/// The amount to set the damage by, 
-		/// will not be set for values less than zero
+		/// 設定するダメージ量。
+		/// 0 未満の値は設定されない
 		/// </param>
 		public void SetDamage(float damageAmount)
 		{
@@ -62,7 +62,7 @@ namespace ActionGameFramework.Health
 		}
 
 		/// <summary>
-		/// Damagable will tell damager that it has successful hurt the damagable
+		/// Damageable が正常にダメージを受けたことを Damager に通知する
 		/// </summary>
 		public void HasDamaged(Vector3 point, IAlignmentProvider otherAlignment)
 		{
@@ -73,7 +73,7 @@ namespace ActionGameFramework.Health
 		}
 
 		/// <summary>
-		/// Instantiate particle system and play it
+		/// ParticleSystem を生成して再生する
 		/// </summary>
 		void OnCollisionEnter(Collision other)
 		{

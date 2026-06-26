@@ -7,22 +7,22 @@ using UnityEngine.UI;
 namespace TowerDefense.UI.HUD
 {
 	/// <summary>
-	/// A simple implementation of UI for player base health
+	/// プレイヤー拠点の体力を表示するUIのシンプルな実装
 	/// </summary>
 	public class PlayerBaseHealth : MonoBehaviour
 	{
 		/// <summary>
-		/// The text element to display information on
+		/// 情報を表示するText要素
 		/// </summary>
 		public Text display;
 
 		/// <summary>
-		/// The highest health that the base can go to
+		/// 拠点が取り得る最大体力
 		/// </summary>
 		protected float m_MaxHealth;
 
 		/// <summary>
-		/// Get the max health of the player base
+		/// プレイヤー拠点の最大体力を取得する
 		/// </summary>
 		protected virtual void Start()
 		{
@@ -43,10 +43,10 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Subscribes to the player base health died event
+		/// プレイヤー拠点の体力変更イベントを購読する
 		/// </summary>
 		/// <param name="info">
-		/// The associated health change information
+		/// 関連する体力変更情報
 		/// </param>
 		protected virtual void OnBaseDamaged(HealthChangeInfo info)
 		{
@@ -54,7 +54,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Get the current health of the home base and display it on m_Display
+		/// Home Baseの現在の体力を取得し、m_Displayに表示する
 		/// </summary>
 		protected void UpdateDisplay()
 		{

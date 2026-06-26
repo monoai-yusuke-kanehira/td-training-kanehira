@@ -4,22 +4,22 @@ using UnityEngine;
 namespace TowerDefense.Towers.Projectiles
 {
 	/// <summary>
-	/// For objects that destroyer themselves on contact
+	/// 接触時に自身を破棄するオブジェクト用
 	/// </summary>
 	public class ContactDestroyer : MonoBehaviour
 	{
 		/// <summary>
-		/// The y-value of the position the object will destroy itself
+		/// オブジェクトが自身を破棄するY座標値
 		/// </summary>
 		public float yDestroyPoint = -50;
 
 		/// <summary>
-		/// The attached collider
+		/// アタッチされているCollider
 		/// </summary>
 		protected Collider m_AttachedCollider;
 
 		/// <summary>
-		/// Caches the attached collider
+		/// アタッチされているColliderをキャッシュします
 		/// </summary>
 		protected virtual void Awake()
 		{
@@ -27,7 +27,7 @@ namespace TowerDefense.Towers.Projectiles
 		}
 
 		/// <summary>
-		/// Checks the y-position against <see cref="yDestroyPoint"/>
+		/// Y座標を<see cref="yDestroyPoint"/>と比較します
 		/// </summary>
 		protected virtual void Update()
 		{
@@ -43,7 +43,7 @@ namespace TowerDefense.Towers.Projectiles
 		}
 
 		/// <summary>
-		/// Returns the object to pool if possible, otherwise destroys
+		/// 可能ならオブジェクトをPoolに戻し、できなければ破棄します
 		/// </summary>
 		void ReturnToPool()
 		{

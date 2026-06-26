@@ -4,18 +4,18 @@ using UnityEngine.SceneManagement;
 namespace TowerDefense.UI
 {
 	/// <summary>
-	/// Simple component to load scenes by name
+	/// 名前でシーンを読み込むシンプルなコンポーネント
 	/// </summary>
 	public class SceneLoader : MonoBehaviour
 	{
 		/// <summary>
-		/// Name of the scene to load
+		/// 読み込むシーンの名前
 		/// </summary>
 		public string sceneToLoadName = "LevelSelect";
 
 		/// <summary>
-		/// Loads the scene from <see cref="sceneToLoadName" />
-		/// if a scene with that name exists
+		/// その名前のシーンが存在する場合、
+		/// <see cref="sceneToLoadName" /> からシーンを読み込む
 		/// </summary>
 		public void LoadScene()
 		{
@@ -23,7 +23,7 @@ namespace TowerDefense.UI
 		}
 
 		/// <summary>
-		/// Restarts the current scene
+		/// 現在のシーンを再読み込みする
 		/// </summary>
 		public void RestartCurrentScene()
 		{

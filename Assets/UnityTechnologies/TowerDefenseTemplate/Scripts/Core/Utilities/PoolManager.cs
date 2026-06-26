@@ -4,22 +4,22 @@ using UnityEngine;
 namespace Core.Utilities
 {
 	/// <summary>
-	/// Managers a dictionary of pools, getting and returning 
+	/// poolのDictionaryを管理し、取得と返却を扱う
 	/// </summary>
 	public class PoolManager : Singleton<PoolManager>
 	{
 		/// <summary>
-		/// List of poolables that will be used to initialize corresponding pools
+		/// 対応するpoolの初期化に使うPoolableのリスト
 		/// </summary>
 		public List<Poolable> poolables;
 
 		/// <summary>
-		/// Dictionary of pools, key is the prefab
+		/// poolのDictionary。キーはprefab
 		/// </summary>
 		protected Dictionary<Poolable, AutoComponentPrefabPool<Poolable>> m_Pools;
 
 		/// <summary>
-		/// Gets a poolable component from the corresponding pool
+		/// 対応するpoolからPoolableコンポーネントを取得する
 		/// </summary>
 		/// <param name="poolablePrefab"></param>
 		/// <returns></returns>
@@ -39,7 +39,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Returns the poolable component to its component pool
+		/// Poolableコンポーネントを所属するコンポーネントpoolへ返す
 		/// </summary>
 		/// <param name="poolable"></param>
 		public void ReturnPoolable(Poolable poolable)
@@ -48,7 +48,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Initializes the dicionary of pools
+		/// poolのDictionaryを初期化する
 		/// </summary>
 		protected void Start()
 		{

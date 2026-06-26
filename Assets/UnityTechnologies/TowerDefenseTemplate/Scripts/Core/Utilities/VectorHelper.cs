@@ -6,17 +6,17 @@ namespace Core.Utilities
 	public static class VectorHelper
 	{
 		/// <summary>
-		/// A helper function that finds the average position of several component objects, 
-		/// specifically because they have transforms
+		/// 複数のコンポーネントオブジェクトの平均位置を求めるヘルパー関数
+		/// Transformを持っていることを前提にしている
 		/// </summary>
 		/// <param name="components">
-		/// The list of components to average
+		/// 平均を取るコンポーネントのリスト
 		/// </param>
 		/// <typeparam name="TComponent">
-		/// The Unity Component which has a transform
+		/// Transformを持つUnityコンポーネント
 		/// </typeparam>
 		/// <returns>
-		/// The average position
+		/// 平均位置
 		/// </returns>
 		public static Vector3 FindAveragePosition<TComponent>(TComponent[] components) where TComponent : Component
 		{
@@ -33,17 +33,17 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// A helper function that finds the average position of several component objects, 
-		/// specifically because they have transforms
+		/// 複数のコンポーネントオブジェクトの平均位置を求めるヘルパー関数
+		/// Transformを持っていることを前提にしている
 		/// </summary>
 		/// <param name="components">
-		/// The list of components to average
+		/// 平均を取るコンポーネントのリスト
 		/// </param>
 		/// <typeparam name="TComponent">
-		/// The Unity Component which has a transform
+		/// Transformを持つUnityコンポーネント
 		/// </typeparam>
 		/// <returns>
-		/// The average velocity
+		/// 平均速度
 		/// </returns>
 		public static Vector3 FindAverageVelocity<TComponent>(TComponent[] components) where TComponent : Component
 		{
@@ -65,17 +65,17 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// A helper function that finds the average position of several component objects, 
-		/// specifically because they have transforms
+		/// 複数のコンポーネントオブジェクトの平均位置を求めるヘルパー関数
+		/// Transformを持っていることを前提にしている
 		/// </summary>
 		/// <param name="components">
-		/// The list of components to average
+		/// 平均を取るコンポーネントのリスト
 		/// </param>
 		/// <typeparam name="TComponent">
-		/// The Unity Component which has a transform
+		/// Transformを持つUnityコンポーネント
 		/// </typeparam>
 		/// <returns>
-		/// The average position
+		/// 平均位置
 		/// </returns>
 		public static Vector3 FindAveragePosition<TComponent>(List<TComponent> components) where TComponent : Component
 		{
@@ -92,17 +92,17 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// A helper function that finds the average position of several component objects, 
-		/// specifically because they have transforms
+		/// 複数のコンポーネントオブジェクトの平均位置を求めるヘルパー関数
+		/// Transformを持っていることを前提にしている
 		/// </summary>
 		/// <param name="components">
-		/// The list of components to average
+		/// 平均を取るコンポーネントのリスト
 		/// </param>
 		/// <typeparam name="TComponent">
-		/// The Unity Component which has a transform
+		/// Transformを持つUnityコンポーネント
 		/// </typeparam>
 		/// <returns>
-		/// The average velocity
+		/// 平均速度
 		/// </returns>
 		public static Vector3 FindAverageVelocity<TComponent>(List<TComponent> components) where TComponent : Component
 		{

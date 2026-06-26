@@ -4,18 +4,18 @@ using Core.Utilities;
 namespace Core.Health
 {
 	/// <summary>
-	/// An interface for objects which can provide a team/alignment for damage purposes
+	/// ダメージ判定用のチームや所属を提供できるオブジェクトのインターフェース
 	/// </summary>
 	public interface IAlignmentProvider : ISerializableInterface
 	{
 		/// <summary>
-		/// Gets whether this alignment can harm another
+		/// この所属が別の所属にダメージを与えられるかどうかを取得します
 		/// </summary>
 		bool CanHarm(IAlignmentProvider other);
 	}
 
 	/// <summary>
-	/// Concrete serializable version of interface above
+	/// 上記インターフェースのシリアライズ可能な具象版
 	/// </summary>
 	[Serializable]
 	public class SerializableIAlignmentProvider : SerializableInterface<IAlignmentProvider>

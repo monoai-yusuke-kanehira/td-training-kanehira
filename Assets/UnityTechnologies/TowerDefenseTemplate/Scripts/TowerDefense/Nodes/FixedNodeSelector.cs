@@ -6,19 +6,19 @@ using UnityEngine;
 namespace TowerDefense.Nodes
 {
 	/// <summary>
-	/// Deterministically selects a node in the order it appears on the list
+	/// リストに並んでいる順番でNodeを決定的に選択します
 	/// </summary>
 	public class FixedNodeSelector : NodeSelector
 	{
 		/// <summary>
-		/// Index to keep track of what node should be selected next
+		/// 次に選択するNodeを追跡するためのインデックス
 		/// </summary>
 		protected int m_NodeIndex;
 
 		/// <summary>
-		/// Selects the next node using <see cref="m_NodeIndex" />
+		/// <see cref="m_NodeIndex" />を使って次のNodeを選択します
 		/// </summary>
-		/// <returns>The next selected node, or null if there are no valid nodes</returns>
+		/// <returns>次に選択されたNode。有効なNodeがない場合はnull</returns>
 		public override Node GetNextNode()
 		{
 			if (linkedNodes.Next(ref m_NodeIndex, true))

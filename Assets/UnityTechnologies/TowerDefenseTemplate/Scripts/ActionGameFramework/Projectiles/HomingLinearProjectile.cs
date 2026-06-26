@@ -6,7 +6,7 @@ using UnityEngine;
 namespace ActionGameFramework.Projectiles
 {
 	/// <summary>
-	/// Basic override of LinearProjectile that allows them to adjust their path in-flight to intercept a designated target.
+	/// 指定した目標を迎撃できるよう、飛行中に進路を調整する LinearProjectile の基本的な派生クラス
 	/// </summary>
 	public class HomingLinearProjectile : LinearProjectile
 	{
@@ -19,9 +19,9 @@ namespace ActionGameFramework.Projectiles
 		Vector3 m_TargetVelocity;
 
 		/// <summary>
-		/// Sets the target transform that will be homed in on once fired.
+		/// 発射後に追尾する目標 Transform を設定する
 		/// </summary>
-		/// <param name="target">Transform of the target to home in on.</param>
+		/// <param name="target">追尾する目標の Transform。</param>
 		public void SetHomingTarget(Targetable target)
 		{
 			m_HomingTarget = target;

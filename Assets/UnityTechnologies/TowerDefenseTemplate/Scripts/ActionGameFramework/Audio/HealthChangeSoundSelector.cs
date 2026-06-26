@@ -6,32 +6,32 @@ using UnityEngine;
 namespace ActionGameFramework.Audio
 {
 	/// <summary>
-	/// Health change sound selector
+	/// 体力変化用のサウンドセレクター
 	/// </summary>
 	[Serializable]
 	public class HealthChangeSoundSelector
 	{
 		/// <summary>
-		/// The array of health change sounds
-		/// This array should be in ascending order of Health Difference
+		/// 体力変化サウンドの配列
+		/// この配列は体力差の昇順に並べる必要がある
 		/// </summary>
 		[Tooltip("Health change should be in ascending order")]
 		public List<HealthChangeSound> healthChangeSounds;
 
 		/// <summary>
-		/// Gets a value indicating whether this <see cref="ActionGameFramework.Audio.HealthChangeSoundSelector" /> is set up.
+		/// この <see cref="ActionGameFramework.Audio.HealthChangeSoundSelector" /> が設定済みかどうかを取得する
 		/// </summary>
-		/// <value><c>true</c> if there are Health Change Sounds; otherwise, <c>false</c>.</value>
+		/// <value>体力変化サウンドがある場合は <c>true</c>、ない場合は <c>false</c>。</value>
 		public bool isSetUp
 		{
 			get { return healthChangeSounds.Count > 0; }
 		}
 
 		/// <summary>
-		/// Gets the clip from health change info.
+		/// 体力変化情報からクリップを取得する
 		/// </summary>
-		/// <returns>The clip from health change info.</returns>
-		/// <param name="info">The HealthChangeInfo</param>
+		/// <returns>体力変化情報に対応するクリップ。</returns>
+		/// <param name="info">HealthChangeInfo</param>
 		public virtual AudioClip GetClipFromHealthChangeInfo(HealthChangeInfo info)
 		{
 			int count = healthChangeSounds.Count;
@@ -40,8 +40,8 @@ namespace ActionGameFramework.Audio
 			{
 				HealthChangeSound sound = healthChangeSounds[i];
 
-				// if the absolute health change is less than the sound health change 
-				// then this is the sound clip to use 
+				// 体力変化の絶対値がサウンド側の体力変化量以下なら
+				// このサウンドクリップを使用する
 				if (info.absHealthDifference <= sound.healthChange)
 				{
 					return sound.sound;

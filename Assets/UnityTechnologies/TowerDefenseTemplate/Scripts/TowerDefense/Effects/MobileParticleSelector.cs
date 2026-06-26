@@ -3,17 +3,17 @@
 namespace TowerDefense.Effects
 {
 	/// <summary>
-	/// Simple class to switch between two separate game objects depending on whether we're
-	/// on a mobile platform or not
+	/// 状況に応じて 2 つの別個のゲーム オブジェクトを切り替えるための単純なクラス
+	/// モバイルプラットフォーム上かどうか
 	/// </summary>
 	public class MobileParticleSelector : MonoBehaviour
 	{
 		/// <summary>
-		/// System to use on non-mobile platforms
+		/// 非モバイルプラットフォームで使用するシステム
 		/// </summary>
 		public ParticleSystem defaultParticles;
 		/// <summary>
-		/// System to use on mobile platforms
+		/// モバイルプラットフォームで使用するシステム
 		/// </summary>
 		public ParticleSystem mobileParticles;
 

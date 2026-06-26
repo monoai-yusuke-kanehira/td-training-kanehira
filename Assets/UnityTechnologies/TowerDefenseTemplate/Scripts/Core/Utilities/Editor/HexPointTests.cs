@@ -165,10 +165,10 @@ namespace Core.Utilities.Editor
 		public void ZCoordTest(
 			[ValueSource("s_AllPoints")] TestHexPoint hexPoint)
 		{
-			// Arrange
+			// 準備
 			var point = new HexPoint(hexPoint.x, hexPoint.y);
 			
-			// Assert
+			// 検証
 			Assert.AreEqual(hexPoint.z, point.z);
 		}
 		
@@ -176,10 +176,10 @@ namespace Core.Utilities.Editor
 		public void XZCreationTest(
 			[ValueSource("s_AllPoints")] TestHexPoint hexPoint)
 		{
-			// Arrange
+			// 準備
 			var point = HexPoint.FromXZ(hexPoint.x, hexPoint.z);
 			
-			// Assert
+			// 検証
 			Assert.AreEqual(hexPoint.y, point.y);
 		}
 		
@@ -187,10 +187,10 @@ namespace Core.Utilities.Editor
 		public void YZCreationTest(
 			[ValueSource("s_AllPoints")] TestHexPoint hexPoint)
 		{
-			// Arrange
+			// 準備
 			var point = HexPoint.FromYZ(hexPoint.y, hexPoint.z);
 			
-			// Assert
+			// 検証
 			Assert.AreEqual(hexPoint.x, point.x);
 		}
 
@@ -199,14 +199,14 @@ namespace Core.Utilities.Editor
 			[ValueSource("s_ValidPoints")] TestHexPoint source, 
 			[ValueSource("s_LeftRotatedValidPoints")] TestHexPoint expected)
 		{
-			// Arrange
+			// 準備
 			var point = new HexPoint(source.x, source.y);
 			var expectedPoint = new HexPoint(expected.x, expected.y);
 			
-			// Act
+			// 実行
 			point = HexPoint.RotateLeft(point);
 			
-			// Assert
+			// 検証
 			Assert.AreEqual(expectedPoint, point);
 		}
 
@@ -215,15 +215,15 @@ namespace Core.Utilities.Editor
 			[ValueSource("s_ValidPoints")] TestHexPoint source, 
 			[ValueSource("s_LeftOffsetRotatedValidPoints")] TestHexPoint expected)
 		{
-			// Arrange
+			// 準備
 			var point = new HexPoint(source.x, source.y);
 			var expectedPoint = new HexPoint(expected.x, expected.y);
 			var offsetPoint = new HexPoint(s_OffsetPosition.x, s_OffsetPosition.y);
 			
-			// Act
+			// 実行
 			point = HexPoint.RotateLeft(point, offsetPoint);
 			
-			// Assert
+			// 検証
 			Assert.AreEqual(expectedPoint, point);
 		}
 
@@ -232,14 +232,14 @@ namespace Core.Utilities.Editor
 			[ValueSource("s_ValidPoints")] TestHexPoint source, 
 			[ValueSource("s_RightRotatedValidPoints")] TestHexPoint expected)
 		{
-			// Arrange
+			// 準備
 			var point = new HexPoint(source.x, source.y);
 			var expectedPoint = new HexPoint(expected.x, expected.y);
 			
-			// Act
+			// 実行
 			point = HexPoint.RotateRight(point);
 			
-			// Assert
+			// 検証
 			Assert.AreEqual(expectedPoint, point);
 		}
 
@@ -248,15 +248,15 @@ namespace Core.Utilities.Editor
 			[ValueSource("s_ValidPoints")] TestHexPoint source, 
 			[ValueSource("s_RightOffsetRotatedValidPoints")] TestHexPoint expected)
 		{
-			// Arrange
+			// 準備
 			var point = new HexPoint(source.x, source.y);
 			var expectedPoint = new HexPoint(expected.x, expected.y);
 			var offsetPoint = new HexPoint(s_OffsetPosition.x, s_OffsetPosition.y);
 			
-			// Act
+			// 実行
 			point = HexPoint.RotateRight(point, offsetPoint);
 			
-			// Assert
+			// 検証
 			Assert.AreEqual(expectedPoint, point);
 		}
 
@@ -265,15 +265,15 @@ namespace Core.Utilities.Editor
 			[Random(-10000, 10000, 5)] int x, 
 			[Random(-10000, 10000, 5)] int y)
 		{
-			// Arrange
+			// 準備
 			var point = new HexPoint(x, y);
 			var expectedPoint = new HexPoint(x, y);
 			
-			// Act
+			// 実行
 			point = HexPoint.RotateLeft(point);
 			point = HexPoint.RotateRight(point);
 			
-			// Assert
+			// 検証
 			Assert.AreEqual(expectedPoint, point);
 		}
 
@@ -284,16 +284,16 @@ namespace Core.Utilities.Editor
 			[Random(-10000, 10000, 25)] int offsetX, 
 			[Random(-10000, 10000, 25)] int offsetY)
 		{
-			// Arrange
+			// 準備
 			var point = new HexPoint(x, y);
 			var expectedPoint = new HexPoint(x, y);
 			var offsetPoint = new HexPoint(offsetX, offsetY);
 			
-			// Act
+			// 実行
 			point = HexPoint.RotateLeft(point, offsetPoint);
 			point = HexPoint.RotateRight(point, offsetPoint);
 			
-			// Assert
+			// 検証
 			Assert.AreEqual(expectedPoint, point);
 		}
 
@@ -302,15 +302,15 @@ namespace Core.Utilities.Editor
 			[Random(-10000, 10000, 5)] int x, 
 			[Random(-10000, 10000, 5)] int y)
 		{
-			// Arrange
+			// 準備
 			var point = new HexPoint(x, y);
 			var expectedPoint = new HexPoint(x, y);
 			
-			// Act
+			// 実行
 			point = HexPoint.RotateRight(point);
 			point = HexPoint.RotateLeft(point);
 			
-			// Assert
+			// 検証
 			Assert.AreEqual(expectedPoint, point);
 		}
 
@@ -321,16 +321,16 @@ namespace Core.Utilities.Editor
 			[Random(-10000, 10000, 25)] int offsetX, 
 			[Random(-10000, 10000, 25)] int offsetY)
 		{
-			// Arrange
+			// 準備
 			var point = new HexPoint(x, y);
 			var expectedPoint = new HexPoint(x, y);
 			var offsetPoint = new HexPoint(offsetX, offsetY);
 			
-			// Act
+			// 実行
 			point = HexPoint.RotateRight(point, offsetPoint);
 			point = HexPoint.RotateLeft(point, offsetPoint);
 			
-			// Assert
+			// 検証
 			Assert.AreEqual(expectedPoint, point);
 		}
 
@@ -339,14 +339,14 @@ namespace Core.Utilities.Editor
 			[ValueSource("s_LeftRotatedValidPoints")] TestHexPoint source, 
 			[ValueSource("s_RightRotatedValidPoints")] TestHexPoint expected)
 		{
-			// Arrange
+			// 準備
 			var point = new HexPoint(source.x, source.y);
 			var expectedPoint = new HexPoint(expected.x, expected.y);
 			
-			// Act
+			// 実行
 			point = HexPoint.RotateRight120(point);
 			
-			// Assert
+			// 検証
 			Assert.AreEqual(expectedPoint, point);
 		}
 
@@ -355,14 +355,14 @@ namespace Core.Utilities.Editor
 			[ValueSource("s_RightRotatedValidPoints")] TestHexPoint source, 
 			[ValueSource("s_LeftRotatedValidPoints")] TestHexPoint expected)
 		{
-			// Arrange
+			// 準備
 			var point = new HexPoint(source.x, source.y);
 			var expectedPoint = new HexPoint(expected.x, expected.y);
 			
-			// Act
+			// 実行
 			point = HexPoint.RotateLeft120(point);
 			
-			// Assert
+			// 検証
 			Assert.AreEqual(expectedPoint, point);
 		}
 
@@ -371,15 +371,15 @@ namespace Core.Utilities.Editor
 			[ValueSource("s_LeftOffsetRotatedValidPoints")] TestHexPoint source, 
 			[ValueSource("s_RightOffsetRotatedValidPoints")] TestHexPoint expected)
 		{
-			// Arrange
+			// 準備
 			var point = new HexPoint(source.x, source.y);
 			var expectedPoint = new HexPoint(expected.x, expected.y);
 			var offsetPoint = new HexPoint(s_OffsetPosition.x, s_OffsetPosition.y);
 			
-			// Act
+			// 実行
 			point = HexPoint.RotateRight120(point, offsetPoint);
 			
-			// Assert
+			// 検証
 			Assert.AreEqual(expectedPoint, point);
 		}
 
@@ -388,15 +388,15 @@ namespace Core.Utilities.Editor
 			[ValueSource("s_RightOffsetRotatedValidPoints")] TestHexPoint source, 
 			[ValueSource("s_LeftOffsetRotatedValidPoints")] TestHexPoint expected)
 		{
-			// Arrange
+			// 準備
 			var point = new HexPoint(source.x, source.y);
 			var expectedPoint = new HexPoint(expected.x, expected.y);
 			var offsetPoint = new HexPoint(s_OffsetPosition.x, s_OffsetPosition.y);
 			
-			// Act
+			// 実行
 			point = HexPoint.RotateLeft120(point, offsetPoint);
 			
-			// Assert
+			// 検証
 			Assert.AreEqual(expectedPoint, point);
 		}
 
@@ -405,14 +405,14 @@ namespace Core.Utilities.Editor
 			[Random(-10000, 10000, 5)] int x, 
 			[Random(-10000, 10000, 5)] int y)
 		{
-			// Arrange
+			// 準備
 			var point = new HexPoint(x, y);
 			var expectedPoint = HexPoint.RotateLeft(HexPoint.RotateLeft(point));
 			
-			// Act
+			// 実行
 			point = HexPoint.RotateLeft120(point);
 			
-			// Assert
+			// 検証
 			Assert.AreEqual(expectedPoint, point);
 		}
 
@@ -423,15 +423,15 @@ namespace Core.Utilities.Editor
 			[Random(-10000, 10000, 25)] int offsetX, 
 			[Random(-10000, 10000, 25)] int offsetY)
 		{
-			// Arrange
+			// 準備
 			var point = new HexPoint(x, y);
 			var offsetPoint = new HexPoint(offsetX, offsetY);
 			var expectedPoint = HexPoint.RotateLeft(HexPoint.RotateLeft(point, offsetPoint), offsetPoint);
 			
-			// Act
+			// 実行
 			point = HexPoint.RotateLeft120(point, offsetPoint);
 			
-			// Assert
+			// 検証
 			Assert.AreEqual(expectedPoint, point);
 		}
 
@@ -440,14 +440,14 @@ namespace Core.Utilities.Editor
 			[Random(-10000, 10000, 5)] int x, 
 			[Random(-10000, 10000, 5)] int y)
 		{
-			// Arrange
+			// 準備
 			var point = new HexPoint(x, y);
 			var expectedPoint = HexPoint.RotateRight(HexPoint.RotateRight(point));
 			
-			// Act
+			// 実行
 			point = HexPoint.RotateRight120(point);
 			
-			// Assert
+			// 検証
 			Assert.AreEqual(expectedPoint, point);
 		}
 
@@ -458,15 +458,15 @@ namespace Core.Utilities.Editor
 			[Random(-10000, 10000, 25)] int offsetX, 
 			[Random(-10000, 10000, 25)] int offsetY)
 		{
-			// Arrange
+			// 準備
 			var point = new HexPoint(x, y);
 			var offsetPoint = new HexPoint(offsetX, offsetY);
 			var expectedPoint = HexPoint.RotateRight(HexPoint.RotateRight(point, offsetPoint), offsetPoint);
 			
-			// Act
+			// 実行
 			point = HexPoint.RotateRight120(point, offsetPoint);
 			
-			// Assert
+			// 検証
 			Assert.AreEqual(expectedPoint, point);
 		}
 
@@ -475,14 +475,14 @@ namespace Core.Utilities.Editor
 			[ValueSource("s_ValidPoints")] TestHexPoint source, 
 			[ValueSource("s_180RotatedValidPoints")] TestHexPoint expected)
 		{
-			// Arrange
+			// 準備
 			var point = new HexPoint(source.x, source.y);
 			var expectedPoint = new HexPoint(expected.x, expected.y);
 			
-			// Act
+			// 実行
 			point = HexPoint.Rotate180(point);
 			
-			// Assert
+			// 検証
 			Assert.AreEqual(expectedPoint, point);
 		}
 		
@@ -491,16 +491,16 @@ namespace Core.Utilities.Editor
 			[Random(-10000, 10000, 5)] int x, 
 			[Random(-10000, 10000, 5)] int y)
 		{
-			// Arrange
+			// 準備
 			var pointA = new HexPoint(x, y);
 			var pointB = new HexPoint(x, y);
 			var expectedPoint = HexPoint.Rotate180(new HexPoint(x, y));
 			
-			// Act
+			// 実行
 			pointA = HexPoint.RotateLeft(HexPoint.RotateLeft(HexPoint.RotateLeft(pointA)));
 			pointB = HexPoint.RotateRight(HexPoint.RotateRight(HexPoint.RotateRight(pointB)));
 			
-			// Assert
+			// 検証
 			Assert.AreEqual(expectedPoint, pointA);
 			Assert.AreEqual(expectedPoint, pointB);
 		}
@@ -510,14 +510,14 @@ namespace Core.Utilities.Editor
 			[ValueSource("s_ValidPoints")] TestHexPoint source,
 			[ValueSource("s_XMirroredValidPoints")] TestHexPoint expected)
 		{
-			// Arrange
+			// 準備
 			var point = new HexPoint(source.x, source.y);
 			var expectedPoint = new HexPoint(expected.x, expected.y);
 			
-			// Act
+			// 実行
 			point = HexPoint.ReflectX(point);
 			
-			// Assert
+			// 検証
 			Assert.AreEqual(expectedPoint, point);
 		}
 
@@ -526,14 +526,14 @@ namespace Core.Utilities.Editor
 			[ValueSource("s_ValidPoints")] TestHexPoint source,
 			[ValueSource("s_OffsetXMirroredValidPoints")] TestHexPoint expected)
 		{
-			// Arrange
+			// 準備
 			var point = new HexPoint(source.x, source.y);
 			var expectedPoint = new HexPoint(expected.x, expected.y);
 			
-			// Act
+			// 実行
 			point = HexPoint.ReflectX(point, 1);
 			
-			// Assert
+			// 検証
 			Assert.AreEqual(expectedPoint, point);
 		}
 
@@ -542,14 +542,14 @@ namespace Core.Utilities.Editor
 			[ValueSource("s_ValidPoints")] TestHexPoint source,
 			[ValueSource("s_YMirroredValidPoints")] TestHexPoint expected)
 		{
-			// Arrange
+			// 準備
 			var point = new HexPoint(source.x, source.y);
 			var expectedPoint = new HexPoint(expected.x, expected.y);
 			
-			// Act
+			// 実行
 			point = HexPoint.ReflectY(point);
 			
-			// Assert
+			// 検証
 			Assert.AreEqual(expectedPoint, point);
 		}
 
@@ -558,14 +558,14 @@ namespace Core.Utilities.Editor
 			[ValueSource("s_ValidPoints")] TestHexPoint source,
 			[ValueSource("s_OffsetYMirroredValidPoints")] TestHexPoint expected)
 		{
-			// Arrange
+			// 準備
 			var point = new HexPoint(source.x, source.y);
 			var expectedPoint = new HexPoint(expected.x, expected.y);
 			
-			// Act
+			// 実行
 			point = HexPoint.ReflectY(point, 1);
 			
-			// Assert
+			// 検証
 			Assert.AreEqual(expectedPoint, point);
 		}
 
@@ -574,14 +574,14 @@ namespace Core.Utilities.Editor
 			[ValueSource("s_ValidPoints")] TestHexPoint source,
 			[ValueSource("s_ZMirroredValidPoints")] TestHexPoint expected)
 		{
-			// Arrange
+			// 準備
 			var point = new HexPoint(source.x, source.y);
 			var expectedPoint = new HexPoint(expected.x, expected.y);
 			
-			// Act
+			// 実行
 			point = HexPoint.ReflectZ(point);
 			
-			// Assert
+			// 検証
 			Assert.AreEqual(expectedPoint, point);
 		}
 
@@ -590,14 +590,14 @@ namespace Core.Utilities.Editor
 			[ValueSource("s_ValidPoints")] TestHexPoint source,
 			[ValueSource("s_OffsetZMirroredValidPoints")] TestHexPoint expected)
 		{
-			// Arrange
+			// 準備
 			var point = new HexPoint(source.x, source.y);
 			var expectedPoint = new HexPoint(expected.x, expected.y);
 			
-			// Act
+			// 実行
 			point = HexPoint.ReflectZ(point, 1);
 			
-			// Assert
+			// 検証
 			Assert.AreEqual(expectedPoint, point);
 		}
 	}

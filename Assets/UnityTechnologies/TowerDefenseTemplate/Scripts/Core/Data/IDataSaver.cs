@@ -1,7 +1,7 @@
 ﻿namespace Core.Data
 {
 	/// <summary>
-	/// Interface for saving data
+	/// データ保存用のインターフェース
 	/// </summary>
 	public interface IDataSaver<T> where T : IDataStore
 	{

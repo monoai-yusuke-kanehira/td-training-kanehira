@@ -9,76 +9,76 @@ using UnityEngine;
 namespace TowerDefense.Level
 {
 	/// <summary>
-	/// The level manager - handles the level states and tracks the player's currency
+	/// レベルマネージャー - レベルの状態を処理し、プレーヤーの通貨を追跡します
 	/// </summary>
 	[RequireComponent(typeof(WaveManager))]
 	public class LevelManager : Singleton<LevelManager>
 	{
 		/// <summary>
-		/// The configured level intro. If this is null the LevelManager will fall through to the gameplay state (i.e. SpawningEnemies)
+		/// 設定されたレベルのイントロ。これが null の場合、LevelManager はゲームプレイ状態 (つまり SpawningEnemies) に移行します
 		/// </summary>
 		public LevelIntro intro;
 
 		/// <summary>
-		/// The tower library for this level
+		/// このレベルのタワーライブラリー
 		/// </summary>
 		public TowerLibrary towerLibrary;
 
 		/// <summary>
-		/// The currency that the player starts with
+		/// プレイヤーが開始する通貨
 		/// </summary>
 		public int startingCurrency;
 
 		/// <summary>
-		/// The controller for gaining currency
+		/// 通貨を獲得するためのコントローラー
 		/// </summary>
 		public CurrencyGainer currencyGainer;
 
 		/// <summary>
-		/// Configuration for if the player gains currency even in pre-build phase
+		/// プレビルドフェーズでもプレイヤーが通貨を獲得する場合の設定
 		/// </summary>
 		[Header("Setting this will allow currency gain during the Intro and Pre-Build phase")]
 		public bool alwaysGainCurrency;
 
 		/// <summary>
-		/// The home bases that the player must defend
+		/// プレイヤーが守らなければならない本拠地
 		/// </summary>
 		public PlayerHomeBase[] homeBases;
 
 		public Collider[] environmentColliders;
 
 		/// <summary>
-		/// The attached wave manager
+		/// 付属のウェーブマネージャー
 		/// </summary>
 		public WaveManager waveManager { get; protected set; }
 
 		/// <summary>
-		/// Number of enemies currently in the level
+		/// 現在レベル内の敵の数
 		/// </summary>
 		public int numberOfEnemies { get; protected set; }
 
 		/// <summary>
-		/// The current state of the level
+		/// レベルの現在の状態
 		/// </summary>
 		public LevelState levelState { get; protected set; }
 
 		/// <summary>
-		/// The currency controller
+		/// 通貨管理者
 		/// </summary>
 		public Currency currency { get; protected set; }
 
 		/// <summary>
-		/// Number of home bases left
+		/// 残り本塁数
 		/// </summary>
 		public int numberOfHomeBasesLeft { get; protected set; }
 
 		/// <summary>
-		/// Starting number of home bases
+		/// 開始本塁数
 		/// </summary>
 		public int numberOfHomeBases { get; protected set; }
 
 		/// <summary>
-		/// An accessor for the home bases
+		/// ホームベース用アクセサー
 		/// </summary>
 		public PlayerHomeBase[] playerHomeBases
 		{
@@ -86,7 +86,7 @@ namespace TowerDefense.Level
 		}
 
 		/// <summary>
-		/// If the game is over
+		/// ゲームオーバーの場合
 		/// </summary>
 		public bool isGameOver
 		{
@@ -94,32 +94,32 @@ namespace TowerDefense.Level
 		}
 
 		/// <summary>
-		/// Fired when all the waves are done and there are no more enemies left
+		/// すべてのウェーブが終了し、敵がいなくなったときに発射されます
 		/// </summary>
 		public event Action levelCompleted;
 
 		/// <summary>
-		/// Fired when all of the home bases are destroyed
+		/// 本拠地がすべて破壊された場合に発射
 		/// </summary>
 		public event Action levelFailed;
 
 		/// <summary>
-		/// Fired when the level state is changed - first parameter is the old state, second parameter is the new state
+		/// レベルの状態が変更されたときに発生します - 最初のパラメータは古い状態、2 番目のパラメータは新しい状態です
 		/// </summary>
 		public event Action<LevelState, LevelState> levelStateChanged;
 
 		/// <summary>
-		/// Fired when the number of enemies has changed
+		/// 敵の数が変化したときに発射
 		/// </summary>
 		public event Action<int> numberOfEnemiesChanged;
 
 		/// <summary>
-		/// Event for home base being destroyed
+		/// 本拠地破壊イベント
 		/// </summary>
 		public event Action homeBaseDestroyed;
 
 		/// <summary>
-		/// Increments the number of enemies. Called on Agent spawn
+		/// 敵の数を増やします。エージェントの生成時に呼び出されます
 		/// </summary>
 		public virtual void IncrementNumberOfEnemies()
 		{
@@ -128,7 +128,7 @@ namespace TowerDefense.Level
 		}
 
 		/// <summary>
-		/// Returns the sum of all HomeBases' health
+		/// すべてのホームベースの健全性の合計を返します
 		/// </summary>
 		public float GetAllHomeBasesHealth()
 		{
@@ -141,7 +141,7 @@ namespace TowerDefense.Level
 		}
 
 		/// <summary>
-		/// Decrements the number of enemies. Called on Agent death
+		/// 敵の数を減らします。エージェントの死亡時に呼び出される
 		/// </summary>
 		public virtual void DecrementNumberOfEnemies()
 		{
@@ -160,7 +160,7 @@ namespace TowerDefense.Level
 		}
 
 		/// <summary>
-		/// Completes building phase, setting state to spawn enemies
+		/// 構築フェーズを完了し、敵を出現させる状態を設定します
 		/// </summary>
 		public virtual void BuildingCompleted()
 		{
@@ -168,8 +168,8 @@ namespace TowerDefense.Level
 		}
 
 		/// <summary>
-		/// Caches the attached wave manager and subscribes to the spawning completed event
-		/// Sets the level state to intro and ensures that the number of enemies is set to 0
+		/// アタッチされた Wave Manager をキャッシュし、生成完了イベントをサブスクライブします
+		/// レベルの状態をイントロに設定し、敵の数が確実に 0 に設定されるようにします
 		/// </summary>
 		protected override void Awake()
 		{
@@ -177,15 +177,15 @@ namespace TowerDefense.Level
 			waveManager = GetComponent<WaveManager>();
 			waveManager.spawningCompleted += OnSpawningCompleted;
 
-			// Does not use the change state function as we don't need to broadcast the event for this default value
+			// このデフォルト値のイベントをブロードキャストする必要がないため、状態変更関数は使用されません
 			levelState = LevelState.Intro;
 			numberOfEnemies = 0;
 
-			// Ensure currency change listener is assigned
+			// 通貨変更リスナーが割り当てられていることを確認する
 			currency = new Currency(startingCurrency);
 			currencyGainer.Initialize(currency);
 
-			// If there's an intro use it, otherwise fall through to gameplay
+			// イントロがある場合はそれを使用し、そうでない場合はゲームプレイに落ちます
 			if (intro != null)
 			{
 				intro.introCompleted += IntroCompleted;
@@ -195,7 +195,7 @@ namespace TowerDefense.Level
 				IntroCompleted();
 			}
 
-			// Iterate through home bases and subscribe
+			// ホームベースを順に処理して購読します
 			numberOfHomeBases = homeBases.Length;
 			numberOfHomeBasesLeft = numberOfHomeBases;
 			for (int i = 0; i < numberOfHomeBases; i++)
@@ -205,7 +205,7 @@ namespace TowerDefense.Level
 		}
 
 		/// <summary>
-		/// Updates the currency gain controller
+		/// 通貨ゲインコントローラーを更新します
 		/// </summary>
 		protected virtual void Update()
 		{
@@ -217,7 +217,7 @@ namespace TowerDefense.Level
 		}
 
 		/// <summary>
-		/// Unsubscribes from events
+		/// イベントの購読を解除する
 		/// </summary>
 		protected override void OnDestroy()
 		{
@@ -231,7 +231,7 @@ namespace TowerDefense.Level
 				intro.introCompleted -= IntroCompleted;
 			}
 
-			// Iterate through home bases and unsubscribe
+			// ホームベースを順に処理して購読を解除します
 			for (int i = 0; i < numberOfHomeBases; i++)
 			{
 				homeBases[i].died -= OnHomeBaseDestroyed;
@@ -239,7 +239,7 @@ namespace TowerDefense.Level
 		}
 
 		/// <summary>
-		/// Fired when Intro is completed or immediately, if no intro is specified
+		/// イントロが完了したとき、またはイントロが指定されていない場合はすぐに起動されます
 		/// </summary>
 		protected virtual void IntroCompleted()
 		{
@@ -247,7 +247,7 @@ namespace TowerDefense.Level
 		}
 
 		/// <summary>
-		/// Fired when the WaveManager has finished spawning enemies
+		/// WaveManager が敵の生成を終了したときに発生します
 		/// </summary>
 		protected virtual void OnSpawningCompleted()
 		{
@@ -255,12 +255,12 @@ namespace TowerDefense.Level
 		}
 
 		/// <summary>
-		/// Changes the state and broadcasts the event
+		/// 状態を変更し、イベントをブロードキャストします
 		/// </summary>
-		/// <param name="newState">The new state to transitioned to</param>
+		/// <param name="newState">移行する新しい状態</param>
 		protected virtual void ChangeLevelState(LevelState newState)
 		{
-			// If the state hasn't changed then return
+			// 状態が変わっていない場合は戻ります
 			if (levelState == newState)
 			{
 				return;
@@ -279,7 +279,7 @@ namespace TowerDefense.Level
 					waveManager.StartWaves();
 					break;
 				case LevelState.AllEnemiesSpawned:
-					// Win immediately if all enemies are already dead
+					// 敵が全員すでに死んでいる場合は即座に勝利します
 					if (numberOfEnemies == 0)
 					{
 						ChangeLevelState(LevelState.Win);
@@ -295,20 +295,20 @@ namespace TowerDefense.Level
 		}
 
 		/// <summary>
-		/// Fired when a home base is destroyed
+		/// 本拠地破壊時に発射
 		/// </summary>
 		protected virtual void OnHomeBaseDestroyed(DamageableBehaviour homeBase)
 		{
-			// Decrement the number of home bases
+			// ホームベースの数を減らす
 			numberOfHomeBasesLeft--;
 
-			// Call the destroyed event
+			// 破棄されたイベントを呼び出す
 			if (homeBaseDestroyed != null)
 			{
 				homeBaseDestroyed();
 			}
 
-			// If there are no home bases left and the level is not over then set the level to lost
+			// ホームベースが残っておらず、レベルが終了していない場合は、レベルをロストに設定します
 			if ((numberOfHomeBasesLeft == 0) && !isGameOver)
 			{
 				ChangeLevelState(LevelState.Lose);
@@ -316,7 +316,7 @@ namespace TowerDefense.Level
 		}
 
 		/// <summary>
-		/// Calls the <see cref="levelCompleted"/> event
+		/// を呼び出します <see cref="levelCompleted"/> イベント
 		/// </summary>
 		protected virtual void SafelyCallLevelCompleted()
 		{
@@ -327,7 +327,7 @@ namespace TowerDefense.Level
 		}
 
 		/// <summary>
-		/// Calls the <see cref="numberOfEnemiesChanged"/> event
+		/// を呼び出します <see cref="numberOfEnemiesChanged"/> イベント
 		/// </summary>
 		protected virtual void SafelyCallNumberOfEnemiesChanged()
 		{
@@ -338,7 +338,7 @@ namespace TowerDefense.Level
 		}
 
 		/// <summary>
-		/// Calls the <see cref="levelFailed"/> event
+		/// を呼び出します <see cref="levelFailed"/> イベント
 		/// </summary>
 		protected virtual void SafelyCallLevelFailed()
 		{

@@ -3,7 +3,7 @@
 namespace ActionGameFramework.Spawning
 {
 	/// <summary>
-	/// Single hit object spawner - concrete implementation that provides one game object to spawn
+	/// 生成する GameObject を 1 つだけ提供する HitObjectSpawner の具象実装
 	/// </summary>
 	public class SingleHitObjectSpawner : HitObjectSpawner
 	{

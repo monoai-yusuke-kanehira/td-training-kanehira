@@ -8,38 +8,38 @@ using UnityEngine;
 namespace TowerDefense.Towers
 {
 	/// <summary>
-	/// An individual level of a tower
+	/// タワーの個別レベル
 	/// </summary>
 	[DisallowMultipleComponent]
 	public class TowerLevel : MonoBehaviour, ISerializationCallbackReceiver
 	{
 		/// <summary>
-		/// The prefab for communicating placement in the scene
+		/// シーン上で配置位置を伝えるためのプレハブ
 		/// </summary>
 		public TowerPlacementGhost towerGhostPrefab;
 
 		/// <summary>
-		/// Build effect gameObject to instantiate on start
+		/// 開始時に生成する建築エフェクトの GameObject
 		/// </summary>
 		public GameObject buildEffectPrefab;
 
 		/// <summary>
-		/// Reference to scriptable object with level data on it
+		/// レベルデータを持つ ScriptableObject への参照
 		/// </summary>
 		public  TowerLevelData levelData;
 
 		/// <summary>
-		/// The parent tower controller of this tower
+		/// このタワーの親タワーコントローラー
 		/// </summary>
 		protected Tower m_ParentTower;
 
 		/// <summary>
-		/// The list of effects attached to the tower
+		/// タワーにアタッチされているエフェクトのリスト
 		/// </summary>
 		Affector[] m_Affectors;
 
 		/// <summary>
-		/// Gets the list of effects attached to the tower
+		/// タワーにアタッチされているエフェクトのリストを取得します
 		/// </summary>
 		protected Affector[] Affectors
 		{
@@ -54,12 +54,12 @@ namespace TowerDefense.Towers
 		}
 
 		/// <summary>
-		/// The physics layer mask that the tower searches on
+		/// タワーが探索に使う物理レイヤーマスク
 		/// </summary>
 		public LayerMask mask { get; protected set; }
 
 		/// <summary>
-		/// Gets the cost value
+		/// コスト値を取得します
 		/// </summary>
 		public int cost
 		{
@@ -67,7 +67,7 @@ namespace TowerDefense.Towers
 		}
 
 		/// <summary>
-		/// Gets the sell value
+		/// 売却値を取得します
 		/// </summary>
 		public int sell
 		{
@@ -75,7 +75,7 @@ namespace TowerDefense.Towers
 		}
 
 		/// <summary>
-		/// Gets the max health
+		/// 最大体力を取得します
 		/// </summary>
 		public int maxHealth
 		{
@@ -83,7 +83,7 @@ namespace TowerDefense.Towers
 		}
 
 		/// <summary>
-		/// Gets the starting health
+		/// 開始時の体力を取得します
 		/// </summary>
 		public int startingHealth
 		{
@@ -91,7 +91,7 @@ namespace TowerDefense.Towers
 		}
 
 		/// <summary>
-		/// Gets the tower description
+		/// タワーの説明を取得します
 		/// </summary>
 		public string description
 		{
@@ -99,7 +99,7 @@ namespace TowerDefense.Towers
 		}
 
 		/// <summary>
-		/// Gets the tower description
+		/// タワーのアップグレード説明を取得します
 		/// </summary>
 		public string upgradeDescription
 		{
@@ -107,7 +107,7 @@ namespace TowerDefense.Towers
 		}
 
 		/// <summary>
-		/// Initialises the Effects attached to this object
+		/// このオブジェクトにアタッチされているエフェクトを初期化します
 		/// </summary>
 		public virtual void Initialize(Tower tower, LayerMask enemyMask, IAlignmentProvider alignment)
 		{
@@ -121,7 +121,7 @@ namespace TowerDefense.Towers
 		}
 
 		/// <summary>
-		/// A method for activating or deactivating the attached <see cref="Affectors"/>
+		/// アタッチされている <see cref="Affectors"/> を有効化または無効化するメソッド
 		/// </summary>
 		public void SetAffectorState(bool state)
 		{
@@ -135,9 +135,9 @@ namespace TowerDefense.Towers
 		}
 
 		/// <summary>
-		/// Returns a list of affectors that implement ITowerRadiusVisualizer
+		/// ITowerRadiusVisualizer を実装している Affector のリストを返します
 		/// </summary>
-		/// <returns>ITowerRadiusVisualizers of tower</returns>
+		/// <returns>タワーの ITowerRadiusVisualizer</returns>
 		public List<ITowerRadiusProvider> GetRadiusVisualizers()
 		{
 			List<ITowerRadiusProvider> visualizers = new List<ITowerRadiusProvider>();
@@ -153,9 +153,9 @@ namespace TowerDefense.Towers
 		}
 
 		/// <summary>
-		/// Returns the dps of the tower
+		/// タワーの DPS を返します
 		/// </summary>
-		/// <returns>The dps of the tower</returns>
+		/// <returns>タワーの DPS</returns>
 		public float GetTowerDps()
 		{
 			float dps = 0;
@@ -181,13 +181,13 @@ namespace TowerDefense.Towers
 
 		public void OnAfterDeserialize()
 		{
-			// Setting this member to null is required because we are setting this value on a prefab which will 
-			// persists post run in editor, so we null this member to ensure it is repopulated every run
+			// この値はエディター上で実行後も残るプレハブに設定されるため、このメンバーを null に戻す必要があります
+			// 毎回確実に再設定されるように、このメンバーを null にします
 			m_Affectors = null;
 		}
 
 		/// <summary>
-		/// Insntiate the build particle effect object
+		/// 建築用パーティクルエフェクトのオブジェクトを生成します
 		/// </summary>
 		void Start()
 		{

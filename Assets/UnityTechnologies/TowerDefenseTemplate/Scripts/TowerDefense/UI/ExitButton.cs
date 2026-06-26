@@ -5,12 +5,12 @@ using UnityEngine.UI;
 namespace TowerDefense.UI
 {
 	/// <summary>
-	/// A button for exiting the game
+	/// ゲームを終了するためのボタン
 	/// </summary>
 	public class ExitButton : Button
 	{
 		/// <summary>
-		/// Close the game when this button is clicked
+		/// このボタンがクリックされたらゲームを終了する
 		/// </summary>
 		public override void OnPointerClick(PointerEventData eventData)
 		{
@@ -18,7 +18,7 @@ namespace TowerDefense.UI
 		}
 
 		/// <summary>
-		/// Disable this button on mobile platforms
+		/// モバイルプラットフォームではこのボタンを無効にする
 		/// </summary>
 		protected override void Awake()
 		{

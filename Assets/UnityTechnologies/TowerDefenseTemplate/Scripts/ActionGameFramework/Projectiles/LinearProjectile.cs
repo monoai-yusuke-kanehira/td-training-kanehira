@@ -5,7 +5,7 @@ using UnityEngine;
 namespace ActionGameFramework.Projectiles
 {
 	/// <summary>
-	/// Simple IProjectile implementation for a projectile that flies in a straight line, optionally under m_Acceleration.
+	/// 必要に応じて m_Acceleration を使いながら直線飛行する Projectile 向けのシンプルな IProjectile 実装
 	/// </summary>
 	[RequireComponent(typeof(Rigidbody))]
 	public class LinearProjectile : MonoBehaviour, IProjectile
@@ -21,10 +21,10 @@ namespace ActionGameFramework.Projectiles
 		public event Action fired;
 
 		/// <summary>
-		/// Fires this projectile from a designated start point to a designated world coordinate.
+		/// 指定した開始位置から指定したワールド座標へ向けてこの Projectile を発射する
 		/// </summary>
-		/// <param name="startPoint">Start point of the flight.</param>
-		/// <param name="targetPoint">Target point to fly to.</param>
+		/// <param name="startPoint">飛行の開始位置。</param>
+		/// <param name="targetPoint">飛行先の目標位置。</param>
 		public virtual void FireAtPoint(Vector3 startPoint, Vector3 targetPoint)
 		{
 			transform.position = startPoint;
@@ -33,15 +33,15 @@ namespace ActionGameFramework.Projectiles
 		}
 
 		/// <summary>
-		/// Fires this projectile in a designated direction.
+		/// 指定した方向へこの Projectile を発射する
 		/// </summary>
-		/// <param name="startPoint">Start point of the flight.</param>
-		/// <param name="fireVector">Vector representing direction of flight.</param>
+		/// <param name="startPoint">飛行の開始位置。</param>
+		/// <param name="fireVector">飛行方向を表す Vector。</param>
 		public virtual void FireInDirection(Vector3 startPoint, Vector3 fireVector)
 		{
 			transform.position = startPoint;
 
-			// If we have no initial speed, we provide a small one to give the launch vector a baseline magnitude.
+			// 初速がない場合は、発射ベクトルに基準となる大きさを持たせるため小さな値を設定する
 			if (Math.Abs(startSpeed) < float.Epsilon)
 			{
 				startSpeed = 0.001f;
@@ -51,10 +51,10 @@ namespace ActionGameFramework.Projectiles
 		}
 
 		/// <summary>
-		/// Fires this projectile at a designated starting velocity, overriding any starting speeds.
+		/// 指定した初速でこの Projectile を発射し、既存の開始速度を上書きする
 		/// </summary>
-		/// <param name="startPoint">Start point of the flight.</param>
-		/// <param name="fireVelocity">Vector3 representing launch velocity.</param>
+		/// <param name="startPoint">飛行の開始位置。</param>
+		/// <param name="fireVelocity">発射速度を表す Vector3。</param>
 		public void FireAtVelocity(Vector3 startPoint, Vector3 fireVelocity)
 		{
 			transform.position = startPoint;

@@ -6,7 +6,7 @@ using UnityEngine;
 namespace TowerDefense.Agents
 {
 	/// <summary>
-	/// This effect will get attached to an agent that is within range of the SlowAffector radius
+	/// この効果は、SlowAffector の半径の範囲内にあるエージェントに付加されます
 	/// </summary>
 	public class AgentSlower : AgentEffect
 	{
@@ -15,10 +15,10 @@ namespace TowerDefense.Agents
 		protected List<float> m_CurrentEffects = new List<float>();
 
 		/// <summary>
-		/// Initializes the slower with the parameters configured in the SlowAffector
+		/// SlowAffector で設定されたパラメータを使用してスローを初期化します
 		/// </summary>
-		/// <param name="slowFactor">Normalized float that represents the % slowdown applied to the agent</param>
-		/// <param name="slowfxPrefab">The instantiated object to visualize the slow effect</param>
+		/// <param name="slowFactor">エージェントに適用される速度低下の割合を表す正規化された浮動小数点数</param>
+		/// <param name="slowfxPrefab">スローエフェクトを視覚化するためにインスタンス化されたオブジェクト</param>
 		/// <param name="position"></param>
 		/// <param name="scale"></param>
 		public void Initialize(float slowFactor, GameObject slowfxPrefab = null, 
@@ -28,7 +28,7 @@ namespace TowerDefense.Agents
 			LazyLoad();
 			m_CurrentEffects.Add(slowFactor);
 
-			// find greatest slow effect
+			// 最も強いスロー効果を探します
 			float min = slowFactor;
 			foreach (float item in m_CurrentEffects)
 			{
@@ -50,7 +50,7 @@ namespace TowerDefense.Agents
 		}
 
 		/// <summary>
-		/// Resets the agent's speed 
+		/// エージェントの速度をリセットします 
 		/// </summary>
 		public void RemoveSlow(float slowFactor)
 		{
@@ -62,12 +62,12 @@ namespace TowerDefense.Agents
 				return;
 			}
 			
-			// No more slow effects
+			// スロー効果が残っていません
 			ResetAgent();
 		}
 
 		/// <summary>
-		/// Agent has died, remove affect
+		/// エージェントが死亡しました。影響を削除します
 		/// </summary>
 		void OnRemoved(DamageableBehaviour targetable)
 		{

@@ -6,24 +6,24 @@ using UnityEngine.UI;
 namespace TowerDefense.UI.HUD
 {
 	/// <summary>
-	/// A class for controlling the displaying the currency
+	/// 通貨表示を制御するクラス
 	/// </summary>
 	public class CurrencyUI : MonoBehaviour
 	{
 		/// <summary>
-		/// The text element to display information on
+		/// 情報を表示するText要素
 		/// </summary>
 		public Text display;
 
 		/// <summary>
-		/// The currency prefix to display next to the amount
+		/// 金額の横に表示する通貨の接頭辞
 		/// </summary>
 		public string currencySymbol = "$";
 
 		protected Currency m_Currency;
 
 		/// <summary>
-		/// Assign the correct currency value
+		/// 正しい通貨値を割り当てる
 		/// </summary>
 		protected virtual void Start()
 		{
@@ -41,7 +41,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Unsubscribe from events
+		/// イベントの購読を解除する
 		/// </summary>
 		protected virtual void OnDestroy()
 		{
@@ -52,7 +52,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// A method for updating the display based on the current currency
+		/// 現在の通貨に基づいて表示を更新するメソッド
 		/// </summary>
 		protected void UpdateDisplay()
 		{

@@ -6,35 +6,35 @@ using UnityEngine.UI;
 namespace TowerDefense.UI.HUD
 {
 	/// <summary>
-	/// Controls the UI objects that draw the tower data
+	/// タワーデータを描画するUIオブジェクトを制御する
 	/// </summary>
 	[RequireComponent(typeof(Canvas))]
 	public class TowerUI : MonoBehaviour
 	{
 		/// <summary>
-		/// The text object for the name
+		/// 名前用のTextオブジェクト
 		/// </summary>
 		public Text towerName;
 
 		/// <summary>
-		/// The text object for the description
+		/// 説明用のTextオブジェクト
 		/// </summary>
 		public Text description;
 		
 		public Text upgradeDescription;
 
 		/// <summary>
-		/// The attached sell button
+		/// アタッチされている売却ボタン
 		/// </summary>
 		public Button sellButton;
 
 		/// <summary>
-		/// The attached upgrade button
+		/// アタッチされているアップグレードボタン
 		/// </summary>
 		public Button upgradeButton;
 
 		/// <summary>
-		/// Component to display the relevant information of the tower
+		/// タワーの関連情報を表示するコンポーネント
 		/// </summary>
 		public TowerInfoDisplay towerInfoDisplay;
 
@@ -43,25 +43,25 @@ namespace TowerDefense.UI.HUD
 		public GameObject[] confirmationButtons;
 
 		/// <summary>
-		/// The main game camera
+		/// メインのゲームカメラ
 		/// </summary>
 		protected Camera m_GameCamera;
 
 		/// <summary>
-		/// The current tower to draw
+		/// 現在描画するタワー
 		/// </summary>
 		protected Tower m_Tower;
 
 		/// <summary>
-		/// The canvas attached to the gameObject
+		/// gameObjectにアタッチされているCanvas
 		/// </summary>
 		protected Canvas m_Canvas;
 
 		/// <summary>
-		/// Draws the tower data on to the canvas
+		/// タワーデータをCanvasに描画する
 		/// </summary>
 		/// <param name="towerToShow">
-		/// The tower to gain info from
+		/// 情報を取得するタワー
 		/// </param>
 		public virtual void Show(Tower towerToShow)
 		{
@@ -100,7 +100,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Hides the tower info UI and the radius visualizer
+		/// タワー情報UIと範囲ビジュアライザーを非表示にする
 		/// </summary>
 		public virtual void Hide()
 		{
@@ -114,7 +114,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Upgrades the tower through <see cref="GameUI"/>
+		/// <see cref="GameUI"/> を通してタワーをアップグレードする
 		/// </summary>
 		public void UpgradeButtonClick()
 		{
@@ -122,7 +122,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Sells the tower through <see cref="GameUI"/>
+		/// <see cref="GameUI"/> を通してタワーを売却する
 		/// </summary>
 		public void SellButtonClick()
 		{
@@ -130,7 +130,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Get the text attached to the buttons
+		/// ボタンにアタッチされているTextを取得する
 		/// </summary>
 		protected virtual void Awake()
 		{
@@ -138,7 +138,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Fires when tower is selected/deselected
+		/// タワーが選択または選択解除されたときに発火する
 		/// </summary>
 		/// <param name="newTower"></param>
 		protected virtual void OnUISelectionChanged(Tower newTower)
@@ -154,7 +154,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Subscribe to mouse button action
+		/// マウスボタン操作を購読する
 		/// </summary>
 		protected virtual void Start()
 		{
@@ -168,7 +168,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Adjust position when the camera moves
+		/// カメラが移動したときに位置を調整する
 		/// </summary>
 		protected virtual void Update()
 		{
@@ -176,7 +176,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Unsubscribe from currencyChanged
+		/// currencyChangedの購読を解除する
 		/// </summary>
 		protected virtual void OnDisable()
 		{
@@ -187,7 +187,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Adjust the position of the UI
+		/// UIの位置を調整する
 		/// </summary>
 		protected void AdjustPosition()
 		{
@@ -201,11 +201,11 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Fired when the <see cref="GameUI"/> state changes
-		/// If the new state is <see cref="GameUI.State.GameOver"/> we need to hide the <see cref="TowerUI"/>
+		/// <see cref="GameUI"/> の状態が変化したときに発火する
+		/// 新しい状態が <see cref="GameUI.State.GameOver"/> の場合は <see cref="TowerUI"/> を非表示にする必要がある
 		/// </summary>
-		/// <param name="oldState">The previous state</param>
-		/// <param name="newState">The state to transition to</param>
+		/// <param name="oldState">前の状態</param>
+		/// <param name="newState">遷移先の状態</param>
 		protected void OnGameUIStateChanged(GameUI.State oldState, GameUI.State newState)
 		{
 			if (newState == GameUI.State.GameOver)
@@ -215,7 +215,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Check if player can afford upgrade on currency changed
+		/// 通貨が変化したとき、プレイヤーがアップグレード費用を支払えるか確認する
 		/// </summary>
 		void OnCurrencyChanged()
 		{
@@ -227,7 +227,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Unsubscribe from GameUI selectionChanged and stateChanged
+		/// GameUIのselectionChangedとstateChangedの購読を解除する
 		/// </summary>
 		void OnDestroy()
 		{

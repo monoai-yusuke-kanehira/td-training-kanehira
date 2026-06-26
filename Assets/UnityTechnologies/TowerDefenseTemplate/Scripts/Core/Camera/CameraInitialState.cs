@@ -3,7 +3,7 @@
 namespace Core.Camera
 {
 	/// <summary>
-	/// Simple class to set some initial state values for the camera
+	/// カメラの初期状態の値を設定するシンプルなクラス
 	/// </summary>
 	[RequireComponent(typeof(CameraRig))]
 	public class CameraInitialState : MonoBehaviour
@@ -16,17 +16,17 @@ namespace Core.Camera
 		}
 
 		/// <summary>
-		/// Determines the starting zoom level for the camera
+		/// カメラの開始時のズームレベルを決めます
 		/// </summary>
 		public StartZoomMode startZoomMode;
 		
 		/// <summary>
-		/// Object for the camera to look at initially
+		/// 開始時にカメラが注視するオブジェクト
 		/// </summary>
 		public Transform initialLookAt;
 		
 		/// <summary>
-		/// On start, set camera parameters
+		/// 開始時にカメラのパラメーターを設定します
 		/// </summary>
 		protected virtual void Start()
 		{

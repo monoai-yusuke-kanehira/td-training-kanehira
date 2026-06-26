@@ -3,25 +3,25 @@
 namespace Core.Utilities
 {
 	/// <summary>
-	/// A Timer that repeats until it is stopped - the callback is fired at the end of every repetition
+	/// 停止されるまで繰り返すTimer。各繰り返しの終了時にコールバックを発火する
 	/// </summary>
 	public class RepeatingTimer : Timer
 	{
 		/// <summary>
-		/// Constructor
+		/// コンストラクター
 		/// </summary>
-		/// <param name="time">The time of one cycle</param>
-		/// <param name="onElapsed">The event fired at the end of each cycle</param>
+		/// <param name="time">1サイクルの時間</param>
+		/// <param name="onElapsed">各サイクルの終了時に発火するイベント</param>
 		public RepeatingTimer(float time, Action onElapsed = null)
 			: base(time, onElapsed)
 		{
 		}
 
 		/// <summary>
-		/// Ticks and does not turn off on elapse
+		/// Tickを進め、経過後もオフにしない
 		/// </summary>
-		/// <param name="deltaTime">The change in time since last tick</param>
-		/// <returns>false always to ensure that the timer is not automatically removed</returns>
+		/// <param name="deltaTime">前回のTickからの経過時間</param>
+		/// <returns>タイマーが自動削除されないように常にfalseを返す</returns>
 		public override bool Tick(float deltaTime)
 		{
 			if (AssessTime(deltaTime))

@@ -3,27 +3,27 @@
 namespace Core.Utilities
 {
 	/// <summary>
-	/// Abstract base for serializable interface wrapper objects
+	/// シリアライズ可能なインターフェースラッパーオブジェクトの抽象基底クラス
 	/// </summary>
 	public abstract class SerializableInterface
 	{
 		/// <summary>
-		/// Unity component that gets serialized that is of our interface type
+		/// このインターフェース型としてシリアライズされるUnityコンポーネント
 		/// </summary>
 		public UnityEngine.Object unityObjectReference;
 	}
 
 	/// <summary>
-	/// A generic solution to allow the serialization of interfaces in Unity game objects
+	/// UnityのGameObjectでインターフェースをシリアライズできるようにする汎用的な仕組み
 	/// </summary>
-	/// <typeparam name="T">Any interface implementing ISerializableInterface</typeparam>
+	/// <typeparam name="T">ISerializableInterfaceを実装した任意のインターフェース</typeparam>
 	[Serializable]
 	public class SerializableInterface<T> : SerializableInterface where T: ISerializableInterface
 	{
 		T m_InterfaceReference;
 		
 		/// <summary>
-		/// Retrieves the interface from the unity component and caches it
+		/// Unityコンポーネントからインターフェースを取得してキャッシュする
 		/// </summary>
 		public T GetInterface()
 		{
@@ -37,7 +37,7 @@ namespace Core.Utilities
 	}
 
 	/// <summary>
-	/// Base interface from which all serializable interfaces must derive
+	/// すべてのシリアライズ可能なインターフェースが継承する必要がある基底インターフェース
 	/// </summary>
 	public interface ISerializableInterface
 	{

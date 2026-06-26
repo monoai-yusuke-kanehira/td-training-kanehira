@@ -4,72 +4,71 @@ using UnityEngine;
 namespace TowerDefense.UI.HUD
 {
 	/// <summary>
-	/// A class that controls the information display 
-	/// whilst dragging the ghost tower
+	/// ゴーストタワーのドラッグ中に情報表示を制御するクラス
 	/// </summary>
 	[RequireComponent(typeof(TowerUI))]
 	public class BuildInfoUI : MonoBehaviour
 	{
 		/// <summary>
-		/// an enum for easily keeping track of UI animation
+		/// UIアニメーションの状態を簡単に追跡するためのenum
 		/// </summary>
 		public enum AnimationState
 		{
 			/// <summary>
-			/// The UI is completely hidden
+			/// UIが完全に非表示になっている
 			/// </summary>
 			Hidden,
 			
 			/// <summary>
-			/// The UI is animation to be shown
+			/// UIが表示されるアニメーション中
 			/// </summary>
 			Showing,
 			
 			/// <summary>
-			/// the UI is completely shown
+			/// UIが完全に表示されている
 			/// </summary>
 			Shown,
 			
 			/// <summary>
-			/// The UI is animating 
+			/// UIが非表示になるアニメーション中
 			/// </summary>
 			Hiding
 		}
 		
 		/// <summary>
-		/// The attached animator
+		/// アタッチされているアニメーター
 		/// </summary>
 		public Animation anim;
 
 		/// <summary>
-		/// The name of the clip that shows the UI
+		/// UIを表示するクリップ名
 		/// </summary>
 		public string showClipName = "Show";
 
 		/// <summary>
-		/// The name of the clip that hides the UI
+		/// UIを非表示にするクリップ名
 		/// </summary>
 		public string hideClipName = "Hide";
 
 		/// <summary>
-		/// The attached <see cref="TowerUI"/>
+		/// アタッチされている <see cref="TowerUI"/>
 		/// </summary>
 		protected TowerUI m_TowerUI;
 
 		/// <summary>
-		/// The attached canvas
+		/// アタッチされているCanvas
 		/// </summary>
 		protected Canvas m_Canvas;
 
 		/// <summary>
-		/// Tracks the animation of the UI
+		/// UIのアニメーション状態を追跡する
 		/// </summary>
 		AnimationState m_State;
 
 		/// <summary>
-		/// NOTE: Plays from Show animation clip event
-		/// Fires at the end of the show animation
-		/// Sets <see cref="m_State"/> to Show
+		/// 注: Showアニメーションクリップのイベントから再生される
+		/// 表示アニメーションの終了時に呼ばれる
+		/// <see cref="m_State"/> をShownに設定する
 		/// </summary>
 		public void ShowEnd()
 		{
@@ -77,9 +76,9 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// NOTE: Plays from Hide animation clip event
-		/// Fires at the end of the hide animation
-		/// Sets <see cref="m_State"/> to Hidden
+		/// 注: Hideアニメーションクリップのイベントから再生される
+		/// 非表示アニメーションの終了時に呼ばれる
+		/// <see cref="m_State"/> をHiddenに設定する
 		/// </summary>
 		public void HideEnd()
 		{
@@ -87,10 +86,10 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Shows the information
+		/// 情報を表示する
 		/// </summary>
 		/// <param name="controller">
-		/// The tower information to display
+		/// 表示するタワー情報
 		/// </param>
 		public virtual void Show(Tower controller)
 		{
@@ -111,7 +110,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Hides the information
+		/// 情報を非表示にする
 		/// </summary>
 		public virtual void Hide()
 		{
@@ -126,7 +125,7 @@ namespace TowerDefense.UI.HUD
 		}
 
 		/// <summary>
-		/// Cache the attached Canvas and the attached TowerControllerUI
+		/// アタッチされているCanvasとTowerControllerUIをキャッシュする
 		/// </summary>
 		protected virtual void Awake()
 		{

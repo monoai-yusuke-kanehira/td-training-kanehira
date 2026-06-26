@@ -4,85 +4,85 @@ using UnityEngine;
 namespace Core.Camera
 {
 	/// <summary>
-	/// Class to control the camera's behaviour. Camera rig currently operates best on terrain that is mostly on
-	/// a single plane
+	/// カメラの動作を制御するクラスです。CameraRigは、ほぼ
+	/// 単一平面の地形で最も安定して動作します
 	/// </summary>
 	public class CameraRig : MonoBehaviour
 	{
 		/// <summary>
-		/// Look dampening factor
+		/// 注視位置の減衰係数
 		/// </summary>
 		public float lookDampFactor;
 
 		/// <summary>
-		/// Movement dampening factor
+		/// 移動の減衰係数
 		/// </summary>
 		public float movementDampFactor;
 
 		/// <summary>
-		/// Nearest zoom level - can go a bit further than this on touch, for springiness
+		/// 最も近いズームレベル。タッチ操作では弾力感を出すため、この値を少し超えられます
 		/// </summary>
 		public float nearestZoom = 15;
 
 		/// <summary>
-		/// Furthest zoom level - can go a bit further than this on touch, for springiness
+		/// 最も遠いズームレベル。タッチ操作では弾力感を出すため、この値を少し超えられます
 		/// </summary>
 		public float furthestZoom = 40;
 
 		/// <summary>
-		/// True maximum zoom level
+		/// 実際の最大ズームレベル
 		/// </summary>
 		public float maxZoom = 60;
 
 		/// <summary>
-		/// Logarithm used to decay zoom beyond furthest
+		/// 最遠ズームを超えた分を減衰させるために使う対数
 		/// </summary>
 		public float zoomLogFactor = 10;
 
 		/// <summary>
-		/// How fast zoom recovers to normal
+		/// ズームが通常範囲へ戻る速さ
 		/// </summary>
 		public float zoomRecoverSpeed = 20;
 
 		/// <summary>
-		/// Y-height of the floor the camera is assuming
+		/// カメラが基準にする床のY座標
 		/// </summary>
 		public float floorY;
 
 		/// <summary>
-		/// Camera angle when fully zoomed in
+		/// 最大までズームインしたときのカメラ角度
 		/// </summary>
 		public Transform zoomedCamAngle;
 
 		/// <summary>
-		/// Map size, edited through the CameraRigEditor script in edit mode
+		/// 編集モードでCameraRigEditorスクリプトから編集されるマップサイズ
 		/// </summary>
 		[HideInInspector]
 		public Rect mapSize = new Rect(-10, -10, 20, 20);
 
 		/// <summary>
-		/// Is the zoom able to exceed its normal zoom extents with a rubber banding effect
+		/// ラバーバンド効果で通常のズーム範囲を超えられるかどうか
 		/// </summary>
 		public bool springyZoom = true;
 
 		/// <summary>
-		/// Current look velocity of camera
+		/// 現在のカメラ注視位置の速度
 		/// </summary>
 		Vector3 m_CurrentLookVelocity;
 
 		/// <summary>
-		/// Rotations of camera at various zoom levels
+		/// 各ズームレベルでのカメラ回転
 		/// </summary>
 		Quaternion m_MinZoomRotation;
 		Quaternion m_MaxZoomRotation;
 
 		/// <summary>
-		/// Current camera velocity
+		/// 現在のカメラ速度
 		/// </summary>
 		Vector3 m_CurrentCamVelocity;
 
 		/// <summary>
-		/// Current reusable floor plane
+		/// 現在再利用している床平面
 		/// </summary>
 		Plane m_FloorPlane;
 
@@ -92,54 +92,54 @@ namespace Core.Camera
 		}
 
 		/// <summary>
-		/// Target position on the grid that we're looking at
+		/// 注視しているグリッド上の目標位置
 		/// </summary>
 		public Vector3 lookPosition { get; private set; }
 
 		/// <summary>
-		/// Current look position of camera
+		/// 現在のカメラ注視位置
 		/// </summary>
 		public Vector3 currentLookPosition { get; private set; }
 
 		/// <summary>
-		/// Target position of the camera
+		/// カメラの目標位置
 		/// </summary>
 		public Vector3 cameraPosition { get; private set; }
 
 		/// <summary>
-		/// Bounds of our look area, related to map size, zoom level and aspect ratio/screen size
+		/// マップサイズ、ズームレベル、画面比率や画面サイズに応じた注視範囲
 		/// </summary>
 		public Rect lookBounds { get; private set; }
 
 		/// <summary>
-		/// Gets our current zoom distance
+		/// 現在のズーム距離を取得します
 		/// </summary>
 		public float zoomDist { get; private set; }
 
 		/// <summary>
-		/// Gets our current internal zoom distance, before clamping and scaling is applied
+		/// クランプやスケーリングを適用する前の内部ズーム距離を取得します
 		/// </summary>
 		public float rawZoomDist { get; private set; }
 
 		/// <summary>
-		/// Gets the unit we're tracking if any
+		/// 追跡中のユニットがあれば取得します
 		/// </summary>
 		public GameObject trackingObject { get; private set; }
 
 		/// <summary>
-		/// Cached camera component
+		/// キャッシュしたCameraコンポーネント
 		/// </summary>
 		public UnityEngine.Camera cachedCamera { get; private set; }
 
 		/// <summary>
-		/// Initialize references and floor plane
+		/// 参照と床平面を初期化します
 		/// </summary>
 		protected virtual void Awake()
 		{
 			cachedCamera = GetComponent<UnityEngine.Camera>();
 			m_FloorPlane = new Plane(Vector3.up, new Vector3(0.0f, floorY, 0.0f));
 			
-			// Set initial values
+			// 初期値を設定します
 			var lookRay = new Ray(cachedCamera.transform.position, cachedCamera.transform.forward);
 
 			float dist;
@@ -155,7 +155,7 @@ namespace Core.Camera
 		}
 
 		/// <summary>
-		/// Setup initial zoom level and camera bounds
+		/// 初期ズームレベルとカメラ範囲を設定します
 		/// </summary>
 		protected virtual void Start()
 		{
@@ -163,13 +163,13 @@ namespace Core.Camera
 		}
 
 		/// <summary>
-		/// Handle camera behaviour
+		/// カメラの動作を処理します
 		/// </summary>
 		protected virtual void Update()
 		{
 			RecalculateBoundingRect();
 
-			// Tracking?
+			// 追跡中かどうか
 			if (trackingObject != null)
 			{
 				PanTo(trackingObject.transform.position);
@@ -180,7 +180,7 @@ namespace Core.Camera
 				}
 			}
 
-			// Approach look position
+			// 注視位置へ近づけます
 			currentLookPosition = Vector3.SmoothDamp(currentLookPosition, lookPosition, ref m_CurrentLookVelocity,
 			                                         lookDampFactor);
 
@@ -194,11 +194,11 @@ namespace Core.Camera
 
 #if UNITY_EDITOR
 		/// <summary>
-		/// Debug bounds area gizmo
+		/// 範囲確認用のGizmo
 		/// </summary>
 		void OnDrawGizmosSelected()
 		{
-			// We dont want to display this in edit mode
+			// 編集モードでは表示しません
 			if (!Application.isPlaying)
 			{
 				return;
@@ -231,27 +231,27 @@ namespace Core.Camera
 #endif
 
 		/// <summary>
-		/// Pans the camera to a specific position
+		/// カメラを指定位置へパンします
 		/// </summary>
-		/// <param name="position">The look target</param>
+		/// <param name="position">注視対象</param>
 		public void PanTo(Vector3 position)
 		{
 			Vector3 pos = position;
 
-			// Look position is floor height
+			// 注視位置を床の高さに合わせます
 			pos.y = floorY;
 
-			// Clamp to look bounds
+			// 注視範囲内に制限します
 			pos.x = Mathf.Clamp(pos.x, lookBounds.xMin, lookBounds.xMax);
 			pos.z = Mathf.Clamp(pos.z, lookBounds.yMin, lookBounds.yMax);
 			lookPosition = pos;
 
-			// Camera position calculated from look position with view vector and zoom dist
+			// 注視位置、視線ベクトル、ズーム距離からカメラ位置を計算します
 			cameraPosition = lookPosition + (GetToCamVector() * zoomDist);
 		}
 
 		/// <summary>
-		/// Cause the camera to follow a unit
+		/// カメラにユニットを追跡させます
 		/// </summary>
 		/// <param name="objectToTrack"></param>
 		public void TrackObject(GameObject objectToTrack)
@@ -261,7 +261,7 @@ namespace Core.Camera
 		}
 
 		/// <summary>
-		/// Stop tracking a unit
+		/// ユニットの追跡を停止します
 		/// </summary>
 		public void StopTracking()
 		{
@@ -269,36 +269,36 @@ namespace Core.Camera
 		}
 
 		/// <summary>
-		/// Pan the camera
+		/// カメラをパンします
 		/// </summary>
-		/// <param name="panDelta">How far to pan the camera, in world space units</param>
+		/// <param name="panDelta">ワールド空間単位でカメラをパンする距離</param>
 		public void PanCamera(Vector3 panDelta)
 		{
 			Vector3 pos = lookPosition;
 			pos += panDelta;
 
-			// Clamp to look bounds
+			// 注視範囲内に制限します
 			pos.x = Mathf.Clamp(pos.x, lookBounds.xMin, lookBounds.xMax);
 			pos.z = Mathf.Clamp(pos.z, lookBounds.yMin, lookBounds.yMax);
 			lookPosition = pos;
 
-			// Camera position calculated from look position with view vector and zoom dist
+			// 注視位置、視線ベクトル、ズーム距離からカメラ位置を計算します
 			cameraPosition = lookPosition + (GetToCamVector() * zoomDist);
 		}
 
 		/// <summary>
-		/// Zoom the camera by a specified value
+		/// 指定した値だけカメラをズームします
 		/// </summary>
-		/// <param name="zoomDelta">How far to zoom the camera</param>
+		/// <param name="zoomDelta">カメラをズームする量</param>
 		public void ZoomCameraRelative(float zoomDelta)
 		{
 			SetZoom(rawZoomDist + zoomDelta);
 		}
 
 		/// <summary>
-		/// Zoom the camera to a specified value
+		/// カメラを指定した値までズームします
 		/// </summary>
-		/// <param name="newZoom">The absolute zoom value</param>
+		/// <param name="newZoom">絶対ズーム値</param>
 		public void SetZoom(float newZoom)
 		{
 			if (springyZoom)
@@ -325,35 +325,35 @@ namespace Core.Camera
 				zoomDist = rawZoomDist = Mathf.Clamp(newZoom, nearestZoom, furthestZoom);
 			}
 
-			// Update bounding rectangle, which is based on our zoom level
+			// ズームレベルに基づく境界矩形を更新します
 			RecalculateBoundingRect();
 
-			// Force recalculated CameraPosition
+			// CameraPositionを強制的に再計算します
 			PanCamera(Vector3.zero);
 		}
 
 		/// <summary>
-		/// Calculates the ray for a specified pointer in 3d space
+		/// 指定したポインターに対応する3D空間上のRayを計算します
 		/// </summary>
-		/// <param name="pointer">The pointer info</param>
-		/// <returns>The ray representing a screen-space pointer in 3D space</returns>
+		/// <param name="pointer">ポインター情報</param>
+		/// <returns>画面空間のポインターを3D空間で表すRay</returns>
 		public Ray GetRayForPointer(PointerInfo pointer)
 		{
 			return cachedCamera.ScreenPointToRay(pointer.currentPosition);
 		}
 
 		/// <summary>
-		/// Gets the screen position of a given world position
+		/// 指定したワールド座標のスクリーン座標を取得します
 		/// </summary>
-		/// <param name="worldPos">The world position</param>
-		/// <returns>The screen position of that point</returns>
+		/// <param name="worldPos">ワールド座標</param>
+		/// <returns>その点のスクリーン座標</returns>
 		public Vector3 GetScreenPos(Vector3 worldPos)
 		{
 			return cachedCamera.WorldToScreenPoint(worldPos);
 		}
 
 		/// <summary>
-		/// Decay the zoom if it's beyond its zoom limits, for springiness
+		/// 弾力感を出すため、ズーム範囲を超えた場合はズームを減衰させます
 		/// </summary>
 		public void ZoomDecay()
 		{
@@ -373,7 +373,7 @@ namespace Core.Camera
 		}
 
 		/// <summary>
-		/// Returns our normalized zoom ratio
+		/// 正規化したズーム比率を返します
 		/// </summary>
 		public float CalculateZoomRatio()
 		{
@@ -381,7 +381,7 @@ namespace Core.Camera
 		}
 
 		/// <summary>
-		/// Gets the to camera vector based on our current zoom level
+		/// 現在のズームレベルに基づいてカメラ方向へのベクトルを取得します
 		/// </summary>
 		Vector3 GetToCamVector()
 		{
@@ -394,19 +394,19 @@ namespace Core.Camera
 		}
 
 		/// <summary>
-		/// Update the size of our camera's bounding rectangle
+		/// カメラの境界矩形サイズを更新します
 		/// </summary>
 		void RecalculateBoundingRect()
 		{
 			Rect mapsize = mapSize;
 
-			// Get some world space projections at this zoom level
-			// Temporarily move camera to final look position
+			// このズームレベルでのワールド空間への投影を取得します
+			// カメラを最終的な注視位置へ一時的に移動します
 			Vector3 prevCameraPos = transform.position;
 			transform.position = cameraPosition;
 			transform.LookAt(lookPosition);
 
-			// Project screen corners and center
+			// 画面の四隅と中心を投影します
 			var bottomLeftScreen = new Vector3(0, 0);
 			var topLeftScreen = new Vector3(0, Screen.height);
 			var centerScreen = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f);
@@ -443,7 +443,7 @@ namespace Core.Camera
 				Mathf.Max(mapsize.width + (toBottomLeft.x * 2), 0),
 				Mathf.Max((mapsize.height - toTopLeft.z) + toBottomLeft.z, 0));
 
-			// Restore camera position
+			// カメラ位置を元に戻します
 			transform.position = prevCameraPos;
 			transform.LookAt(currentLookPosition);
 		}

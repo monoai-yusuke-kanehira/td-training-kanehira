@@ -5,27 +5,27 @@ using UnityEngine;
 namespace TowerDefense.Towers.Projectiles
 {
 	/// <summary>
-	/// Component that will apply splash damage on collision enter
+	/// 衝突時に範囲ダメージを与えるコンポーネント
 	/// </summary>
 	public class SplashDamager : MonoBehaviour
 	{
 		/// <summary>
-		/// The Area this projectile will attack in
+		/// このProjectileが攻撃する範囲
 		/// </summary>
 		public float attackRange = 0.6f;
 
 		/// <summary>
-		/// The amount of damage done, a percentage of the damager damage
+		/// 与えるダメージ量。Damagerのダメージに対する割合です
 		/// </summary>
 		public float damageAmount;
 
 		/// <summary>
-		/// The physics layer mask to search on
+		/// 検索対象のPhysics Layer Mask
 		/// </summary>
 		public LayerMask mask = -1;
 
 		/// <summary>
-		/// The alignment of the projectile
+		/// Projectileの属性
 		/// </summary>
 		public SerializableIAlignmentProvider alignment;
 
@@ -37,7 +37,7 @@ namespace TowerDefense.Towers.Projectiles
 		}
 
 		/// <summary>
-		/// Gets this damager's alignment
+		/// このDamagerの属性を取得します
 		/// </summary>
 		public IAlignmentProvider alignmentProvider
 		{
@@ -45,8 +45,8 @@ namespace TowerDefense.Towers.Projectiles
 		}
 
 		/// <summary>
-		/// Searches for Targetables within a radius of <see cref="attackRange"/>
-		/// and damages them if valid
+		/// <see cref="attackRange"/>の半径内にいるTargetableを検索します
+		/// 有効であればダメージを与えます
 		/// </summary>
 		protected virtual void OnCollisionEnter(Collision other)
 		{

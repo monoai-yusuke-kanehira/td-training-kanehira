@@ -8,7 +8,7 @@ namespace Core.Data
 		protected readonly string m_Filename;
 
 		/// <summary>
-		/// Instantiate a json saver
+		/// JSON保存処理を生成します
 		/// </summary>
 		/// <param name="filename">The filename (including extension) to use.</param>
 		/// <remarks><paramref name="filename" /> is relative to <see cref="Application.persistentDataPath" /></remarks>

@@ -3,7 +3,7 @@ using TowerDefense.Level;
 using TowerDefense.Towers;
 using TowerDefense.UI.HUD;
 using UnityEngine;
-using UnityEngine.InputSystem; // Añadido para el New Input System
+using UnityEngine.InputSystem; // New Input System のために追加
 using State = TowerDefense.UI.HUD.GameUI.State;
 
 namespace TowerDefense.Input
@@ -48,7 +48,7 @@ namespace TowerDefense.Input
             if (Keyboard.current == null) return;
             var kb = Keyboard.current;
 
-            // Manejo de Escape con New Input System
+            // New Input System で Escape キーを処理する
             if (kb.escapeKey.wasPressedThisFrame)
             {
                 switch (m_GameUI.state)
@@ -70,12 +70,12 @@ namespace TowerDefense.Input
                 }
             }
             
-            // Atajos de teclado para colocar torres (1-9 y 0)
+            // タワー配置用のキーボードショートカット（1-9 と 0）
             if (LevelManager.instanceExists)
             {
                 int towerLibraryCount = LevelManager.instance.towerLibrary.Count;
                 
-                // Mapeo de teclas numéricas (Alpha1 es el índice 0, Alpha2 el 1, etc.)
+                // 数字キーの対応付け（Alpha1 がインデックス 0、Alpha2 が 1、以降同様）
                 Key[] numKeys = { 
                     Key.Digit1, Key.Digit2, Key.Digit3, Key.Digit4, Key.Digit5, 
                     Key.Digit6, Key.Digit7, Key.Digit8, Key.Digit9 
@@ -92,7 +92,7 @@ namespace TowerDefense.Input
                     }
                 }
 
-                // Caso especial para la tecla 0 (mapeada al índice 9 de la librería)
+                // 0 キー用の特別処理（ライブラリのインデックス 9 に対応）
                 if (towerLibraryCount > 9 && kb.digit0Key.wasPressedThisFrame)
                 {
                     TrySetBuildMode(9);
@@ -101,7 +101,7 @@ namespace TowerDefense.Input
         }
 
         /// <summary>
-        /// Método auxiliar para evitar repetición de código al presionar números
+        /// 数字キーを押したときの処理の重複を避けるための補助メソッド
         /// </summary>
         void TrySetBuildMode(int libraryIndex)
         {
@@ -134,11 +134,11 @@ namespace TowerDefense.Input
             {
                 if (m_GameUI.isBuilding)
                 {
-                    if (mouseInfo.mouseButtonId == 0) // Click izquierdo confirma
+                    if (mouseInfo.mouseButtonId == 0) // 左クリックで確定
                     {
                         m_GameUI.TryPlaceTower(pointer);
                     }
-                    else // Click derecho cancela
+                    else // 右クリックでキャンセル
                     {
                         m_GameUI.CancelGhostPlacement();
                     }

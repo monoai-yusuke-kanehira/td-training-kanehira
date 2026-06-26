@@ -5,33 +5,33 @@ using UnityEngine;
 namespace TowerDefense.Towers.Placement
 {
 	/// <summary>
-	/// An area suitable for placing a single tower
+	/// 単一のTower配置に適したエリア
 	/// </summary>
 	[RequireComponent(typeof(Collider))]
 	public class SingleTowerPlacementArea : MonoBehaviour, IPlacementArea
 	{
 		/// <summary>
-		/// Visualisation prefab to instantiate
+		/// 生成する表示用Prefab
 		/// </summary>
 		public PlacementTile placementTilePrefab;
 		
 		/// <summary>
-		/// Visualisation prefab to instantiate on mobile platforms
+		/// モバイル環境で生成する表示用Prefab
 		/// </summary>
 		public PlacementTile placementTilePrefabMobile;
 		
 		/// <summary>
-		/// <see cref="PlacementTile"/> we've spawned on our spot
+		/// この場所に生成した<see cref="PlacementTile"/>
 		/// </summary>
 		PlacementTile m_SpawnedTile;
 
 		/// <summary>
-		/// If the area is occupied
+		/// エリアが占有されているかどうか
 		/// </summary>
 		bool m_IsOccupied;
 
 		/// <summary>
-		/// Set up visualisation tile
+		/// 表示用タイルを設定します
 		/// </summary>
 		protected void Awake()
 		{
@@ -51,37 +51,37 @@ namespace TowerDefense.Towers.Placement
 		}
 
 		/// <summary>
-		/// Returns (0, 0), as there is only one available spot
+		/// 利用可能な場所が1つだけなので、(0, 0)を返します
 		/// </summary>
-		/// <param name="worldPosition"><see cref="Vector3"/> indicating world space coordinates to convert.</param>
-		/// <param name="sizeOffset"><see cref="IntVector2"/> indicating size of object to center.</param>
+		/// <param name="worldPosition">変換するワールド空間座標を示す<see cref="Vector3"/>。</param>
+		/// <param name="sizeOffset">中央に合わせるオブジェクトのサイズを示す<see cref="IntVector2"/>。</param>
 		public IntVector2 WorldToGrid(Vector3 worldPosition, IntVector2 sizeOffset)
 		{
 			return new IntVector2(0, 0);
 		}
 
 		/// <summary>
-		/// Returns transform.position, as there is only one available spot
+		/// 利用可能な場所が1つだけなので、transform.positionを返します
 		/// </summary>
-		/// <param name="gridPosition">The coordinate in grid space</param>
-		/// <param name="sizeOffset"><see cref="IntVector2"/> indicating size of object to center.</param>
+		/// <param name="gridPosition">グリッド空間での座標</param>
+		/// <param name="sizeOffset">中央に合わせるオブジェクトのサイズを示す<see cref="IntVector2"/>。</param>
 		public Vector3 GridToWorld(IntVector2 gridPosition, IntVector2 sizeOffset)
 		{
 			return transform.position;
 		}
 
 		/// <summary>
-		/// Tests whether the placement area is valid.
+		/// 配置エリアが有効かテストします。
 		/// </summary>
-		/// <param name="gridPos">The grid location</param>
-		/// <param name="size">The size of the item</param>
+		/// <param name="gridPos">グリッド上の位置</param>
+		/// <param name="size">アイテムのサイズ</param>
 		public TowerFitStatus Fits(IntVector2 gridPos, IntVector2 size)
 		{
 			return m_IsOccupied ? TowerFitStatus.Overlaps : TowerFitStatus.Fits;
 		}
 
 		/// <summary>
-		/// Occupies the area
+		/// エリアを占有します
 		/// </summary>
 		/// <param name="gridPos"></param>
 		/// <param name="size"></param>
@@ -96,7 +96,7 @@ namespace TowerDefense.Towers.Placement
 		}
 
 		/// <summary>
-		/// Clears the area
+		/// エリアをクリアします
 		/// </summary>
 		/// <param name="gridPos"></param>
 		/// <param name="size"></param>
@@ -112,7 +112,7 @@ namespace TowerDefense.Towers.Placement
 
 #if UNITY_EDITOR
 		/// <summary>
-		/// Draw the spot as a smalls phere in the scene view.
+		/// Sceneビューでこの場所を小さな球として描画します。
 		/// </summary>
 		void OnDrawGizmos()
 		{
@@ -127,7 +127,7 @@ namespace TowerDefense.Towers.Placement
 			Gizmos.matrix = originalMatrix;
 			Gizmos.color = prevCol;
 			
-			// Draw icon too
+			// アイコンも描画します
 			Gizmos.DrawIcon(transform.position + Vector3.up, "build_zone.png", true);
 		}
 #endif

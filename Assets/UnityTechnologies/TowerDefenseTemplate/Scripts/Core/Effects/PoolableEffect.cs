@@ -5,8 +5,8 @@ using UnityEngine;
 namespace TowerDefense.Effects
 {
 	/// <summary>
-	/// Simple effect support script to reset trails and particles on enable, and also
-	/// stops and starts reused emitters (to prevent them emitting when moving after being repooled)
+	/// 有効化時にTrailとParticleをリセットし、さらに
+	/// 再利用されるEmitterを停止してから開始するためのシンプルなエフェクト補助スクリプト（プールへ戻した後の移動中に放出されるのを防ぎます）
 	/// </summary>
 	public class PoolableEffect : Poolable
 	{
@@ -16,7 +16,7 @@ namespace TowerDefense.Effects
 		bool m_EffectsEnabled;
 		
 		/// <summary>
-		/// Stop emitting all particles
+		/// すべてのParticleの放出を停止します
 		/// </summary>
 		public void StopAll()
 		{
@@ -27,7 +27,7 @@ namespace TowerDefense.Effects
 		}
 		
 		/// <summary>
-		/// Turn off all known systems
+		/// 既知のすべてのシステムをオフにします
 		/// </summary>
 		public void TurnOffAllSystems()
 		{
@@ -36,7 +36,7 @@ namespace TowerDefense.Effects
 				return;
 			}
 			
-			// Reset all systems and trails
+			// すべてのシステムとTrailをリセットします
 			foreach (var particleSystem in m_Systems)
 			{
 				particleSystem.Clear();
@@ -54,7 +54,7 @@ namespace TowerDefense.Effects
 		}
 
 		/// <summary>
-		/// Turn on all known systems
+		/// 既知のすべてのシステムをオンにします
 		/// </summary>
 		public void TurnOnAllSystems()
 		{
@@ -63,7 +63,7 @@ namespace TowerDefense.Effects
 				return;
 			}
 			
-			// Re-enable all systems and trails
+			// すべてのシステムとTrailを再度有効化します
 			foreach (var particleSystem in m_Systems)
 			{
 				particleSystem.Clear();
@@ -90,7 +90,7 @@ namespace TowerDefense.Effects
 		{
 			m_EffectsEnabled = true;
 			
-			// Cache systems and trails, but only active and emitting ones
+			// システムとTrailをキャッシュします。ただし、アクティブで放出中のものだけです
 			m_Systems = new List<ParticleSystem>();
 			m_Trails = new List<TrailRenderer>();
 

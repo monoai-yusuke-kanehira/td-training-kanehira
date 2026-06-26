@@ -3,27 +3,27 @@
 namespace Core.Input
 {
 	/// <summary>
-	/// Class to track information about a passive pointer input
+	/// 待機中のポインター入力の情報を管理するクラス
 	/// </summary>
 	public abstract class PointerInfo
 	{
 		/// <summary>
-		/// Current pointer position
+		/// 現在のポインター位置
 		/// </summary>
 		public Vector2 currentPosition;
 
 		/// <summary>
-		/// Previous frame's pointer position
+		/// 前フレームのポインター位置
 		/// </summary>
 		public Vector2 previousPosition;
 
 		/// <summary>
-		/// Movement delta for this frame
+		/// このフレームでの移動量
 		/// </summary>
 		public Vector2 delta;
 
 		/// <summary>
-		/// Tracks if this pointer began over UI
+		/// このポインター入力がUI上で始まったかを記録する
 		/// </summary>
 		public bool startedOverUI;
 	}

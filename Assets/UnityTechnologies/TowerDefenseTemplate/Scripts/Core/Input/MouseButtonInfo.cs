@@ -1,17 +1,17 @@
 ﻿namespace Core.Input
 {
 	/// <summary>
-	/// Info for mouse
+	/// マウス情報
 	/// </summary>
 	public class MouseButtonInfo : PointerActionInfo
 	{
 		/// <summary>
-		/// Is this mouse button down
+		/// このマウスボタンが押されているかどうか
 		/// </summary>
 		public bool isDown;
 
 		/// <summary>
-		/// Our mouse button id
+		/// このマウスボタンのID
 		/// </summary>
 		public int mouseButtonId;
 	}

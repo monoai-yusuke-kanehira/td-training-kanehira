@@ -5,7 +5,7 @@ using UnityEditor;
 namespace TowerDefense.Level.Editor
 {
 	/// <summary>
-	/// Custom editor to display wave time sum
+	/// 波形時間の合計を表示するカスタムエディター
 	/// </summary>
 	[CustomEditor(typeof(Wave), true)]
 	public class WaveEditor : UnityEditor.Editor
@@ -21,17 +21,17 @@ namespace TowerDefense.Level.Editor
 		{
 			base.OnInspectorGUI();
 
-			// Draw a summary of all spawn instructions
+			// すべてのスポーン命令の概要を描画します
 			List<SpawnInstruction> spawnInstructions = m_Wave.spawnInstructions;
 			if (spawnInstructions == null)
 			{
 				return;
 			}
 			
-			// Count spawn instructions
+			// カウントスポーン命令
 			float lastSpawnTime = spawnInstructions.Sum(t => t.delayToSpawn);
 
-			// Group by enemy type so we can count per type as well
+			// 種類ごとにも数えられるよう、敵タイプでグループ化します
 			var groups = spawnInstructions.GroupBy(t => t.agentConfiguration);
 			var groupCounts = groups.Select(g => new {Number = g.Count(), Item = g.Key.agentName});
 

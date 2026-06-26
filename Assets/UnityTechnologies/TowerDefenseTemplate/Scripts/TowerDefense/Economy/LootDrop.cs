@@ -5,23 +5,23 @@ using UnityEngine;
 namespace TowerDefense.Economy
 {
 	/// <summary>
-	/// A class that adds money to the currency when the attached DamagableBehaviour dies
+	/// アタッチされたDamageableBehaviourが終了したときに通貨にお金を追加するクラス
 	/// </summary>
 	[RequireComponent(typeof(DamageableBehaviour))]
 	public class LootDrop : MonoBehaviour
 	{
 		/// <summary>
-		/// The amount of loot/currency dropped when object "dies"
+		/// オブジェクトが「死亡」したときにドロップされる戦利品/通貨の量
 		/// </summary>
 		public int lootDropped = 1;
 
 		/// <summary>
-		/// The attached DamagableBehaviour
+		/// 添付のDamgableBehaviour
 		/// </summary>
 		protected DamageableBehaviour m_DamageableBehaviour;
 
 		/// <summary>
-		/// Caches attached DamageableBehaviour
+		/// キャッシュがアタッチされています
 		/// </summary>
 		protected virtual void OnEnable()
 		{
@@ -33,7 +33,7 @@ namespace TowerDefense.Economy
 		}
 
 		/// <summary>
-		/// Unsubscribed from the <see cref="m_DamageableBehaviour"/> died event
+		/// からの購読を解除しました <see cref="m_DamageableBehaviour"/> 死亡イベント
 		/// </summary>
 		protected virtual void OnDisable()
 		{
@@ -41,8 +41,8 @@ namespace TowerDefense.Economy
 		}
 
 		/// <summary>
-		/// The callback for when the attached object "dies".
-		/// Add <see cref="lootDropped"/> to current currency
+		/// アタッチされたオブジェクトが「死亡」したときのコールバック
+		/// 追加 <see cref="lootDropped"/> 現在の通貨に換算
 		/// </summary>
 		protected virtual void OnDeath(HealthChangeInfo info)
 		{

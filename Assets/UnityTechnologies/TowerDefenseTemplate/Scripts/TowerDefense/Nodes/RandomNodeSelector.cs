@@ -6,19 +6,19 @@ using UnityEngine;
 namespace TowerDefense.Nodes
 {
 	/// <summary>
-	/// Randomly selects the next node
+	/// 次のNodeをランダムに選択します
 	/// </summary>
 	public class RandomNodeSelector : NodeSelector
 	{
 		/// <summary>
-		/// The sum of all Node weights in m_LinkedNodes
+		/// m_LinkedNodes内の全Nodeの重みの合計
 		/// </summary>
 		protected int m_WeightSum;
 
 		/// <summary>
-		/// Gets a random node in the list
+		/// リスト内からランダムなNodeを取得します
 		/// </summary>
-		/// <returns>The randomly selected node</returns>
+		/// <returns>ランダムに選択されたNode</returns>
 		public override Node GetNextNode()
 		{
 			if (linkedNodes == null)
@@ -31,7 +31,7 @@ namespace TowerDefense.Nodes
 
 		protected void Awake()
 		{
-			// cache the linked node weights
+			// リンクされたNodeの重みをキャッシュします
 			m_WeightSum = TotalLinkedNodeWeights();
 		}
 #if UNITY_EDITOR
@@ -42,9 +42,9 @@ namespace TowerDefense.Nodes
 		}
 #endif
 		/// <summary>
-		/// Sums up the weights of the linked nodes for random selection
+		/// ランダム選択のためにリンクされたNodeの重みを合計します
 		/// </summary>
-		/// <returns>Weight Sum of Linked Nodes</returns>
+		/// <returns>リンクされたNodeの重みの合計</returns>
 		protected int TotalLinkedNodeWeights()
 		{
 			int totalWeight = 0;

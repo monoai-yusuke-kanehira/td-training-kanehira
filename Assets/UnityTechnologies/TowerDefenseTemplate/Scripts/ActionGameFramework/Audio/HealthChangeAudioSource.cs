@@ -5,23 +5,23 @@ using UnityEngine;
 namespace ActionGameFramework.Audio
 {
 	/// <summary>
-	/// Health change audio source - a helper for playing sounds on Health Change
+	/// 体力変化時にサウンドを再生するためのヘルパー
 	/// </summary>
 	[RequireComponent(typeof(AudioSource))]
 	public class HealthChangeAudioSource : MonoBehaviour
 	{
 		/// <summary>
-		/// The sound selector. A mechanism of specifying how sounds are selected based on HealthChangeInfo
+		/// サウンドセレクター。HealthChangeInfo に基づいて再生するサウンドを選ぶ仕組み
 		/// </summary>
 		public HealthChangeSoundSelector soundSelector;
 
 		/// <summary>
-		/// The audio source
+		/// サウンド再生に使う AudioSource
 		/// </summary>
 		protected AudioSource m_Source;
 
 		/// <summary>
-		/// Assign the required AudioSource reference at runtime
+		/// 実行時に必要な AudioSource 参照を割り当てる
 		/// </summary>
 		protected virtual void Awake()
 		{
@@ -29,7 +29,7 @@ namespace ActionGameFramework.Audio
 		}
 
 		/// <summary>
-		/// Play the AudioSource
+		/// AudioSource を再生する
 		/// </summary>
 		public virtual void PlaySound()
 		{
@@ -37,9 +37,9 @@ namespace ActionGameFramework.Audio
 		}
 
 		/// <summary>
-		/// Play a clip when certain health change requirements are met
+		/// 指定された体力変化の条件を満たしたときにクリップを再生する
 		/// </summary>
-		/// <param name="info">Uses <see cref="HealthChangeInfo"/> to determine what clip to play</param>
+		/// <param name="info">再生するクリップを決めるために使う <see cref="HealthChangeInfo"/></param>
 		public virtual void PlayHealthChangeSound(HealthChangeInfo info)
 		{
 			if (soundSelector != null && soundSelector.isSetUp)
@@ -55,7 +55,7 @@ namespace ActionGameFramework.Audio
 		}
 
 		/// <summary>
-		/// Sorts the <see cref="soundSelector"/> sound list
+		/// <see cref="soundSelector"/> のサウンドリストを並べ替える
 		/// </summary>
 		public void Sort()
 		{
@@ -68,12 +68,12 @@ namespace ActionGameFramework.Audio
 	}
 
 	/// <summary>
-	/// Provides a way to compare 2 <see cref="HealthChangeSound"/>s
+	/// 2 つの <see cref="HealthChangeSound"/> を比較する方法を提供する
 	/// </summary>
 	public class HealthChangeSoundComparer : IComparer<HealthChangeSound>
 	{
 		/// <summary>
-		/// Compares 2 <see cref="HealthChangeSound"/>
+		/// 2 つの <see cref="HealthChangeSound"/> を比較する
 		/// </summary>
 		public int Compare(HealthChangeSound first, HealthChangeSound second)
 		{

@@ -3,18 +3,18 @@
 namespace Core.UI
 {
 	/// <summary>
-	/// Abstract base class for menu pages which animates the process of enabling and disabling
-	/// Handles activation/deactivation of the page
+	/// 有効化と無効化の処理をアニメーションさせるメニューページの抽象基底クラス
+	/// ページの有効化と無効化を扱う
 	/// </summary>
 	public abstract class AnimatingMainMenuPage : MonoBehaviour, IMainMenuPage
 	{
 		/// <summary>
-		/// Canvas to disable. If this object is set, then the canvas is disabled instead of the game object 
+		/// 無効化するCanvas。このオブジェクトが設定されている場合は、GameObjectではなくCanvasを無効化する
 		/// </summary>
 		public Canvas canvas;
 		
 		/// <summary>
-		/// Deactivates this page
+		/// このページを非表示にする
 		/// </summary>
 		public virtual void Hide()
 		{
@@ -22,7 +22,7 @@ namespace Core.UI
 		}
 
 		/// <summary>
-		/// Activates this page
+		/// このページを表示する
 		/// </summary>
 		public virtual void Show()
 		{
@@ -30,12 +30,12 @@ namespace Core.UI
 		}
 
 		/// <summary>
-		/// Starts the deactivation process. e.g. begins fading page out. Call FinishedDeactivatingPage when done
+		/// 無効化処理を開始する。例: ページのフェードアウトを始める。完了したらFinishedDeactivatingPageを呼ぶ
 		/// </summary>
 		protected abstract void BeginDeactivatingPage();
 
 		/// <summary>
-		/// Ends the deactivation process and turns off the associated gameObject/canvas
+		/// 無効化処理を終了し、関連するGameObjectまたはCanvasをオフにする
 		/// </summary>
 		protected virtual void FinishedDeactivatingPage()
 		{
@@ -50,7 +50,7 @@ namespace Core.UI
 		}
 
 		/// <summary>
-		/// Starts the activation process by turning on the associated gameObject/canvas.  Call FinishedActivatingPage when done
+		/// 関連するGameObjectまたはCanvasをオンにして有効化処理を開始する。完了したらFinishedActivatingPageを呼ぶ
 		/// </summary>
 		protected virtual void BeginActivatingPage()
 		{
@@ -65,7 +65,7 @@ namespace Core.UI
 		}
 
 		/// <summary>
-		/// Finishes the activation process. e.g. Turning on input
+		/// 有効化処理を完了する。例: 入力を有効にする
 		/// </summary>
 		protected abstract void FinishedActivatingPage();
 	}

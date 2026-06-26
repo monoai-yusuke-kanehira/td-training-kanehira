@@ -3,7 +3,7 @@
 namespace TowerDefense.UI
 {
 	/// <summary>
-	/// A simple component that plays an animation
+	/// アニメーションを再生するシンプルなコンポーネント
 	/// </summary>
 	[RequireComponent(typeof(Animation))]
 	public class PlayAnimation : MonoBehaviour

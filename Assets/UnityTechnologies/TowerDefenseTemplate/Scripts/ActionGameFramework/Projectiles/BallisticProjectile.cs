@@ -6,7 +6,7 @@ using UnityEngine;
 namespace ActionGameFramework.Projectiles
 {
 	/// <summary>
-	/// Simple IProjectile implementation for projectile that flies in a parabolic arc with no further m_Acceleration.
+	/// 追加の m_Acceleration なしで放物線軌道を飛ぶ Projectile 向けのシンプルな IProjectile 実装
 	/// </summary>
 	[RequireComponent(typeof(Rigidbody))]
 	public class BallisticProjectile : MonoBehaviour, IProjectile
@@ -21,8 +21,7 @@ namespace ActionGameFramework.Projectiles
 		public float startSpeed;
 
 		/// <summary>
-		/// The duration that collisions between this gameObjects colliders
-		/// and the given colliders will be ignored.
+		/// この GameObject の Collider と指定した Collider の衝突を無視する時間
 		/// </summary>
 		public float collisionIgnoreTime = 0.35f;
 
@@ -32,18 +31,18 @@ namespace ActionGameFramework.Projectiles
 		protected List<Collider> m_CollidersIgnoring = new List<Collider>();
 		
 		/// <summary>
-		/// All the colliders attached to this gameObject and its children
+		/// この GameObject と子オブジェクトにアタッチされているすべての Collider
 		/// </summary>
 		protected Collider[] m_Colliders;
 
 		public event Action fired;
 
 		/// <summary>
-		/// Fires this projectile from a designated start point to a designated world coordinate.
-		/// Automatically sets firing angle to suit launch speed unless angle is overridden, in which case launch speed is overridden to suit angle.
+		/// 指定した開始位置から指定したワールド座標へ向けてこの Projectile を発射する
+		/// 角度が上書きされていない場合は発射速度に合わせて発射角度を自動設定し、上書きされている場合は角度に合わせて発射速度を上書きする
 		/// </summary>
-		/// <param name="startPoint">Start point of the flight.</param>
-		/// <param name="targetPoint">Target point to fly to.</param>
+		/// <param name="startPoint">飛行の開始位置。</param>
+		/// <param name="targetPoint">飛行先の目標位置。</param>
 		public virtual void FireAtPoint(Vector3 startPoint, Vector3 targetPoint)
 		{
 			transform.position = startPoint;
@@ -69,10 +68,10 @@ namespace ActionGameFramework.Projectiles
 		}
 
 		/// <summary>
-		/// Fires this projectile in a designated direction at the launch speed.
+		/// 指定した方向へ発射速度でこの Projectile を発射する
 		/// </summary>
-		/// <param name="startPoint">Start point of the flight.</param>
-		/// <param name="fireVector">Vector representing launch direction.</param>
+		/// <param name="startPoint">飛行の開始位置。</param>
+		/// <param name="fireVector">発射方向を表す Vector。</param>
 		public virtual void FireInDirection(Vector3 startPoint, Vector3 fireVector)
 		{
 			transform.position = startPoint;
@@ -81,10 +80,10 @@ namespace ActionGameFramework.Projectiles
 		}
 
 		/// <summary>
-		/// Fires this projectile at a designated starting velocity, overriding any starting speeds.
+		/// 指定した初速でこの Projectile を発射し、既存の開始速度を上書きする
 		/// </summary>
-		/// <param name="startPoint">Start point of the flight.</param>
-		/// <param name="fireVelocity">Vector3 representing launch velocity.</param>
+		/// <param name="startPoint">飛行の開始位置。</param>
+		/// <param name="fireVelocity">発射速度を表す Vector3。</param>
 		public void FireAtVelocity(Vector3 startPoint, Vector3 fireVelocity)
 		{
 			transform.position = startPoint;
@@ -95,9 +94,9 @@ namespace ActionGameFramework.Projectiles
 		}
 
 		/// <summary>
-		/// Ignores all collisions between this and the given colliders for a defined period of time
+		/// 指定した時間、この Projectile と指定した Collider 間のすべての衝突を無視する
 		/// </summary>
-		/// <param name="collidersToIgnore">Colliders to ignore</param>
+		/// <param name="collidersToIgnore">無視する Collider。</param>
 		public void IgnoreCollision(Collider[] collidersToIgnore)
 		{
 			if (collisionIgnoreTime > 0)
@@ -131,8 +130,8 @@ namespace ActionGameFramework.Projectiles
 			{
 				return;
 			}
-			// If we are ignoring collisions, increment counter. 
-			// If counter is complete, reenable collisions
+			// 衝突を無視している間はカウンターを進める
+			// カウンターが完了したら衝突を再度有効にする
 			if (m_IgnoringCollsions)
 			{
 				m_CollisionIgnoreCount += Time.deltaTime;

@@ -7,23 +7,23 @@ using UnityEngine;
 namespace Core.Data
 {
 	/// <summary>
-	/// Encryption extension to Json Saver
+	/// JsonSaver に暗号化機能を追加したクラス
 	/// </summary>
 	public class EncryptedJsonSaver<T> : JsonSaver<T> where T : IDataStore
 	{
 		/// <summary>
-		/// IV for Rijndael defaults to 16 if using its default block size
+		/// Rijndael のデフォルトブロックサイズを使う場合、IV は常に 16 バイトになる
 		/// </summary>
 		const int k_InitializationVectorLength = 16;
 
 		/// <summary>
-		/// Longest supported key length for Rijndael is 256 bits (32 bytes)
-		/// Other supported values are 128 or 192 bits
+		/// Rijndael がサポートする最大キー長は 256 ビット（32 バイト）。
+		/// そのほかに 128 ビットまたは 192 ビットもサポートされる
 		/// </summary>
 		const int k_KeyLength = 32;
 
 		/// <summary>
-		/// Salt for encryption
+		/// 暗号化に使うソルト
 		/// </summary>
 		static readonly byte[] s_Salt =
 		{
@@ -37,7 +37,7 @@ namespace Core.Data
 		}
 
 		/// <summary>
-		/// Get device bytes to prevent copying save file to different device
+		/// 保存ファイルを別の端末へコピーして使えないように、端末固有のバイト列を取得する
 		/// </summary>
 		static byte[] GetUniqueDeviceBytes()
 		{
@@ -47,9 +47,9 @@ namespace Core.Data
 		}
 
 		/// <summary>
-		/// Gets encrypted write stream
+		/// 暗号化された書き込みストリームを取得する
 		/// </summary>
-		/// <returns>The write stream.</returns>
+		/// <returns>書き込みストリーム</returns>
 		protected override StreamWriter GetWriteStream()
 		{
 			var underlyingStream = new FileStream(m_Filename, FileMode.Create);
@@ -71,9 +71,9 @@ namespace Core.Data
 		}
 
 		/// <summary>
-		/// Gets decrypted read stream
+		/// 復号済みの読み取りストリームを取得する
 		/// </summary>
-		/// <returns>The read stream.</returns>
+		/// <returns>読み取りストリーム</returns>
 		protected override StreamReader GetReadStream()
 		{
 			var underlyingStream = new FileStream(m_Filename, FileMode.Open);

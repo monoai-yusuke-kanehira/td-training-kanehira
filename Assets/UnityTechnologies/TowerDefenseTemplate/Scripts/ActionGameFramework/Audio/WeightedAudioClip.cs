@@ -4,19 +4,19 @@ using UnityEngine;
 namespace ActionGameFramework.Audio
 {
 	/// <summary>
-	/// Weighted audio clip.
-	/// This is so that individual clips can be given a higher probability of selection
+	/// 重み付き AudioClip。
+	/// 個別のクリップが選ばれやすくなるように確率を上げるために使う
 	/// </summary>
 	[Serializable]
 	public class WeightedAudioClip
 	{
 		/// <summary>
-		/// The audio clip.
+		/// 再生対象の AudioClip
 		/// </summary>
 		public AudioClip clip;
 
 		/// <summary>
-		/// The weight - used to ensure that individual clips can be given a higher probability of selection
+		/// 重み。個別のクリップが選ばれる確率を高くするために使う
 		/// </summary>
 		public int weight = 1;
 	}

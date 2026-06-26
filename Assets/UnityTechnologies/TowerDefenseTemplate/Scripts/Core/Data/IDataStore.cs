@@ -1,7 +1,7 @@
 ﻿namespace Core.Data
 {
 	/// <summary>
-	/// Interface for data store
+	/// データストア用のインターフェース
 	/// </summary>
 	public interface IDataStore
 	{

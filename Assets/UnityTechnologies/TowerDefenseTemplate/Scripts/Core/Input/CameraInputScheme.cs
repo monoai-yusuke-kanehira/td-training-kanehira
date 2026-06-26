@@ -4,22 +4,22 @@ using UnityEngine;
 namespace Core.Input
 {
 	/// <summary>
-	/// Abstract base input scheme for schemes that control the CameraRig
+	/// CameraRigを制御する入力スキーム用の抽象基底クラス
 	/// </summary>
 	public abstract class CameraInputScheme : InputScheme
 	{
 		/// <summary>
-		/// Camera rig to control
+		/// 制御対象のCameraRig
 		/// </summary>
 		public CameraRig cameraRig;
 
 		/// <summary>
-		/// Pan speed factor when fully zoomed-in
+		/// 最大までズームインしたときのパン速度係数
 		/// </summary>
 		public float nearZoomPanSpeedModifier = 0.2f;
 
 		/// <summary>
-		/// Gets our pan speed multiplier for the given zoom level
+		/// 指定したズームレベルでのパン速度倍率を取得します
 		/// </summary>
 		/// <returns></returns>
 		protected float GetPanSpeedForZoomLevel()
@@ -30,17 +30,17 @@ namespace Core.Input
 		}
 
 		/// <summary>
-		/// Do screen edge panning with the given screen coordinates
+		/// 指定したスクリーン座標を使って画面端パンを行います
 		/// </summary>
-		/// <param name="screenPosition">The screen position of the cursor panning the camera</param>
-		/// <param name="screenEdgeThreshold">The screen edge threshold in pixels</param>
-		/// <param name="panSpeed">Speed of panning</param>
+		/// <param name="screenPosition">カメラをパンするカーソルのスクリーン座標</param>
+		/// <param name="screenEdgeThreshold">画面端判定のしきい値（ピクセル）</param>
+		/// <param name="panSpeed">パン速度</param>
 		protected void PanWithScreenCoordinates(Vector2 screenPosition, float screenEdgeThreshold, float panSpeed)
 		{
-			// Calculate zoom ratio
+			// ズーム比率を計算します
 			float zoomRatio = GetPanSpeedForZoomLevel();
 
-			// Left
+			// 左
 			if ((screenPosition.x < screenEdgeThreshold))
 			{
 				float panAmount = (screenEdgeThreshold - screenPosition.x) / screenEdgeThreshold;
@@ -54,7 +54,7 @@ namespace Core.Input
 				}
 			}
 
-			// Right
+			// 右
 			if ((screenPosition.x > Screen.width - screenEdgeThreshold))
 			{
 				float panAmount = ((screenEdgeThreshold - Screen.width) + screenPosition.x) / screenEdgeThreshold;
@@ -67,7 +67,7 @@ namespace Core.Input
 				cameraRig.StopTracking();
 			}
 
-			// Down
+			// 下
 			if ((screenPosition.y < screenEdgeThreshold))
 			{
 				float panAmount = (screenEdgeThreshold - screenPosition.y) / screenEdgeThreshold;
@@ -81,7 +81,7 @@ namespace Core.Input
 				}
 			}
 
-			// Up
+			// 上
 			if ((screenPosition.y > Screen.height - screenEdgeThreshold))
 			{
 				float panAmount = ((screenEdgeThreshold - Screen.height) + screenPosition.y) / screenEdgeThreshold;

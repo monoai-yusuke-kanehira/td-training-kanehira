@@ -4,22 +4,22 @@ using UnityEngine;
 namespace Core.Utilities
 {
 	/// <summary>
-	/// A timer data model. Consumed/process by the TimedBehaviour
+	/// タイマーのデータモデル。TimedBehaviourによって使用、処理される
 	/// </summary>
 	public class Timer
 	{
 		/// <summary>
-		/// Event fired on elapsing
+		/// 時間が経過したときに発火するイベント
 		/// </summary>
 		readonly Action m_Callback;
 
 		/// <summary>
-		/// The time
+		/// 時間
 		/// </summary>
 		float m_Time, m_CurrentTime;
 
 		/// <summary>
-		/// Normalized progress of the timer
+		/// タイマーの正規化された進行度
 		/// </summary>
 		public float normalizedProgress
 		{
@@ -27,10 +27,10 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Timer constructor
+		/// Timerのコンストラクター
 		/// </summary>
-		/// <param name="newTime">the time that timer is counting</param>
-		/// <param name="onElapsed">the event fired at the end of the timer elapsing</param>
+		/// <param name="newTime">タイマーが計測する時間</param>
+		/// <param name="onElapsed">タイマーの終了時に発火するイベント</param>
 		public Timer(float newTime, Action onElapsed = null)
 		{
 			SetTime(newTime);
@@ -40,20 +40,20 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Returns the result of AssessTime
+		/// AssessTimeの結果を返す
 		/// </summary>
-		/// <param name="deltaTime">change in time between ticks</param>
-		/// <returns>true if the timer has elapsed, false otherwise</returns>
+		/// <param name="deltaTime">Tick間の経過時間</param>
+		/// <returns>タイマーが終了していればtrue、それ以外はfalse</returns>
 		public virtual bool Tick(float deltaTime)
 		{
 			return AssessTime(deltaTime);
 		}
 
 		/// <summary>
-		/// Checks if the time has elapsed and fires the tick event
+		/// 時間が経過したかを確認し、Tickイベントを発火する
 		/// </summary>
-		/// <param name="deltaTime">the change in time between assessments</param>
-		/// <returns>true if the timer has elapsed, false otherwise</returns>
+		/// <param name="deltaTime">評価間の経過時間</param>
+		/// <returns>タイマーが終了していればtrue、それ以外はfalse</returns>
 		protected bool AssessTime(float deltaTime)
 		{
 			m_CurrentTime += deltaTime;
@@ -67,7 +67,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Resets the current time to 0
+		/// 現在時間を0にリセットする
 		/// </summary>
 		public void Reset()
 		{
@@ -75,7 +75,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Fires the associated timer event
+		/// 関連付けられたタイマーイベントを発火する
 		/// </summary>
 		public void FireEvent()
 		{
@@ -83,9 +83,9 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Sets the elapsed time
+		/// 経過時間を設定する
 		/// </summary>
-		/// <param name="newTime">sets the time to a new value</param>
+		/// <param name="newTime">新しく設定する時間</param>
 		public void SetTime(float newTime)
 		{
 			m_Time = newTime;

@@ -5,25 +5,25 @@ using UnityEngine;
 namespace ActionGameFramework.Audio
 {
 	/// <summary>
-	/// Weighted audio list
+	/// 重み付き Audio リスト
 	/// </summary>
 	[Serializable]
 	public class WeightedAudioList
 	{
 		/// <summary>
-		/// Items with their corresponding weights
+		/// 各項目と対応する重み
 		/// </summary>
 		public WeightedAudioClip[] weightedItems;
 
 		/// <summary>
-		/// The sum of all items weights
+		/// すべての項目の重みの合計
 		/// </summary>
 		protected int m_WeightSum = -1;
 
 		/// <summary>
-		/// Gets the weight sum.
+		/// 重みの合計を取得する
 		/// </summary>
-		/// <value>The weight sum.</value>
+		/// <value>重みの合計。</value>
 		public int weightSum
 		{
 			get
@@ -38,9 +38,9 @@ namespace ActionGameFramework.Audio
 		}
 
 		/// <summary>
-		/// Gets a random audio clip from the weighted list
+		/// 重み付きリストからランダムな AudioClip を取得する
 		/// </summary>
-		/// <returns>The selection.</returns>
+		/// <returns>選ばれた AudioClip。</returns>
 		public AudioClip WeightedSelection()
 		{
 			if (weightedItems.Length == 0)
@@ -53,7 +53,7 @@ namespace ActionGameFramework.Audio
 		}
 
 		/// <summary>
-		/// Calculates the sum of all item weights
+		/// すべての項目の重みの合計を計算する
 		/// </summary>
 		protected void CalculateWeightSum()
 		{

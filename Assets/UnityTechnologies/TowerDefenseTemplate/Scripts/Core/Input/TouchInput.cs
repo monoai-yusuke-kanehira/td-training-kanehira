@@ -4,27 +4,27 @@ using UnityInput = UnityEngine.Input;
 namespace Core.Input
 {
 	/// <summary>
-	/// Base control scheme for touch devices, which performs CameraRig control
+	/// タッチデバイス向けの基本操作スキーム。CameraRigを操作する
 	/// </summary>
 	public class TouchInput : CameraInputScheme
 	{
 		/// <summary>
-		/// Configuration of the pan speed
+		/// パン速度の設定
 		/// </summary>
 		public float panSpeed = 5;
 
 		/// <summary>
-		/// How quickly flicks decay
+		/// フリックの勢いがどれだけ速く減衰するか
 		/// </summary>
 		public float flickDecayFactor = 0.2f;
 
 		/// <summary>
-		/// Flick direction
+		/// フリック方向
 		/// </summary>
 		Vector3 m_FlickDirection;
 
 		/// <summary>
-		/// Gets whether the scheme should be activated or not
+		/// この操作スキームを有効にするかどうかを取得する
 		/// </summary>
 		public override bool shouldActivate
 		{
@@ -32,7 +32,7 @@ namespace Core.Input
 		}
 
 		/// <summary>
-		/// This default scheme on IOS and Android devices
+		/// iOSおよびAndroidデバイスでは、この操作スキームをデフォルトにする
 		/// </summary>
 		public override bool isDefault
 		{
@@ -47,7 +47,7 @@ namespace Core.Input
 		}
 
 		/// <summary>
-		/// Register input events
+		/// 入力イベントを登録する
 		/// </summary>
 		protected virtual void OnEnable()
 		{
@@ -57,7 +57,7 @@ namespace Core.Input
 				return;
 			}
 			
-			// Register drag event
+			// ドラッグイベントを登録する
 			InputController inputController = InputController.instance;
 			inputController.pressed += OnPress;
 			inputController.released += OnRelease;
@@ -66,7 +66,7 @@ namespace Core.Input
 		}
 		
 		/// <summary>
-		/// Deregister input events
+		/// 入力イベントの登録を解除する
 		/// </summary>
 		protected virtual void OnDisable()
 		{
@@ -86,7 +86,7 @@ namespace Core.Input
 		}
 
 		/// <summary>
-		/// Perform flick and zoom
+		/// フリックとズームを実行する
 		/// </summary>
 		protected virtual void Update()
 		{
@@ -98,7 +98,7 @@ namespace Core.Input
 		}
 
 		/// <summary>
-		/// Called on input press
+		/// 入力が押されたときに呼ばれる
 		/// </summary>
 		protected virtual void OnPress(PointerActionInfo pointer)
 		{
@@ -109,7 +109,7 @@ namespace Core.Input
 		}
 		
 		/// <summary>
-		/// Called on input release
+		/// 入力が離されたときに呼ばれる
 		/// </summary>
 		protected virtual void OnRelease(PointerActionInfo pointer)
 		{
@@ -120,11 +120,11 @@ namespace Core.Input
 		}
 
 		/// <summary>
-		/// Called when we drag
+		/// ドラッグしたときに呼ばれる
 		/// </summary>
 		protected virtual void OnDrag(PointerActionInfo pointer)
 		{
-			// Drag panning for touch input
+			// タッチ入力のドラッグでパンする
 			if (cameraRig != null)
 			{
 				DoDragPan(pointer);
@@ -132,7 +132,7 @@ namespace Core.Input
 		}
 
 		/// <summary>
-		/// Called on pinch gestures
+		/// ピンチ操作で呼ばれる
 		/// </summary>
 		protected virtual void OnPinch(PinchInfo pinch)
 		{
@@ -143,11 +143,11 @@ namespace Core.Input
 		}
 
 		/// <summary>
-		/// Update current flick velocity
+		/// 現在のフリック速度を更新する
 		/// </summary>
 		protected void UpdateFlick()
 		{
-			// Flick?
+			// フリック中か
 			if (m_FlickDirection.sqrMagnitude > Mathf.Epsilon)
 			{
 				cameraRig.PanCamera(m_FlickDirection * Time.deltaTime);
@@ -156,7 +156,7 @@ namespace Core.Input
 		}
 
 		/// <summary>
-		/// Decay the zoom if no touches are active
+		/// アクティブなタッチがなければズームを減衰させる
 		/// </summary>
 		protected void DecayZoom()
 		{
@@ -167,13 +167,13 @@ namespace Core.Input
 		}
 
 		/// <summary>
-		/// "Catch" flicks on press, to stop the panning momentum
+		/// 押されたときにフリックを「捕まえて」、パンの勢いを止める
 		/// </summary>
-		/// <param name="pointer">The press pointer event</param>
+		/// <param name="pointer">押下時のポインターイベント</param>
 		protected void DoFlickCatch(PointerActionInfo pointer)
 		{
 			var touchInfo = pointer as TouchInfo;
-			// Stop flicks on touch
+			// タッチ時にフリックを止める
 			if (touchInfo != null)
 			{
 				m_FlickDirection = Vector2.zero;
@@ -182,17 +182,17 @@ namespace Core.Input
 		}
 		
 		/// <summary>
-		/// Do flicks, on release only
+		/// 離されたときだけフリックを行う
 		/// </summary>
-		/// <param name="pointer">The release pointer event</param>
+		/// <param name="pointer">リリース時のポインターイベント</param>
 		protected void DoReleaseFlick(PointerActionInfo pointer)
 		{
 			var touchInfo = pointer as TouchInfo;
 
 			if (touchInfo != null && touchInfo.flickVelocity.sqrMagnitude > Mathf.Epsilon)
 			{
-				// We have a flick!
-				// Work out velocity from motion
+				// フリックが発生している
+				// 動きから速度を計算する
 				Ray prevRay = cameraRig.cachedCamera.ScreenPointToRay(pointer.currentPosition -
 																		pointer.flickVelocity);
 				Ray currRay = cameraRig.cachedCamera.ScreenPointToRay(pointer.currentPosition);
@@ -210,21 +210,21 @@ namespace Core.Input
 					endPoint = currRay.GetPoint(dist);
 				}
 
-				// Work out that movement in units per second
+				// その移動量を1秒あたりの単位に変換する
 				m_FlickDirection = (startPoint - endPoint) / Time.deltaTime;
 			}
 		}
 
 		/// <summary>
-		/// Controls the pan with a drag
+		/// ドラッグでパンを制御する
 		/// </summary>
 		protected void DoDragPan(PointerActionInfo pointer)
 		{
 			var touchInfo = pointer as TouchInfo;
 			if (touchInfo != null)
 			{
-				// Work out movement amount by raycasting onto floor plane from delta positions
-				// and getting that distance
+				// 差分位置から床平面へレイキャストする
+				// その距離から移動量を計算する
 				Ray currRay = cameraRig.cachedCamera.ScreenPointToRay(touchInfo.currentPosition);
 
 				Vector3 endPoint = Vector3.zero;
@@ -233,7 +233,7 @@ namespace Core.Input
 				{
 					endPoint = currRay.GetPoint(dist);
 				}
-				// Pan
+				// パンする
 				Ray prevRay = cameraRig.cachedCamera.ScreenPointToRay(touchInfo.previousPosition);
 				Vector3 startPoint = Vector3.zero;
 
@@ -242,7 +242,7 @@ namespace Core.Input
 					startPoint = prevRay.GetPoint(dist);
 				}
 				Vector3 panAmount = startPoint - endPoint;
-				// If this is a touch, we divide the pan amount by the number of touches
+				// タッチ入力の場合は、パン量をタッチ数で割る
 				if (UnityInput.touchCount > 0)
 				{
 					panAmount /= UnityInput.touchCount;
@@ -253,7 +253,7 @@ namespace Core.Input
 		}
 		
 		/// <summary>
-		/// Perform a zoom with the given pinch
+		/// 指定されたピンチ操作でズームする
 		/// </summary>
 		protected void DoPinchZoom(PinchInfo pinch)
 		{
@@ -265,10 +265,10 @@ namespace Core.Input
 
 			cameraRig.SetZoom(zoomChange * cameraRig.rawZoomDist);
 
-			// Calculate actual zoom change after clamping
+			// クランプ後の実際のズーム変化量を計算する
 			zoomChange = cameraRig.zoomDist / prevZoomDist;
 
-			// First get floor position of middle of gesture
+			// まずジェスチャー中央の床上の位置を取得する
 			Vector2 averageScreenPos = (pinch.touch1.currentPosition + pinch.touch2.currentPosition) * 0.5f;
 			Ray ray = cameraRig.cachedCamera.ScreenPointToRay(averageScreenPos);
 
@@ -280,18 +280,18 @@ namespace Core.Input
 				worldPos = ray.GetPoint(dist);
 			}
 
-			// Vector from our current look pos to this point 
+			// 現在の注視位置からこの点までのベクトル
 			Vector3 offsetValue = worldPos - cameraRig.lookPosition;
 
-			// Pan towards or away from our zoom center
+			// ズーム中心に近づく、または離れるようにパンする
 			PanCamera(offsetValue * (1 - zoomChange));
 		}
 		
 		/// <summary>
-		/// Pans the camera
+		/// カメラをパンする
 		/// </summary>
 		/// <param name="panAmount">
-		/// The vector to pan
+		/// パンに使うベクトル
 		/// </param>
 		protected void PanCamera(Vector3 panAmount)
 		{

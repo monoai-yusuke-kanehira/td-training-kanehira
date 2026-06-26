@@ -3,12 +3,12 @@
 namespace TowerDefense.Agents
 {
 	/// <summary>
-	/// A component that will apply various effects on an agent
+	/// エージェントにさまざまな効果を与えるコンポーネント
 	/// </summary>
 	public abstract class AgentEffect : MonoBehaviour
 	{
 		/// <summary>
-		/// Reference to the agent that will be affected
+		/// 影響を受けるエージェントへの参照
 		/// </summary>
 		protected Agent m_Agent;
 
@@ -18,7 +18,7 @@ namespace TowerDefense.Agents
 		}
 
 		/// <summary>
-		/// A lazy way to ensure that <see cref="m_Agent"/> will not be null
+		/// それを確実にするための怠惰な方法 <see cref="m_Agent"/> nullにはなりません
 		/// </summary>
 		public virtual void LazyLoad()
 		{

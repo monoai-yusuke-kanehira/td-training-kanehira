@@ -3,7 +3,7 @@
 namespace TowerDefense.UI
 {
 	/// <summary>
-	/// A simple component that applies a constant rotation to a transform
+	/// Transformに一定の回転を適用するシンプルなコンポーネント
 	/// </summary>
 	public class Rotator : MonoBehaviour
 	{

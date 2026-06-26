@@ -3,17 +3,17 @@
 namespace Core.UI
 {
 	/// <summary>
-	/// Basic class for simple main menu pages that just turns on and off
+	/// 単純にオンとオフを切り替えるメインメニューページの基本クラス
 	/// </summary>
 	public class SimpleMainMenuPage : MonoBehaviour, IMainMenuPage
 	{
 		/// <summary>
-		/// Canvas to disable. If this object is set, then the canvas is disabled instead of the game object 
+		/// 無効化するCanvas。このオブジェクトが設定されている場合は、GameObjectではなくCanvasを無効化する
 		/// </summary>
 		public Canvas canvas;
 		
 		/// <summary>
-		/// Deactivates this page
+		/// このページを非表示にする
 		/// </summary>
 		public virtual void Hide()
 		{
@@ -28,7 +28,7 @@ namespace Core.UI
 		}
 
 		/// <summary>
-		/// Activates this page
+		/// このページを表示する
 		/// </summary>
 		public virtual void Show()
 		{

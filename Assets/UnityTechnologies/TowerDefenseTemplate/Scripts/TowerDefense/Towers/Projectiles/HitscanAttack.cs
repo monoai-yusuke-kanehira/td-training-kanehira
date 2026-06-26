@@ -5,51 +5,51 @@ using UnityEngine;
 namespace TowerDefense.Towers.Projectiles
 {
 	/// <summary>
-	/// Implementation of hitscan projectile
-	/// The principle behind this weapon is that it instantly attacks enemies
+	/// Hitscan Projectileの実装
+	/// この武器は敵を即座に攻撃する仕組みです
 	/// </summary>
 	[RequireComponent(typeof(Damager))]
 	public class HitscanAttack : MonoBehaviour
 	{
 		/// <summary>
-		/// The amount of time to delay
+		/// 遅延させる時間
 		/// </summary>
 		public float delay;
 
 		/// <summary>
-		/// The delay timer
+		/// 遅延タイマー
 		/// </summary>
 		protected Timer m_Timer;
 
 		/// <summary>
-		/// The enemy this projectile will attack
+		/// このProjectileが攻撃する敵
 		/// </summary>
 		protected Targetable m_Enemy;
 
 		/// <summary>
-		/// The Damager attached to the object
+		/// オブジェクトにアタッチされたDamager
 		/// </summary>
 		protected Damager m_Damager;
 
 		/// <summary>
-		/// The towers projectile position
+		/// TowerのProjectile位置
 		/// </summary>
 		protected Vector3 m_Origin;
 
 		/// <summary>
-		/// Configuration for pausing the timer delay timer
-		/// without setting Time.timeScale to 0
+		/// 遅延タイマーを一時停止するための設定
+		/// Time.timeScaleを0にせずに行います
 		/// </summary>
 		protected bool m_PauseTimer;
 
 		/// <summary>
-		/// The delay configuration for the attacking
+		/// 攻撃用の遅延設定
 		/// </summary>
 		/// <param name="origin">
-		/// The point the attack will be fired from
+		/// 攻撃の発射元となる点
 		/// </param>
 		/// <param name="enemy">
-		/// The enemy to attack
+		/// 攻撃する敵
 		/// </param>
 		public void AttackEnemy(Vector3 origin, Targetable enemy)
 		{
@@ -60,8 +60,8 @@ namespace TowerDefense.Towers.Projectiles
 		}
 
 		/// <summary>
-		/// The actual attack of the hitscan attack.
-		/// Early returns from the method if the there is no enemy to attack.
+		/// Hitscan攻撃の実際の攻撃処理。
+		/// 攻撃する敵がいない場合はメソッドから早期returnします。
 		/// </summary>
 		protected void DealDamage()
 		{
@@ -72,7 +72,7 @@ namespace TowerDefense.Towers.Projectiles
 				return;
 			}
 			
-			// effects
+			// エフェクト
 			ParticleSystem pfxPrefab = m_Damager.collisionParticles;
 			var attackEffect = Poolable.TryGetPoolable<ParticleSystem>(pfxPrefab.gameObject);
 			attackEffect.transform.position = m_Enemy.position;
@@ -83,7 +83,7 @@ namespace TowerDefense.Towers.Projectiles
 		}
 
 		/// <summary>
-		/// Cache the damager component attached to this object
+		/// このオブジェクトにアタッチされたDamagerコンポーネントをキャッシュします
 		/// </summary>
 		protected virtual void Awake()
 		{
@@ -92,7 +92,7 @@ namespace TowerDefense.Towers.Projectiles
 		}
 
 		/// <summary>
-		/// Update the m_Timer if it is available
+		/// m_Timerが利用可能な場合は更新します
 		/// </summary>
 		protected virtual void Update()
 		{

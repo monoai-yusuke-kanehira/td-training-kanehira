@@ -1,12 +1,12 @@
 namespace Core.Input
 {
 	/// <summary>
-	/// Touch info
+	/// タッチ情報
 	/// </summary>
 	public class TouchInfo : PointerActionInfo
 	{
 		/// <summary>
-		/// Our touch ID
+		/// このタッチのID
 		/// </summary>
 		public int touchId;
 	}

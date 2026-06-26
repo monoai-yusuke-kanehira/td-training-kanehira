@@ -5,33 +5,33 @@ using UnityEngine;
 namespace TowerDefense.Affectors
 {
 	/// <summary>
-	/// A tower effect for generating currency
+	/// 通貨を生成するタワー効果
 	/// </summary>
 	public class CurrencyAffector : Affector
 	{
 		/// <summary>
-		/// The controller for currency gain
+		/// 通貨獲得を制御するコントローラー
 		/// </summary>
 		public CurrencyGainer currencyGainer;
 
 		/// <summary>
-		/// Format for displaying the the properties of this affector
+		/// このAffectorのプロパティ表示に使うフォーマット
 		/// </summary>
 		public string descriptionFormat = "<b>Produces</b> {1} at {2} units per second";
 
 		/// <summary>
-		/// The audio source attached
+		/// アタッチされているAudioSource
 		/// </summary>
 		public AudioSource audioSource;
 
 		/// <summary>
-		/// The attached particle system
+		/// アタッチされているParticleSystem
 		/// </summary>
 		public ParticleSystem currencyParticleSystem;
 
 
 		/// <summary>
-		/// Initialize the currency gain
+		/// 通貨獲得を初期化する
 		/// </summary>
 		protected virtual void Start()
 		{
@@ -39,7 +39,7 @@ namespace TowerDefense.Affectors
 		}
 
 		/// <summary>
-		/// Update the currency gain
+		/// 通貨獲得を更新する
 		/// </summary>
 		protected virtual void Update()
 		{
@@ -47,7 +47,7 @@ namespace TowerDefense.Affectors
 		}
 
 		/// <summary>
-		/// Subscribe to currency gain events
+		/// 通貨獲得イベントを購読する
 		/// </summary>
 		protected virtual void OnEnable()
 		{
@@ -55,7 +55,7 @@ namespace TowerDefense.Affectors
 		}
 
 		/// <summary>
-		/// Unsubscribe to currency gain event
+		/// 通貨獲得イベントの購読を解除する
 		/// </summary>
 		protected virtual void OnDisable()
 		{
@@ -63,10 +63,10 @@ namespace TowerDefense.Affectors
 		}
 
 		/// <summary>
-		/// Fires when currency changed in <see cref="currencyGainer"/>
+		/// <see cref="currencyGainer"/>で通貨が変化したときに発火する
 		/// </summary>
 		/// <param name="info">
-		/// The info for the currency gainer
+		/// CurrencyGainer用の情報
 		/// </param>
 		protected void OnCurrencyChanged(CurrencyChangeInfo info)
 		{

@@ -3,7 +3,7 @@
 namespace Core.Health
 {
 	/// <summary>
-	/// Health change info - stores information about the health change
+	/// 体力変化情報。体力変化に関する情報を保持します
 	/// </summary>
 	public struct HealthChangeInfo
 	{

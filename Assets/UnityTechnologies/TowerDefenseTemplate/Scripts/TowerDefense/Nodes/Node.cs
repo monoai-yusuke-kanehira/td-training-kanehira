@@ -5,27 +5,27 @@ using UnityEngine;
 namespace TowerDefense.Nodes
 {
 	/// <summary>
-	/// A point along the path which agents will navigate towards before recieving the next instruction from the NodeSelector
-	/// Requires a collider to be added manually.
+	/// AgentがNodeSelectorから次の指示を受け取る前に向かう、経路上の地点
+	/// Colliderを手動で追加する必要があります。
 	/// </summary>
 	[RequireComponent(typeof(Collider))]
 	public class Node : MonoBehaviour
 	{
 		/// <summary>
-		/// Reference to the MeshObject created by an AreaMeshCreator
+		/// AreaMeshCreatorによって作成されたMeshObjectへの参照
 		/// </summary>
 		[HideInInspector]
 		public AreaMeshCreator areaMesh;
 
 		/// <summary>
-		/// Selection weight of the node
+		/// Nodeの選択重み
 		/// </summary>
 		public int weight = 1;
 
 		/// <summary>
-		/// Gets the next node from the selector
+		/// Selectorから次のNodeを取得します
 		/// </summary>
-		/// <returns>Next node, or null if this is the terminating node</returns>
+		/// <returns>次のNode。終端Nodeの場合はnull</returns>
 		public Node GetNextNode()
 		{
 			var selector = GetComponent<NodeSelector>();
@@ -37,17 +37,17 @@ namespace TowerDefense.Nodes
 		}
 
 		/// <summary>
-		/// Gets a random point inside the area defined by a node's meshcreator
+		/// NodeのMeshCreatorで定義された範囲内のランダムな点を取得します
 		/// </summary>
-		/// <returns>A random point within the MeshObject's area</returns>
+		/// <returns>MeshObjectの範囲内にあるランダムな点</returns>
 		public Vector3 GetRandomPointInNodeArea()
 		{
-			// Fallback to our position if we have no mesh
+			// メッシュがない場合は自身の位置を代わりに使います
 			return areaMesh == null ? transform.position : areaMesh.GetRandomPointInside();
 		}
 
 		/// <summary>
-		/// When agent enters the node area, get the next node
+		/// AgentがNodeの範囲に入ったとき、次のNodeを取得します
 		/// </summary>
 		public virtual void OnTriggerEnter(Collider other)
 		{
@@ -60,7 +60,7 @@ namespace TowerDefense.Nodes
 
 #if UNITY_EDITOR
 		/// <summary>
-		/// Ensure the collider is a trigger
+		/// ColliderがTriggerになるようにします
 		/// </summary>
 		protected void OnValidate()
 		{
@@ -70,7 +70,7 @@ namespace TowerDefense.Nodes
 				trigger.isTrigger = true;
 			}
 			
-			// Try and find AreaMeshCreator
+			// AreaMeshCreatorを探します
 			if (areaMesh == null)
 			{
 				areaMesh = GetComponentInChildren<AreaMeshCreator>();

@@ -4,31 +4,31 @@ using UnityEngine;
 namespace Core.Health
 {
 	/// <summary>
-	/// Damageable class for handling health using events
-	/// Could be used on Players or enemies or even destructable world objects
+	/// イベントを使って体力を扱うDamageableクラス
+	/// プレイヤー、敵、破壊可能なワールドオブジェクトにも使用できます
 	/// </summary>
 	[Serializable]
 	public class Damageable
 	{
 		/// <summary>
-		/// The max health of this instance
+		/// このインスタンスの最大体力
 		/// </summary>
 		public float maxHealth;
 		
 		public float startingHealth;
 
 		/// <summary>
-		/// The alignment of the damager
+		/// ダメージを与えた側の所属
 		/// </summary>
 		public SerializableIAlignmentProvider alignment;
 
 		/// <summary>
-		/// Gets the current health.
+		/// 現在の体力を取得します。
 		/// </summary>
 		public float currentHealth { protected set; get; }
 
 		/// <summary>
-		/// Gets the normalised health.
+		/// 正規化された体力を取得します。
 		/// </summary>
 		public float normalisedHealth
 		{
@@ -44,7 +44,7 @@ namespace Core.Health
 		}
 
 		/// <summary>
-		/// Gets the <see cref="IAlignmentProvider"/> of this instance
+		/// このインスタンスの <see cref="IAlignmentProvider"/> を取得します
 		/// </summary>
 		public IAlignmentProvider alignmentProvider
 		{
@@ -55,7 +55,7 @@ namespace Core.Health
 		}
 
 		/// <summary>
-		/// Gets whether this instance is dead.
+		/// このインスタンスが死亡しているかどうかを取得します。
 		/// </summary>
 		public bool isDead
 		{
@@ -63,20 +63,20 @@ namespace Core.Health
 		}
 
 		/// <summary>
-		/// Gets whether this instance is at max health.
+		/// このインスタンスの体力が最大かどうかを取得します。
 		/// </summary>
 		public bool isAtMaxHealth
 		{
 			get { return Mathf.Approximately(currentHealth, maxHealth); }
 		}
 
-		// events
+		// イベント
 		public event Action reachedMaxHealth;
 
 		public event Action<HealthChangeInfo> damaged, healed, died, healthChanged;
 
 		/// <summary>
-		/// Init this instance
+		/// このインスタンスを初期化します
 		/// </summary>
 		public virtual void Init()
 		{
@@ -84,7 +84,7 @@ namespace Core.Health
 		}
 
 		/// <summary>
-		/// Sets the max health and starting health to the same value
+		/// 最大体力と開始時の体力を同じ値に設定します
 		/// </summary>
 		public void SetMaxHealth(float health)
 		{
@@ -96,7 +96,7 @@ namespace Core.Health
 		}
 
 		/// <summary>
-		/// Sets the max health and starting health separately
+		/// 最大体力と開始時の体力を別々に設定します
 		/// </summary>
 		public void SetMaxHealth(float health, float startingHealth)
 		{
@@ -109,10 +109,10 @@ namespace Core.Health
 		}
 
 		/// <summary>
-		/// Sets this instance's health directly.
+		/// このインスタンスの体力を直接設定します。
 		/// </summary>
 		/// <param name="health">
-		/// The value to set <see cref="currentHealth"/> to
+		/// <see cref="currentHealth"/> に設定する値
 		/// </param>
 		public void SetHealth(float health)
 		{
@@ -132,20 +132,20 @@ namespace Core.Health
 		}
 
 		/// <summary>
-		/// Use the alignment to see if taking damage is a valid action
+		/// 所属を使って、ダメージを受けることが有効な処理か確認します
 		/// </summary>
 		/// <param name="damage">
-		/// The damage to take
+		/// 受けるダメージ量
 		/// </param>
 		/// <param name="damageAlignment">
-		/// The alignment of the other combatant
+		/// 相手側の所属
 		/// </param>
 		/// <param name="output">
-		/// The output data if there is damage taken
+		/// ダメージを受けた場合の出力データ
 		/// </param>
 		/// <returns>
-		/// <value>true if this instance took damage</value>
-		/// <value>false if this instance was already dead, or the alignment did not allow the damage</value>
+		/// <value>このインスタンスがダメージを受けた場合は true</value>
+		/// <value>このインスタンスがすでに死亡している、または所属の判定でダメージが許可されなかった場合は false</value>
 		/// </returns>
 		public bool TakeDamage(float damage, IAlignmentProvider damageAlignment, out HealthChangeInfo output)
 		{
@@ -173,9 +173,9 @@ namespace Core.Health
 		}
 
 		/// <summary>
-		/// Logic for increasing the health.
+		/// 体力を増やす処理。
 		/// </summary>
-		/// <param name="health">Health.</param>
+		/// <param name="health">増やす体力量</param>
 		public HealthChangeInfo IncreaseHealth(float health)
 		{
 			var info = new HealthChangeInfo {damageable = this};
@@ -190,10 +190,10 @@ namespace Core.Health
 		}
 
 		/// <summary>
-		/// Changes the health.
+		/// 体力を変更します。
 		/// </summary>
-		/// <param name="healthIncrement">Health increment.</param>
-		/// <param name="info">HealthChangeInfo for this change</param>
+		/// <param name="healthIncrement">体力の増減量</param>
+		/// <param name="info">この変更に使う HealthChangeInfo</param>
 		protected void ChangeHealth(float healthIncrement, HealthChangeInfo info)
 		{
 			info.oldHealth = currentHealth;
@@ -208,9 +208,9 @@ namespace Core.Health
 		}
 
 		/// <summary>
-		/// A helper method for null checking actions
+		/// アクションのnullチェック用ヘルパーメソッド
 		/// </summary>
-		/// <param name="action">Action to be done</param>
+		/// <param name="action">実行する Action</param>
 		protected void SafelyDoAction(Action action)
 		{
 			if (action != null)
@@ -220,10 +220,10 @@ namespace Core.Health
 		}
 
 		/// <summary>
-		/// A helper method for null checking actions
+		/// アクションのnullチェック用ヘルパーメソッド
 		/// </summary>
-		/// <param name="action">Action to be done</param>
-		/// <param name="info">The HealthChangeInfo to be passed to the Action</param>
+		/// <param name="action">実行する Action</param>
+		/// <param name="info">Action に渡す HealthChangeInfo</param>
 		protected void SafelyDoAction(Action<HealthChangeInfo> action, HealthChangeInfo info)
 		{
 			if (action != null)

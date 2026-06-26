@@ -6,49 +6,49 @@ using UnityEngine.Audio;
 namespace Core.Data
 {
 	/// <summary>
-	/// Base game manager
+	/// 基本ゲームマネージャー
 	/// </summary>
 	public abstract class GameManagerBase<TGameManager, TDataStore> : PersistentSingleton<TGameManager>
 		where TDataStore : GameDataStoreBase, new()
 		where TGameManager : GameManagerBase<TGameManager, TDataStore>
 	{
 		/// <summary>
-		/// File name of saved game
+		/// 保存ゲームのファイル名
 		/// </summary>
 		const string k_SavedGameFile = "save";
 
 		/// <summary>
-		/// Reference to audio mixer for volume changing
+		/// 音量変更に使うAudioMixerへの参照
 		/// </summary>
 		public AudioMixer gameMixer;
 
 		/// <summary>
-		/// Master volume parameter on the mixer
+		/// ミキサーのマスター音量パラメーター
 		/// </summary>
 		public string masterVolumeParameter;
 
 		/// <summary>
-		/// SFX volume parameter on the mixer
+		/// ミキサーの効果音音量パラメーター
 		/// </summary>
 		public string sfxVolumeParameter;
 
 		/// <summary>
-		/// Music volume parameter on the mixer
+		/// ミキサーの音楽音量パラメーター
 		/// </summary>
 		public string musicVolumeParameter;
 
 		/// <summary>
-		/// The serialization implementation for persistence 
+		/// 永続化に使うシリアライズ実装
 		/// </summary>
 		protected JsonSaver<TDataStore> m_DataSaver;
 
 		/// <summary>
-		/// The object used for persistence
+		/// 永続化に使うオブジェクト
 		/// </summary>
 		protected TDataStore m_DataStore;
 
 		/// <summary>
-		/// Retrieve volumes from data store
+		/// データストアから音量を取得します
 		/// </summary>
 		public virtual void GetVolumes(out float master, out float sfx, out float music)
 		{
@@ -58,17 +58,17 @@ namespace Core.Data
 		}
 
 		/// <summary>
-		/// Set and persist game volumes
+		/// ゲーム音量を設定して永続化します
 		/// </summary>
 		public virtual void SetVolumes(float master, float sfx, float music, bool save)
 		{
-			// Early out if no mixer set
+			// ミキサーが設定されていない場合は早期終了します
 			if (gameMixer == null)
 			{
 				return;
 			}
 			
-			// Transform 0-1 into logarithmic -80-0
+			// 0から1の値を-80から0の対数値へ変換します
 			if (masterVolumeParameter != null)
 			{
 				gameMixer.SetFloat(masterVolumeParameter, LogarithmicDbTransform(Mathf.Clamp01(master)));
@@ -84,7 +84,7 @@ namespace Core.Data
 
 			if (save)
 			{
-				// Apply to save data too
+				// 保存データにも適用します
 				m_DataStore.masterVolume = master;
 				m_DataStore.sfxVolume = sfx;
 				m_DataStore.musicVolume = music;
@@ -93,7 +93,7 @@ namespace Core.Data
 		}
 
 		/// <summary>
-		/// Load data
+		/// データを読み込みます
 		/// </summary>
 		protected override void Awake()
 		{
@@ -102,7 +102,7 @@ namespace Core.Data
 		}
 
 		/// <summary>
-		/// Initialize volumes. We cannot change mixer params on awake
+		/// 音量を初期化します。Awakeではミキサーのパラメーターを変更できません
 		/// </summary>
 		protected virtual void Start()
 		{
@@ -110,11 +110,11 @@ namespace Core.Data
 		}
 
 		/// <summary>
-		/// Set up persistence
+		/// 永続化を設定します
 		/// </summary>
 		protected void LoadData()
 		{
-			// If it is in Unity Editor use the standard JSON (human readable for debugging) otherwise encrypt it for deployed version
+			// Unity Editor上ではデバッグしやすい標準JSONを使い、それ以外の配布版では暗号化します
 #if UNITY_EDITOR
 			m_DataSaver = new JsonSaver<TDataStore>(k_SavedGameFile);
 #else
@@ -138,7 +138,7 @@ namespace Core.Data
 		}
 
 		/// <summary>
-		/// Saves the gamme
+		/// ゲームを保存します
 		/// </summary>
 		protected virtual void SaveData()
 		{
@@ -146,7 +146,7 @@ namespace Core.Data
 		}
 
 		/// <summary>
-		/// Transform volume from linear to logarithmic
+		/// 音量をリニア値から対数値へ変換します
 		/// </summary>
 		protected static float LogarithmicDbTransform(float volume)
 		{

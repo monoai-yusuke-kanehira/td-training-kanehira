@@ -11,7 +11,7 @@ namespace Core.Camera.Editor
 		SerializedProperty m_SerializedPropertyMapSize;
 
 		/// <summary>
-		/// Adds a label below the default inspector GUI
+		/// デフォルトのInspector GUIの下にラベルを追加します
 		/// </summary>
 		public override void OnInspectorGUI()
 		{
@@ -21,7 +21,7 @@ namespace Core.Camera.Editor
 		}
 
 		/// <summary>
-		/// Draws and handles input for manipulating the map size
+		/// マップサイズを操作するための表示と入力処理を行います
 		/// </summary>
 		void OnSceneGUI()
 		{
@@ -36,7 +36,7 @@ namespace Core.Camera.Editor
 			        leftPosition = new Vector3(m_MapSize.xMin, y, middleY),
 			        rightPosition = new Vector3(m_MapSize.xMax, y, middleY);
 
-			// Draw handles to resize map rect
+			// マップ矩形のサイズ変更用ハンドルを描画します
 			float size = HandleUtility.GetHandleSize(m_CameraRig.transform.position) * 0.125f;
 			Vector3 snap = Vector3.one * 0.5f;
 			var fmh_42_60_639081509944640010 = Quaternion.LookRotation(Vector3.up); Vector3 bottom = Handles.FreeMoveHandle(bottomPosition, size, snap,
@@ -53,7 +53,7 @@ namespace Core.Camera.Editor
 			ReprojectOntoFloor(ref left, floor);
 			ReprojectOntoFloor(ref right, floor);
 
-			// Draw a box to represent the map rect
+			// マップ矩形を表すボックスを描画します
 			Vector3 topLeft = new Vector3(m_MapSize.x, y, m_MapSize.y),
 			        topRight = topLeft + new Vector3(m_MapSize.width, 0, 0),
 			        bottomLeft = topLeft + new Vector3(0, 0, m_MapSize.height),
@@ -76,8 +76,8 @@ namespace Core.Camera.Editor
 		}
 
 		/// <summary>
-		/// Reproject moved positions back onto floor plane (they move in 3D space so it can feel sluggish
-		/// if we take their new position and clamp it back down to plane y
+		/// 移動した位置を床平面へ再投影します（3D空間で移動するため操作が重く感じることがあります
+		/// 新しい位置を取得して平面のY座標へ戻すように制限する場合）
 		/// </summary>
 		static void ReprojectOntoFloor(ref Vector3 worldPoint, Plane floor)
 		{
@@ -94,7 +94,7 @@ namespace Core.Camera.Editor
 		}
 
 		/// <summary>
-		/// Gets the serializedObject for editing
+		/// 編集用のserializedObjectを取得します
 		/// </summary>
 		void OnEnable()
 		{

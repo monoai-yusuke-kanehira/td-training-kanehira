@@ -3,7 +3,7 @@
 namespace ActionGameFramework.Spawning
 {
 	/// <summary>
-	/// Random hit object spawner - implementation of the hit spawner which chooses a random hit spawner from a weighted list
+	/// 重み付きリストからランダムに HitObject を選ぶ HitObjectSpawner の実装
 	/// </summary>
 	public class RandomHitObjectSpawner : HitObjectSpawner
 	{

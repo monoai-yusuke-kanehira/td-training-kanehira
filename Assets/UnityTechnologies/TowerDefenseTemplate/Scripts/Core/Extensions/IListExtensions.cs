@@ -6,20 +6,20 @@ using UnityRandom = UnityEngine.Random;
 namespace Core.Extensions
 {
 	/// <summary>
-	/// Extension methods for ILists
+	/// IList用の拡張メソッド
 	/// </summary>
 	public static class IListExtensions
 	{
 		static readonly Random s_SharedRandom = new Random();
 
 		/// <summary>
-		/// Select an item from a list using a weighted selection.
+		/// 重み付き選択を使ってリストから項目を選びます。
 		/// </summary>
-		/// <remarks>This is an O(n) operation, not constant-time like equal random selection.</remarks>
-		/// <param name="elements">An <see cref="System.Collections.Generic.IList{T}" /> of elements to choose from</param>
-		/// <param name="weightSum">The sum of all the weights of the elements</param>
-		/// <param name="getElementWeight">A delegate to retrieve the weight of a specific element</param>
-		/// <returns>An element randomly selected from <paramref name="elements" /></returns>
+		/// <remarks>これは O(n) の処理で、均等なランダム選択のような定数時間の処理ではありません。</remarks>
+		/// <param name="elements">選択対象となる要素の <see cref="System.Collections.Generic.IList{T}" /></param>
+		/// <param name="weightSum">すべての要素の重みの合計</param>
+		/// <param name="getElementWeight">特定の要素の重みを取得するためのデリゲート</param>
+		/// <returns><paramref name="elements" /> からランダムに選ばれた要素</returns>
 		public static T WeightedSelection<T>(this IList<T> elements, int weightSum, Func<T, int> getElementWeight)
 		{
 			int index = elements.WeightedSelectionIndex(weightSum, getElementWeight);
@@ -27,13 +27,13 @@ namespace Core.Extensions
 		}
 
 		/// <summary>
-		/// Select an item from a list using a weighted selection.
+		/// 重み付き選択を使ってリストから項目を選びます。
 		/// </summary>
-		/// <remarks>This is an O(n) operation, not constant-time like equal random selection.</remarks>
-		/// <param name="elements">An <see cref="System.Collections.Generic.IList{T}" /> of elements to choose from</param>
-		/// <param name="weightSum">The sum of all the weights of the elements</param>
-		/// <param name="getElementWeight">A delegate to retrieve the weight of a specific element</param>
-		/// <returns>An element randomly selected from <paramref name="elements" /></returns>
+		/// <remarks>これは O(n) の処理で、均等なランダム選択のような定数時間の処理ではありません。</remarks>
+		/// <param name="elements">選択対象となる要素の <see cref="System.Collections.Generic.IList{T}" /></param>
+		/// <param name="weightSum">すべての要素の重みの合計</param>
+		/// <param name="getElementWeight">特定の要素の重みを取得するためのデリゲート</param>
+		/// <returns><paramref name="elements" /> からランダムに選ばれた要素</returns>
 		public static T WeightedSelection<T>(this IList<T> elements, float weightSum, Func<T, float> getElementWeight)
 		{
 			int index = elements.WeightedSelectionIndex(weightSum, getElementWeight);
@@ -41,13 +41,13 @@ namespace Core.Extensions
 		}
 
 		/// <summary>
-		/// Select the index of an item from a list using a weighted selection.
+		/// 重み付き選択を使ってリストから項目のインデックスを選びます。
 		/// </summary>
-		/// <remarks>This is an O(n) operation, not constant-time like equal random selection.</remarks>
-		/// <param name="elements">An <see cref="System.Collections.Generic.IList{T}" /> of elements to choose from</param>
-		/// <param name="weightSum">The sum of all the weights of the elements</param>
-		/// <param name="getElementWeight">A delegate to retrieve the weight of a specific element</param>
-		/// <returns>The index of an element randomly selected from <paramref name="elements" /></returns>
+		/// <remarks>これは O(n) の処理で、均等なランダム選択のような定数時間の処理ではありません。</remarks>
+		/// <param name="elements">選択対象となる要素の <see cref="System.Collections.Generic.IList{T}" /></param>
+		/// <param name="weightSum">すべての要素の重みの合計</param>
+		/// <param name="getElementWeight">特定の要素の重みを取得するためのデリゲート</param>
+		/// <returns><paramref name="elements" /> からランダムに選ばれた要素のインデックス</returns>
 		public static int WeightedSelectionIndex<T>(this IList<T> elements, int weightSum, Func<T, int> getElementWeight)
 		{
 			if (weightSum <= 0)
@@ -83,13 +83,13 @@ namespace Core.Extensions
 		}
 
 		/// <summary>
-		/// Select the index of an item from a list using a weighted selection.
+		/// 重み付き選択を使ってリストから項目のインデックスを選びます。
 		/// </summary>
-		/// <remarks>This is an O(n) operation, not constant-time like equal random selection.</remarks>
-		/// <param name="elements">An <see cref="System.Collections.Generic.IList{T}" /> of elements to choose from</param>
-		/// <param name="weightSum">The sum of all the weights of the elements</param>
-		/// <param name="getElementWeight">A delegate to retrieve the weight of a specific element</param>
-		/// <returns>The index of an element randomly selected from <paramref name="elements" /></returns>
+		/// <remarks>これは O(n) の処理で、均等なランダム選択のような定数時間の処理ではありません。</remarks>
+		/// <param name="elements">選択対象となる要素の <see cref="System.Collections.Generic.IList{T}" /></param>
+		/// <param name="weightSum">すべての要素の重みの合計</param>
+		/// <param name="getElementWeight">特定の要素の重みを取得するためのデリゲート</param>
+		/// <returns><paramref name="elements" /> からランダムに選ばれた要素のインデックス</returns>
 		public static int WeightedSelectionIndex<T>(this IList<T> elements, float weightSum, Func<T, float> getElementWeight)
 		{
 			if (weightSum <= 0)
@@ -126,7 +126,7 @@ namespace Core.Extensions
 		}
 
 		/// <summary>
-		/// Shuffle this List into a new array copy
+		/// このListをシャッフルして新しい配列コピーにします
 		/// </summary>
 		public static T[] Shuffle<T>(this IList<T> original)
 		{
@@ -149,13 +149,13 @@ namespace Core.Extensions
 		}
 
 		/// <summary>
-		/// Goes to the next element of the list
+		/// リストの次の要素へ進みます
 		/// </summary>
-		/// <param name="elements">An <see cref="System.Collections.Generic.IList{T}" /> of elements to choose from</param>
-		/// <param name="currentIndex">The current index to be changed via reference</param>
-		/// <param name="wrap">if the list should wrap</param>
-		/// <typeparam name="T">The generic parameter for the list</typeparam>
-		/// <returns>true if there is a next item in the list</returns>
+		/// <param name="elements">選択対象となる要素の <see cref="System.Collections.Generic.IList{T}" /></param>
+		/// <param name="currentIndex">参照渡しで変更される現在のインデックス</param>
+		/// <param name="wrap">リストの末尾から先頭へ回り込むかどうか</param>
+		/// <typeparam name="T">リストのジェネリック型</typeparam>
+		/// <returns>リスト内に次の要素がある場合は true</returns>
 		public static bool Next<T>(this IList<T> elements, ref int currentIndex, bool wrap = false)
 		{
 			int count = elements.Count;
@@ -181,13 +181,13 @@ namespace Core.Extensions
 		}
 
 		/// <summary>
-		/// Goes to the previous element of the list
+		/// リストの前の要素へ戻ります
 		/// </summary>
-		/// <param name="elements">An <see cref="System.Collections.Generic.IList{T}" /> of elements to choose from</param>
-		/// <param name="currentIndex">The current index to be changed via reference</param>
-		/// <param name="wrap">if the list should wrap</param>
-		/// <typeparam name="T">The generic parameter for the list</typeparam>
-		/// <returns>true if there is a previous item in the list</returns>
+		/// <param name="elements">選択対象となる要素の <see cref="System.Collections.Generic.IList{T}" /></param>
+		/// <param name="currentIndex">参照渡しで変更される現在のインデックス</param>
+		/// <param name="wrap">リストの先頭から末尾へ回り込むかどうか</param>
+		/// <typeparam name="T">リストのジェネリック型</typeparam>
+		/// <returns>リスト内に前の要素がある場合は true</returns>
 		public static bool Prev<T>(this IList<T> elements, ref int currentIndex, bool wrap = false)
 		{
 			int count = elements.Count;

@@ -4,34 +4,34 @@ using UnityEngine;
 namespace ActionGameFramework.Projectiles
 {
 	/// <summary>
-	/// Interface allowing specification of generic projectiles.
+	/// 汎用的な Projectile を定義するためのインターフェース
 	/// </summary>
 	public interface IProjectile
 	{
 		/// <summary>
-		/// Event fired when this projectile is launched
+		/// この Projectile が発射されたときに発火するイベント
 		/// </summary>
 		event Action fired;
 		
 		/// <summary>
-		/// Fires this projectile from a designated start point to a designated world coordinate.
+		/// 指定した開始位置から指定したワールド座標へ向けてこの Projectile を発射する
 		/// </summary>
-		/// <param name="startPoint">Start point of the flight.</param>
-		/// <param name="targetPoint">Target point to fly to.</param>
+		/// <param name="startPoint">飛行の開始位置。</param>
+		/// <param name="targetPoint">飛行先の目標位置。</param>
 		void FireAtPoint(Vector3 startPoint, Vector3 targetPoint);
 
 		/// <summary>
-		/// Fires this projectile in a designated direction.
+		/// 指定した方向へこの Projectile を発射する
 		/// </summary>
-		/// <param name="startPoint">Start point of the flight.</param>
-		/// <param name="fireVector">Vector representing direction of flight.</param>
+		/// <param name="startPoint">飛行の開始位置。</param>
+		/// <param name="fireVector">飛行方向を表す Vector。</param>
 		void FireInDirection(Vector3 startPoint, Vector3 fireVector);
 
 		/// <summary>
-		/// Fires this projectile at a designated starting velocity, overriding any starting speeds.
+		/// 指定した初速でこの Projectile を発射し、既存の開始速度を上書きする
 		/// </summary>
-		/// <param name="startPoint">Start point of the flight.</param>
-		/// <param name="fireVelocity">Vector3 representing launch velocity.</param>
+		/// <param name="startPoint">飛行の開始位置。</param>
+		/// <param name="fireVelocity">発射速度を表す Vector3。</param>
 		void FireAtVelocity(Vector3 startPoint, Vector3 fireVelocity);
 	}
 }

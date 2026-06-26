@@ -1,7 +1,7 @@
 ﻿namespace TowerDefense.Level
 {
 	/// <summary>
-	/// An enum to represent the different level states
+	/// さまざまなレベルの状態を表す列挙型
 	/// </summary>
 	public enum LevelState
 	{

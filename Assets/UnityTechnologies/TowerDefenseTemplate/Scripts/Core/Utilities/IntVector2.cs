@@ -4,33 +4,33 @@ using UnityEngine;
 namespace Core.Utilities
 {
 	/// <summary>
-	/// A 2-dimensional vector with integer components
+	/// 整数成分を持つ2次元ベクトル
 	/// </summary>
 	[Serializable]
 	public struct IntVector2 : IEquatable<IntVector2>
 	{
 		/// <summary>
-		/// Vector with both components being 1
+		/// 両方の成分が1のベクトル
 		/// </summary>
 		public static readonly IntVector2 one = new IntVector2(1, 1);
 
 		/// <summary>
-		/// Vector with both components being 0
+		/// 両方の成分が0のベクトル
 		/// </summary>
 		public static readonly IntVector2 zero = new IntVector2(0, 0);
 
 		/// <summary>
-		/// The x component of this vector
+		/// このベクトルのx成分
 		/// </summary>
 		public int x;
 
 		/// <summary>
-		/// The y component of this vector
+		/// このベクトルのy成分
 		/// </summary>
 		public int y;
 
 		/// <summary>
-		/// Gets the squared magnitude of this vector
+		/// このベクトルの長さの2乗を取得する
 		/// </summary>
 		public int sqrMagnitude
 		{
@@ -38,7 +38,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Returns the magnitude of this vector
+		/// このベクトルの長さを返す
 		/// </summary>
 		public float magnitude
 		{
@@ -46,7 +46,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Gets the manhattan distance of this vector
+		/// このベクトルのマンハッタン距離を取得する
 		/// </summary>
 		public int manhattanDistance
 		{
@@ -54,7 +54,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Initialize a new vector
+		/// 新しいベクトルを初期化する
 		/// </summary>
 		public IntVector2(int x, int y)
 		{
@@ -77,7 +77,7 @@ namespace Core.Utilities
 		}
 
 		/// <summary>
-		/// Simple hash multiplying by two primes
+		/// 2つの素数を掛け合わせるシンプルなハッシュ
 		/// </summary>
 		public override int GetHashCode()
 		{

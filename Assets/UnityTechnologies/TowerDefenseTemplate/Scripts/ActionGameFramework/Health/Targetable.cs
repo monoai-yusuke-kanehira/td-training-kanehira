@@ -4,27 +4,27 @@ using UnityEngine;
 namespace ActionGameFramework.Health
 {
 	/// <summary>
-	/// A simple class for identifying enemies
+	/// 敵を識別するためのシンプルなクラス
 	/// </summary>
 	public class Targetable : DamageableBehaviour
 	{
 		/// <summary>
-		/// The transform that will be targeted
+		/// ターゲットになる Transform
 		/// </summary>
 		public Transform targetTransform;
 
 		/// <summary>
-		/// The position of the object
+		/// オブジェクトの位置
 		/// </summary>
 		protected Vector3 m_CurrentPosition, m_PreviousPosition;
 
 		/// <summary>
-		/// The velocity of the rigidbody
+		/// Rigidbody の速度
 		/// </summary>
 		public virtual Vector3 velocity { get; protected set; }
 		
 		/// <summary>
-		/// The transform that objects target, which falls back to this object's transform if not set
+		/// 他のオブジェクトが狙う Transform。未設定の場合はこのオブジェクトの Transform を使う
 		/// </summary>
 		public Transform targetableTransform
 		{
@@ -35,7 +35,7 @@ namespace ActionGameFramework.Health
 		}
 
 		/// <summary>
-		/// Returns our targetable's transform position
+		/// この Targetable の Transform 位置を返す
 		/// </summary>
 		public override Vector3 position
 		{
@@ -43,7 +43,7 @@ namespace ActionGameFramework.Health
 		}
 
 		/// <summary>
-		/// Initialises any DamageableBehaviour logic
+		/// DamageableBehaviour の処理を初期化する
 		/// </summary>
 		protected override void Awake()
 		{
@@ -52,7 +52,7 @@ namespace ActionGameFramework.Health
 		}
 
 		/// <summary>
-		/// Sets up the position data so velocity can be calculated
+		/// 速度を計算できるように位置データを設定する
 		/// </summary>
 		protected void ResetPositionData()
 		{
@@ -61,7 +61,7 @@ namespace ActionGameFramework.Health
 		}
 
 		/// <summary>
-		/// Calculates the velocity and updates the position
+		/// 速度を計算し、位置を更新する
 		/// </summary>
 		void FixedUpdate()
 		{

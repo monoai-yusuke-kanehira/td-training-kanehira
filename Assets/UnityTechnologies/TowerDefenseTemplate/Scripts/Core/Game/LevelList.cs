@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Core.Game
 {
 	/// <summary>
-	/// Scriptable object for Level configuration
+	/// レベル設定用のScriptableObject
 	/// </summary>
 	[CreateAssetMenu(fileName = "LevelList", menuName = "StarterKit/Create Level List", order = 1)]
 	public class LevelList : ScriptableObject, IList<LevelItem>,
@@ -17,12 +17,12 @@ namespace Core.Game
 		public LevelItem[] levels;
 
 		/// <summary>
-		/// Cached dictionary of levels by their IDs
+		/// IDごとにレベルをキャッシュしたDictionary
 		/// </summary>
 		IDictionary<string, LevelItem> m_LevelDictionary;
 
 		/// <summary>
-		/// Gets the number of levels
+		/// レベル数を取得します
 		/// </summary>
 		public int Count
 		{
@@ -30,7 +30,7 @@ namespace Core.Game
 		}
 
 		/// <summary>
-		/// Level list is always read-only
+		/// レベルリストは常に読み取り専用です
 		/// </summary>
 		public bool IsReadOnly
 		{
@@ -38,7 +38,7 @@ namespace Core.Game
 		}
 
 		/// <summary>
-		/// Gets a level by index
+		/// インデックスでレベルを取得します
 		/// </summary>
 		public LevelItem this[int i]
 		{
@@ -46,7 +46,7 @@ namespace Core.Game
 		}
 
 		/// <summary>
-		/// Gets a level by id
+		/// IDでレベルを取得します
 		/// </summary>
 		public LevelItem this[string key]
 		{
@@ -54,7 +54,7 @@ namespace Core.Game
 		}
 
 		/// <summary>
-		/// Gets a collection of all level keys
+		/// すべてのレベルキーのコレクションを取得します
 		/// </summary>
 		public ICollection<string> Keys
 		{
@@ -62,7 +62,7 @@ namespace Core.Game
 		}
 
 		/// <summary>
-		/// Gets the index of a given level
+		/// 指定したレベルのインデックスを取得します
 		/// </summary>
 		public int IndexOf(LevelItem item)
 		{
@@ -83,7 +83,7 @@ namespace Core.Game
 		}
 
 		/// <summary>
-		/// Gets whether this level exists in the list
+		/// このレベルがリストに存在するかどうかを取得します
 		/// </summary>
 		public bool Contains(LevelItem item)
 		{
@@ -91,7 +91,7 @@ namespace Core.Game
 		}
 
 		/// <summary>
-		/// Gets whether a level of the given id exists
+		/// 指定したIDのレベルが存在するかどうかを取得します
 		/// </summary>
 		public bool ContainsKey(string key)
 		{
@@ -99,7 +99,7 @@ namespace Core.Game
 		}
 
 		/// <summary>
-		/// Try get a level with the given key
+		/// 指定したキーでレベルの取得を試みます
 		/// </summary>
 		public bool TryGetValue(string key, out LevelItem value)
 		{
@@ -107,7 +107,7 @@ namespace Core.Game
 		}
 
 		/// <summary>
-		/// Gets the <see cref="LevelItem"/> associated with the given scene
+		/// 指定したシーンに関連付けられた <see cref="LevelItem"/> を取得します
 		/// </summary>
 		public LevelItem GetLevelByScene(string scene)
 		{
@@ -124,8 +124,8 @@ namespace Core.Game
 			return null;
 		}
 
-		// Explicit interface implementations
-		// Serialization listeners to create dictionary
+		// 明示的なインターフェース実装
+		// Dictionaryを作成するためのシリアライズイベント
 		void ISerializationCallbackReceiver.OnBeforeSerialize()
 		{
 		}

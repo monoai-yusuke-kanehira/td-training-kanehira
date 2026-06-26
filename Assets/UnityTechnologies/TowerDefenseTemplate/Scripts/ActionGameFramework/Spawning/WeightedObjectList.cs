@@ -5,25 +5,25 @@ using UnityEngine;
 namespace ActionGameFramework.Spawning
 {
 	/// <summary>
-	/// List of weighted objects
+	/// 重み付きオブジェクトのリスト
 	/// </summary>
 	[Serializable]
 	public class WeightedObjectList
 	{
 		/// <summary>
-		/// The weighted items
+		/// 重み付きの項目
 		/// </summary>
 		public WeightedObject[] weightedItems;
 
 		/// <summary>
-		/// Sum of the item weights
+		/// 項目の重みの合計
 		/// </summary>
 		protected int m_WeightSum = -1;
 
 		/// <summary>
-		/// Gets the weight sum.
+		/// 重みの合計を取得します。
 		/// </summary>
-		/// <value>The weight sum.</value>
+		/// <value>重みの合計。</value>
 		public int weightSum
 		{
 			get
@@ -38,9 +38,9 @@ namespace ActionGameFramework.Spawning
 		}
 
 		/// <summary>
-		/// Returns a random game object based on weight
+		/// 重みに基づいてランダムなGameObjectを返します
 		/// </summary>
-		/// <returns>The selection.</returns>
+		/// <returns>選択された項目。</returns>
 		public GameObject WeightedSelection()
 		{
 			if (weightedItems.Length == 0)
@@ -53,7 +53,7 @@ namespace ActionGameFramework.Spawning
 		}
 
 		/// <summary>
-		/// Calculates the weight sum.
+		/// 重みの合計を計算します。
 		/// </summary>
 		protected void CalculateWeightSum()
 		{

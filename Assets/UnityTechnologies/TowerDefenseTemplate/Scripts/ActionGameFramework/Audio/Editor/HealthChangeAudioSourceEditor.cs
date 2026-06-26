@@ -4,7 +4,7 @@ using UnityEngine;
 namespace ActionGameFramework.Audio.Editor
 {
 	/// <summary>
-	/// Custom editor for <see cref="HealthChangeAudioSource"/> that sorts sounds on the fly
+	/// <see cref="HealthChangeAudioSource"/> 用のカスタムエディター。必要に応じてサウンドを並べ替える
 	/// </summary>
 	[CustomEditor(typeof(HealthChangeAudioSource))]
 	public class HealthChangeAudioSourceEditor : UnityEditor.Editor
@@ -16,12 +16,12 @@ namespace ActionGameFramework.Audio.Editor
 			"\nYou can also press the \'Sort\' button once you are done editing the sound list.";
 
 		/// <summary>
-		/// The <see cref="HealthChangeAudioSource"/> that is selected
+		/// 選択中の <see cref="HealthChangeAudioSource"/>
 		/// </summary>
 		protected HealthChangeAudioSource m_Source;
 
 		/// <summary>
-		/// Sort the sounds when the <see cref="HealthChangeAudioSource"/> is selected
+		/// <see cref="HealthChangeAudioSource"/> が選択されたときにサウンドを並べ替える
 		/// </summary>
 		protected void OnEnable()
 		{
@@ -29,7 +29,7 @@ namespace ActionGameFramework.Audio.Editor
 		}
 
 		/// <summary>
-		/// Sort the sounds when <see cref="HealthChangeAudioSource"/> is deselected
+		/// <see cref="HealthChangeAudioSource"/> の選択が外れたときにサウンドを並べ替える
 		/// </summary>
 		protected void OnDisable()
 		{
@@ -37,7 +37,7 @@ namespace ActionGameFramework.Audio.Editor
 		}
 
 		/// <summary>
-		/// Sort the <see cref="HealthChangeAudioSource"/>'s sound list
+		/// <see cref="HealthChangeAudioSource"/> のサウンドリストを並べ替える
 		/// </summary>
 		protected void Sort()
 		{
@@ -49,7 +49,7 @@ namespace ActionGameFramework.Audio.Editor
 		}
 
 		/// <summary>
-		/// Provide a button to manually sort sounds that were edited
+		/// 編集したサウンドを手動で並べ替えるボタンを表示する
 		/// </summary>
 		public override void OnInspectorGUI()
 		{

@@ -1,7 +1,7 @@
 ﻿namespace Core.Utilities
 {
 	/// <summary>
-	/// Singleton that persists across multiple scenes
+	/// 複数のシーンをまたいで存在し続けるSingleton
 	/// </summary>
 	public class PersistentSingleton<T> : Singleton<T> where T : Singleton<T>
 	{

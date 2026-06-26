@@ -10,13 +10,13 @@ namespace TowerDefense.Towers.TowerLaunchers
 		public abstract void Launch(Targetable enemy, GameObject attack, Transform firingPoint);
 
 		/// <summary>
-		/// Gets an instance of the attack object from the Pool and Launches it
+		/// Poolから攻撃オブジェクトのインスタンスを取得して発射します
 		/// </summary>
 		/// <param name="enemies">
-		/// The list of enemies to sample from
+		/// 抽出元となる敵リスト
 		/// </param>
 		/// <param name="attack">
-		/// The object used to attack
+		/// 攻撃に使うオブジェクト
 		/// </param>
 		/// <param name="firingPoints"></param>
 		public virtual void Launch(List<Targetable> enemies, GameObject attack, Transform[] firingPoints)
@@ -39,13 +39,13 @@ namespace TowerDefense.Towers.TowerLaunchers
 		}
 
 		/// <summary>
-		/// Gets a instance of attack from the Pool and Launches it
+		/// Poolから攻撃インスタンスを取得して発射します
 		/// </summary>
 		/// <param name="enemy">
-		/// The enemy launcher is attacking
+		/// Launcherが攻撃している敵
 		/// </param>
 		/// <param name="attack">
-		/// The object used to attack the enemy
+		/// 敵を攻撃するために使うオブジェクト
 		/// </param>
 		/// <param name="firingPoints"></param>
 		public virtual void Launch(Targetable enemy, GameObject attack, Transform[] firingPoints)
@@ -59,16 +59,16 @@ namespace TowerDefense.Towers.TowerLaunchers
 		}
 
 		/// <summary>
-		/// Sets up a particle system to provide aiming feedback
+		/// 照準フィードバック用のParticle Systemを設定します
 		/// </summary>
 		/// <param name="particleSystemToPlay">
-		/// The Particle system to fire
+		/// 再生するParticle System
 		/// </param>
 		/// <param name="origin">
-		/// The position of the particle system
+		/// Particle Systemの位置
 		/// </param>
 		/// <param name="lookPosition">
-		/// The direction the particle system is looking
+		/// Particle Systemが向く方向
 		/// </param>
 		public void PlayParticles(ParticleSystem particleSystemToPlay, Vector3 origin, Vector3 lookPosition)
 		{
@@ -82,10 +82,10 @@ namespace TowerDefense.Towers.TowerLaunchers
 		}
 
 		/// <summary>
-		/// Gets a random transform from a list
+		/// リストからランダムなTransformを取得します
 		/// </summary>
 		/// <param name="launchPoints">
-		/// The list of transforms to use
+		/// 使用するTransformのリスト
 		/// </param>
 		public Transform GetRandomTransform(Transform[] launchPoints)
 		{

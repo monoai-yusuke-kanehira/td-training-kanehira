@@ -4,7 +4,7 @@ using UnityEngine;
 namespace TowerDefense.UI
 {
 	/// <summary>
-	/// A simple component that plays a given particle system on a given regular interval
+	/// 指定されたParticle Systemを一定間隔で再生するシンプルなコンポーネント
 	/// </summary>
 	public class IntervalParticleSystemPlayer : MonoBehaviour
 	{

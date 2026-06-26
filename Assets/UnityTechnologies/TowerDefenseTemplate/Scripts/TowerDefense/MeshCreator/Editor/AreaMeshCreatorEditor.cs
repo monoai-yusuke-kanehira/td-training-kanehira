@@ -15,7 +15,7 @@ namespace TowerDefense.MeshCreator.Editor
 		protected float m_OctagonRadius = 1;
 
 		/// <summary>
-		/// Recreates the mesh when this script becomes active
+		/// このスクリプトが有効になったときにメッシュを作り直します
 		/// </summary>
 		protected void OnEnable()
 		{
@@ -24,7 +24,7 @@ namespace TowerDefense.MeshCreator.Editor
 		}
 
 		/// <summary>
-		/// Inspector GUI
+		/// InspectorのGUI
 		/// </summary>
 		public override void OnInspectorGUI()
 		{
@@ -58,7 +58,7 @@ namespace TowerDefense.MeshCreator.Editor
 		}
 
 		/// <summary>
-		/// Creates the mesh from the points currently in the mesh creator
+		/// メッシュ作成用オブジェクトに現在設定されている点からメッシュを作成します
 		/// </summary>
 		protected void CreateMesh()
 		{
@@ -69,18 +69,18 @@ namespace TowerDefense.MeshCreator.Editor
 				Vector3 v = m_AreaMeshCreator.transform.InverseTransformPoint(vertices3D[i]);
 				vertices2D[i] = new Vector2(v.x, v.z);
 			}
-			// Use the triangulator to get indices for creating triangles
+			// Triangulatorを使って三角形作成用のインデックスを取得します
 			var tr = new Triangulator(vertices2D);
 			int[] indices = tr.Triangulate();
 
-			// Create the Vector3 vertices
+			// Vector3の頂点を作成します
 			Vector3[] vertices = new Vector3[vertices2D.Length];
 			for (int i = 0; i < vertices.Length; i++)
 			{
 				vertices[i] = new Vector3(vertices2D[i].x, 0, vertices2D[i].y);
 			}
 
-			// Create the mesh
+			// メッシュを作成します
 			var msh = new Mesh();
 			msh.vertices = vertices;
 			msh.triangles = indices;
@@ -110,7 +110,7 @@ namespace TowerDefense.MeshCreator.Editor
 		}
 
 		/// <summary>
-		/// Makes points coplanar
+		/// 点を同一平面上にそろえます
 		/// </summary>
 		protected void ForcePointsFlat()
 		{
@@ -118,10 +118,10 @@ namespace TowerDefense.MeshCreator.Editor
 		}
 
 		/// <summary>
-		/// Adds a new point at the midpoint of 2 other points
+		/// 2つの点の中間地点に新しい点を追加します
 		/// </summary>
-		/// <param name="point1">First point</param>
-		/// <param name="point2">Second point</param>
+		/// <param name="point1">1つ目の点</param>
+		/// <param name="point2">2つ目の点</param>
 		protected void AddPoint(Transform point1, Transform point2)
 		{
 			Vector3 first = point1.position, last = point2.position, midpoint = Midpoint(first, last);
@@ -146,7 +146,7 @@ namespace TowerDefense.MeshCreator.Editor
 		}
 
 		/// <summary>
-		/// Draws and handles input for manipulating the mesh in scene
+		/// Scene上でメッシュを操作するための表示と入力処理を行います
 		/// </summary>
 		protected void OnSceneGUI()
 		{
@@ -222,15 +222,15 @@ namespace TowerDefense.MeshCreator.Editor
 				ForcePointsFlat();
 			}
 
-			// maintain selection of object
+			// オブジェクトの選択状態を維持します
 			Selection.activeGameObject = m_AreaMeshCreator.gameObject;
 		}
 
 		/// <summary>
-		/// Gets the 2 closest points to the specified (cursor) position
+		/// 指定されたカーソル位置に最も近い2つの点を取得します
 		/// </summary>
-		/// <param name="position">The position of the cursor</param>
-		/// <returns>The 2 closest points to the cursor</returns>
+		/// <param name="position">カーソルの位置</param>
+		/// <returns>カーソルに最も近い2つの点</returns>
 		protected Transform[] GetClosestTwoPoints(Vector3 position)
 		{
 			Transform[] points = new Transform[2];
@@ -251,10 +251,10 @@ namespace TowerDefense.MeshCreator.Editor
 		}
 
 		/// <summary>
-		/// Finds the closest point to the specified (cursor) position
+		/// 指定されたカーソル位置に最も近い点を探します
 		/// </summary>
-		/// <param name="position">The position of the cursor</param>
-		/// <returns>The closest point to the cursor</returns>
+		/// <param name="position">カーソルの位置</param>
+		/// <returns>カーソルに最も近い点</returns>
 		protected Transform GetClosetsPoint(Vector3 position)
 		{
 			Transform[] ordererPoints = m_AreaMeshCreator.pointsTransforms.OrderBy(x => Vector3.Distance(x.position, position))
@@ -263,7 +263,7 @@ namespace TowerDefense.MeshCreator.Editor
 		}
 
 		/// <summary>
-		/// Deletes the selected point Transform.
+		/// 選択中の点のTransformを削除します。
 		/// </summary>
 		protected void DeletePoint(Transform point)
 		{
@@ -272,17 +272,17 @@ namespace TowerDefense.MeshCreator.Editor
 		}
 
 		/// <summary>
-		/// Gets the midpoint between 2 Vector3's
+		/// 2つのVector3の中間地点を取得します
 		/// </summary>
-		/// <param name="first">First point</param>
-		/// <param name="last">Last point</param>
+		/// <param name="first">1つ目の点</param>
+		/// <param name="last">最後の点</param>
 		protected static Vector3 Midpoint(Vector3 first, Vector3 last)
 		{
 			return (first + last) * 0.5f;
 		}
 
 		/// <summary>
-		/// Destroys the current points in the mesh
+		/// メッシュ内の現在の点を削除します
 		/// </summary>
 		protected void ClearCurrentPoints()
 		{
@@ -295,9 +295,9 @@ namespace TowerDefense.MeshCreator.Editor
 		}
 
 		/// <summary>
-		/// Creates a new point at the specified position
+		/// 指定した位置に新しい点を作成します
 		/// </summary>
-		/// <param name="position">Position to create the point at</param>
+		/// <param name="position">点を作成する位置</param>
 		protected void CreateNewPoint(Vector3 position)
 		{
 			var point = new GameObject("point");
@@ -307,9 +307,9 @@ namespace TowerDefense.MeshCreator.Editor
 		}
 
 		/// <summary>
-		/// Creates a basic square
+		/// 基本的な正方形を作成します
 		/// </summary>
-		/// <param name="sideLength">Length of the sides of the square</param>
+		/// <param name="sideLength">正方形の辺の長さ</param>
 		protected void SetSquare(float sideLength)
 		{
 			ClearCurrentPoints();
@@ -323,9 +323,9 @@ namespace TowerDefense.MeshCreator.Editor
 		}
 
 		/// <summary>
-		/// Creates an octagon
+		/// 八角形を作成します
 		/// </summary>
-		/// <param name="radius">Radius of the Octagon</param>
+		/// <param name="radius">八角形の半径</param>
 		protected void SetOctagon(float radius)
 		{
 			ClearCurrentPoints();

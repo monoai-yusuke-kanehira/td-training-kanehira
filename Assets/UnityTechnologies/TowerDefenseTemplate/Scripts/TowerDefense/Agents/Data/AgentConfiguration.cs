@@ -6,18 +6,18 @@ namespace TowerDefense.Agents.Data
 	public class AgentConfiguration : ScriptableObject
 	{
 		/// <summary>
-		/// The name of the agent
+		/// エージェントの名前
 		/// </summary>
 		public string agentName;
 
 		/// <summary>
-		/// Short summary of the agent
+		/// エージェントの簡単な概要
 		/// </summary>
 		[Multiline]
 		public string agentDescription;
 
 		/// <summary>
-		/// The Agent prefab that will be used on instantiation
+		/// インスタンス化で使用されるエージェント プレハブ
 		/// </summary>
 		public Agent agentPrefab;
 	}

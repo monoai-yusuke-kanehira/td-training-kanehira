@@ -7,29 +7,29 @@ namespace TowerDefense.UI
 	public class RadiusVisualizerController : MonoBehaviour
 	{
 		/// <summary>
-		/// Prefab used to visualize effect radius of tower
+		/// タワーの効果範囲を可視化するために使用するPrefab
 		/// </summary>
 		public GameObject radiusVisualizerPrefab;
 
 		public float radiusVisualizerHeight = 0.02f;
 
 		/// <summary>
-		/// The local euler angles
+		/// ローカルのオイラー角
 		/// </summary>
 		public Vector3 localEuler;
 
 		readonly List<GameObject> m_RadiusVisualizers = new List<GameObject>();
 
 		/// <summary>
-		/// Sets up the radius visualizer for a tower or ghost tower
+		/// タワーまたはゴーストタワー用の範囲ビジュアライザーを設定する
 		/// </summary>
 		/// <param name="tower">
-		/// The tower to get the data from
+		/// データを取得するタワー
 		/// </param>
-		/// <param name="ghost">Transform of ghost to parent the visualiser to.</param>
+		/// <param name="ghost">ビジュアライザーの親にするゴーストのTransform。</param>
 		public void SetupRadiusVisualizers(Tower tower, Transform ghost = null)
 		{
-			// Create necessary affector radius visualizations
+			// 必要な影響範囲の可視化オブジェクトを作成する
 			List<ITowerRadiusProvider> providers =
 				tower.levels[tower.currentLevel].GetRadiusVisualizers();
 
@@ -59,7 +59,7 @@ namespace TowerDefense.UI
 		}
 
 		/// <summary>
-		/// Hides the radius visualizers
+		/// 範囲ビジュアライザーを非表示にする
 		/// </summary>
 		public void HideRadiusVisualizers()
 		{

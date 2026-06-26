@@ -3,15 +3,15 @@
 namespace ActionGameFramework.Health
 {
 	/// <summary>
-	/// Damage collider - a collider based implementation of DamageZone
+	/// DamageZone を Collider ベースで実装したダメージ用コライダー
 	/// </summary>
 	[RequireComponent(typeof(Collider))]
 	public class DamageCollider : DamageZone
 	{
 		/// <summary>
-		/// On collision enter, see if the colliding object has a Damager and then make the damageableBehaviour take damage
+		/// 衝突したオブジェクトに Damager があるか確認し、あれば damageableBehaviour にダメージを与える
 		/// </summary>
-		/// <param name="c">The collider</param>
+		/// <param name="c">衝突情報</param>
 		protected void OnCollisionEnter(Collision c)
 		{
 			var damager = c.gameObject.GetComponent<Damager>();
@@ -29,10 +29,10 @@ namespace ActionGameFramework.Health
 		}
 
 		/// <summary>
-		/// Averages the contacts to get the position.
+		/// 接触点の平均から位置を取得する
 		/// </summary>
-		/// <returns>The average position.</returns>
-		/// <param name="contacts">Contacts.</param>
+		/// <returns>平均位置。</returns>
+		/// <param name="contacts">接触点。</param>
 		protected Vector3 ConvertContactsToPosition(ContactPoint[] contacts)
 		{
 			Vector3 output = Vector3.zero;

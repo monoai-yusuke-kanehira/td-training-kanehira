@@ -4,67 +4,67 @@ using UnityEngine;
 namespace TowerDefense.Targetting.Editor
 {
 	/// <summary>
-	/// The editor for configuring targetter
+	/// Targetterを設定するためのEditor
 	/// </summary>
 	[CustomEditor(typeof(Targetter)), CanEditMultipleObjects]
 	public class TargetterEditor : UnityEditor.Editor
 	{
 		/// <summary>
-		/// Configuration for which collider to use
+		/// 使用するColliderの設定
 		/// </summary>
 		public enum TargetterCollider
 		{
 			/// <summary>
-			/// For sphere collider
+			/// Sphere Collider用
 			/// </summary>
 			Sphere,
 
 			/// <summary>
-			/// For capsule collider
+			/// Capsule Collider用
 			/// </summary>
 			Capsule
 		}
 
 		/// <summary>
-		/// The targetter to edit
+		/// 編集対象のTargetter
 		/// </summary>
 		Targetter m_Targetter;
 
 		/// <summary>
-		/// The collision configuration to use
+		/// 使用する衝突設定
 		/// </summary>
 		TargetterCollider m_ColliderConfiguration;
 
 		/// <summary>
-		/// The radius of the collider
+		/// Colliderの半径
 		/// </summary>
 		float m_ColliderRadius;
 
-		// Capsule specific info
+		// Capsule固有の情報
 
 		/// <summary>
-		/// The height of a capsule collider
+		/// Capsule Colliderの高さ
 		/// </summary>
 		float m_ExtraVerticalRange;
 
 		/// <summary>
-		/// The attached collider
+		/// アタッチされているCollider
 		/// </summary>
 		Collider m_AttachedCollider;
 
 		/// <summary>
-		/// The serialized property representing <see cref="m_AttachedCollider"/>
+		/// <see cref="m_AttachedCollider"/>を表すSerializedProperty
 		/// </summary>
 		SerializedProperty m_SerializedAttachedCollider;
 
 		/// <summary>
-		/// draws the default inspector 
-		/// and then draws configuration for colliders
+		/// デフォルトのInspectorを描画します
+		/// その後、Collider用の設定を描画します
 		/// </summary>
 		public override void OnInspectorGUI()
 		{
 			base.OnInspectorGUI();
-			// To make the inspector a little bit neater
+			// Inspectorを少し見やすくするため
 			EditorGUILayout.Space();
 			EditorGUILayout.LabelField("Targetter Collider Configuration", EditorStyles.boldLabel);
 
@@ -83,7 +83,7 @@ namespace TowerDefense.Targetting.Editor
 		}
 
 		/// <summary>
-		/// For attaching and hiding the correct collider
+		/// 適切なColliderをアタッチして非表示にするため
 		/// </summary>
 		void AttachCollider()
 		{
@@ -121,7 +121,7 @@ namespace TowerDefense.Targetting.Editor
 		}
 
 		/// <summary>
-		/// Assigns the values to the collider
+		/// Colliderに値を設定します
 		/// </summary>
 		void SetValues()
 		{
@@ -140,7 +140,7 @@ namespace TowerDefense.Targetting.Editor
 		}
 
 		/// <summary>
-		/// Obtains the information from the collider
+		/// Colliderから情報を取得します
 		/// </summary>
 		void GetValues()
 		{
@@ -159,8 +159,8 @@ namespace TowerDefense.Targetting.Editor
 		}
 
 		/// <summary>
-		/// Caches the collider and hides it
-		/// and configures all the necessary information from it
+		/// Colliderをキャッシュして非表示にします
+		/// そこから必要な情報をすべて設定します
 		/// </summary>
 		void OnEnable()
 		{
@@ -193,7 +193,7 @@ namespace TowerDefense.Targetting.Editor
 			{
 				m_ColliderConfiguration = TargetterCollider.Capsule;
 			}
-			// to ensure the collider is referenced by the serialized object
+			// SerializedObjectからColliderが参照されるようにします
 			if (m_SerializedAttachedCollider.objectReferenceValue == null)
 			{
 				m_SerializedAttachedCollider.objectReferenceValue = m_AttachedCollider;

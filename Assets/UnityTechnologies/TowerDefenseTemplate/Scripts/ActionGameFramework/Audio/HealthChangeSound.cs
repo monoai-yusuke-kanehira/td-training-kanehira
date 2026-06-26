@@ -4,7 +4,7 @@ using UnityEngine;
 namespace ActionGameFramework.Audio
 {
 	/// <summary>
-	/// Health change sound - maps a health change to an AudioClip
+	/// 体力変化量と AudioClip を対応付けるサウンド設定
 	/// </summary>
 	[Serializable]
 	public class HealthChangeSound

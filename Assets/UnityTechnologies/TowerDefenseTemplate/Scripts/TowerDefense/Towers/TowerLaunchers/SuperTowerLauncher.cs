@@ -11,38 +11,38 @@ using UnityEngine.Events;
 namespace TowerDefense.Towers.TowerLaunchers
 {
 	/// <summary>
-	/// Rapid fire launcher, launchers a homing projectile
+	/// ホーミングProjectileを連射するLauncher
 	/// </summary>
 	public class SuperTowerLauncher : HomingLauncher
 	{
 		/// <summary>
-		/// How long the tower will stay active
+		/// Towerが有効でいる時間
 		/// </summary>
 		public float towerLifeSpan = 10;
 
 		/// <summary>
-		/// Angle, in degrees, to rotate, on the x axis, the fire vector by
+		/// 発射ベクトルをX軸方向に回転させる角度（度）
 		/// </summary>
 		public float fireVectorXRotationAdjustment = 45.0f;
 
 		/// <summary>
-		/// Fires when the max amount of projectiles has been reached
+		/// Projectileの最大数に達したときに発火します
 		/// </summary>
 		public UnityEvent death;
 		
 		/// <summary>
-		/// Timer to invoke a unity event when it elapses
+		/// 時間切れ時にUnityEventを呼び出すTimer
 		/// </summary>
 		protected Timer m_LifeTimer;
 
 		/// <summary>
-		///	Finds a random enemy in a list and fires from a random point
+		///	リストからランダムな敵を選び、ランダムな点から発射します
 		/// </summary>
 		/// <param name="enemies">
-		/// The list of enemies to sample from
+		/// 抽出元となる敵リスト
 		/// </param>
 		/// <param name="attack">
-		/// The object used to attack
+		/// 攻撃に使うオブジェクト
 		/// </param>
 		/// <param name="firingPoints"></param>
 		public override void Launch(List<Targetable> enemies, GameObject attack, Transform[] firingPoints)
@@ -87,8 +87,8 @@ namespace TowerDefense.Towers.TowerLaunchers
 		}
 
 		/// <summary>
-		/// Subscribes to Level Manager onStateChanged
-		/// If waves have already begun, then begin death timer
+		/// Level ManagerのonStateChangedを購読します
+		/// Waveがすでに始まっている場合は死亡タイマーを開始します
 		/// </summary>
 		protected virtual void OnEnable()
 		{
@@ -108,7 +108,7 @@ namespace TowerDefense.Towers.TowerLaunchers
 		}
 
 		/// <summary>
-		/// Unsubscribe from Level Manager onStateChanged
+		/// Level ManagerのonStateChangedの購読を解除します
 		/// </summary>
 		protected virtual void OnDisable()
 		{
@@ -119,7 +119,7 @@ namespace TowerDefense.Towers.TowerLaunchers
 		}
 
 		/// <summary>
-		/// Tick the timer
+		/// Timerを進めます
 		/// </summary>
 		protected void Update()
 		{
@@ -131,7 +131,7 @@ namespace TowerDefense.Towers.TowerLaunchers
 		}
 
 		/// <summary>
-		/// Invoke the UnityEvent once the timer elapses
+		/// Timerが終了したらUnityEventを呼び出します
 		/// </summary>
 		protected void OnLifeTimerElapsed()
 		{
@@ -139,13 +139,13 @@ namespace TowerDefense.Towers.TowerLaunchers
 		}
 
 		/// <summary>
-		/// Checks the current state, if within a valid state, start the death timer
+		/// 現在の状態を確認し、有効な状態であれば死亡タイマーを開始します
 		/// </summary>
 		/// <param name="previousState">
-		/// The previous state the the LevelManager was in
+		/// LevelManagerの直前の状態
 		/// </param>
 		/// <param name="currentState">
-		/// The current state the LevelManager was in
+		/// LevelManagerの現在の状態
 		/// </param>
 		void OnLevelStateChanged(LevelState previousState, LevelState currentState)
 		{
