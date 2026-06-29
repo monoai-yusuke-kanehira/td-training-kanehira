@@ -1,5 +1,6 @@
-﻿using Core.Utilities;
-using UnityEngine;
+﻿using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 
 namespace TowerDefense.Level
 {
@@ -13,31 +14,24 @@ namespace TowerDefense.Level
 		/// </summary>
 		public float time = 5f;
 
-		/// <summary>
-		/// 遅延を追跡するために使用されるタイマー オブジェクト
-		/// </summary>
-		protected Timer m_Timer;
+        private CancellationTokenSource m_Cts;
 
-		/// <summary>
-		/// タイマーを設定し、SafelyCallIntroCompleted イベントを発生させます
-		/// </summary>
 		protected void Awake()
 		{
-			m_Timer = new Timer(time, SafelyCallIntroCompleted);
+            m_Cts = new CancellationTokenSource();
+            RunIntroAsync(m_Cts.Token).Forget();
 		}
 
-		/// <summary>
-		/// タイマーにチェックを入れ、完了したら無効にします
-		/// </summary>
-		protected void Update()
-		{
-			if (m_Timer != null)
-			{
-				if (m_Timer.Tick(Time.deltaTime))
-				{
-					m_Timer = null;
-				}
-			}
-		}
+        async UniTaskVoid RunIntroAsync(CancellationToken cancellationToken)
+        {
+            await UniTask.Delay(TimeSpan.FromSeconds(time), cancellationToken: cancellationToken);
+            SafelyCallIntroCompleted();
+        }
+
+        protected void OnDestroy()
+        {
+            m_Cts?.Cancel();
+            m_Cts?.Dispose();
+        }
 	}
 }
