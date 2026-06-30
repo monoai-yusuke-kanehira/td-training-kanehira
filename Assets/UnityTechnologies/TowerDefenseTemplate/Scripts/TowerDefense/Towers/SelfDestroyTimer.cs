@@ -1,64 +1,55 @@
-ï»¿using Core.Utilities;
+ï»¿using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
+using Core.Utilities;
 
 namespace TowerDefense.Towers
 {
-	/// <summary>
-	/// ©‰óˆ——p‚Ì•â•ƒRƒ“ƒ|[ƒlƒ“ƒg
-	/// </summary>
 	public class SelfDestroyTimer : MonoBehaviour
 	{
-		/// <summary>
-		/// ”jŠü‚Ü‚Å‚ÌŠÔ
-		/// </summary>
 		public float time = 5;
-
-		/// <summary>
-		/// §Œä—pƒ^ƒCƒ}[
-		/// </summary>
-		public Timer timer;
-		
-		/// <summary>
-		/// ŒöŠJ‚³‚ê‚Ä‚¢‚é€–SƒR[ƒ‹ƒoƒbƒN
-		/// </summary>
 		public UnityEvent death;
+        CancellationTokenSource m_DestroyCts;
 
-		/// <summary>
-		/// •K—v‚É‰‚¶‚ÄŠÔ‚ğ‰Šú‰»‚µ‚Ü‚·
-		/// </summary>
+        /// <summary>
+        /// éåŒæœŸã‚¿ã‚¤ãƒãƒ¼ã‚’é–‹å§‹ã™ã‚‹å‡¦ç†
+        /// </summary>
 		protected virtual void OnEnable()
-		{
-			if (timer == null)
-			{
-				timer = new Timer(time, OnTimeEnd);
-			}
-			else
-			{
-				timer.Reset();
-			}
-		}
+        {
+            m_DestroyCts?.Cancel();
+            m_DestroyCts?.Dispose();
+            m_DestroyCts = CancellationTokenSource.CreateLinkedTokenSource(destroyCancellationToken);
+            RunDestroyTimerAsync(m_DestroyCts.Token).Forget();
+        }
 
-		/// <summary>
-		/// ƒ^ƒCƒ}[‚ğXV‚µ‚Ü‚·
-		/// </summary>
-		protected virtual void Update()
-		{
-			if (timer == null)
-			{
-				return;
-			}
-			timer.Tick(Time.deltaTime);
-		}
+        /// <summary>
+        /// éåŒæœŸã§å¾…ã¤å‡¦ç†ã®å®Ÿè£…
+        /// </summary>
+        async UniTaskVoid RunDestroyTimerAsync(CancellationToken cancellationToken)
+        {
+            try
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(time), cancellationToken: cancellationToken);
+                OnTimeEnd();
+            }
+            catch(OperationCanceledException)
+            {
+            }
+        }
 
-		/// <summary>
-		/// ƒ^ƒCƒ}[I—¹‚É”­‰Î‚µ‚Ü‚·
-		/// </summary>
+        protected virtual void OnDisable()
+        {
+            m_DestroyCts?.Cancel();
+            m_DestroyCts?.Dispose();
+            m_DestroyCts = null;
+        }
+
 		protected virtual void OnTimeEnd()
 		{
 			death.Invoke();
 			Poolable.TryPool(gameObject);
-			timer.Reset();
 		}
 	}
 }
