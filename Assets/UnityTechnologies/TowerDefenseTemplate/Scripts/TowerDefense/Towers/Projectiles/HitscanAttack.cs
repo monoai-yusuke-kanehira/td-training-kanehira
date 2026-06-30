@@ -1,68 +1,51 @@
 ï»¿using ActionGameFramework.Health;
 using Core.Utilities;
 using UnityEngine;
+using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 
 namespace TowerDefense.Towers.Projectiles
 {
-	/// <summary>
-	/// Hitscan Projectile‚ÌÀ‘•
-	/// ‚±‚Ì•Ší‚Í“G‚ğ‘¦À‚ÉUŒ‚‚·‚éd‘g‚İ‚Å‚·
-	/// </summary>
 	[RequireComponent(typeof(Damager))]
 	public class HitscanAttack : MonoBehaviour
 	{
-		/// <summary>
-		/// ’x‰„‚³‚¹‚éŠÔ
-		/// </summary>
 		public float delay;
-
-		/// <summary>
-		/// ’x‰„ƒ^ƒCƒ}[
-		/// </summary>
-		protected Timer m_Timer;
-
-		/// <summary>
-		/// ‚±‚ÌProjectile‚ªUŒ‚‚·‚é“G
-		/// </summary>
 		protected Targetable m_Enemy;
-
-		/// <summary>
-		/// ƒIƒuƒWƒFƒNƒg‚ÉƒAƒ^ƒbƒ`‚³‚ê‚½Damager
-		/// </summary>
 		protected Damager m_Damager;
-
-		/// <summary>
-		/// Tower‚ÌProjectileˆÊ’u
-		/// </summary>
 		protected Vector3 m_Origin;
+        CancellationTokenSource m_AttackCts;
 
-		/// <summary>
-		/// ’x‰„ƒ^ƒCƒ}[‚ğˆê’â~‚·‚é‚½‚ß‚Ìİ’è
-		/// Time.timeScale‚ğ0‚É‚¹‚¸‚És‚¢‚Ü‚·
-		/// </summary>
-		protected bool m_PauseTimer;
-
-		/// <summary>
-		/// UŒ‚—p‚Ì’x‰„İ’è
-		/// </summary>
-		/// <param name="origin">
-		/// UŒ‚‚Ì”­ËŒ³‚Æ‚È‚é“_
-		/// </param>
-		/// <param name="enemy">
-		/// UŒ‚‚·‚é“G
-		/// </param>
 		public void AttackEnemy(Vector3 origin, Targetable enemy)
 		{
 			m_Enemy = enemy;
 			m_Origin = origin;
-			m_Timer.Reset();
-			m_PauseTimer = false;
+
+            m_AttackCts?.Cancel();
+            m_AttackCts?.Dispose();
+            m_AttackCts = CancellationTokenSource.CreateLinkedTokenSource(destroyCancellationToken);
+            DelayAttackAsync(m_AttackCts.Token).Forget();
 		}
 
-		/// <summary>
-		/// HitscanUŒ‚‚ÌÀÛ‚ÌUŒ‚ˆ—B
-		/// UŒ‚‚·‚é“G‚ª‚¢‚È‚¢ê‡‚Íƒƒ\ƒbƒh‚©‚ç‘Šúreturn‚µ‚Ü‚·B
-		/// </summary>
+        async UniTaskVoid DelayAttackAsync(CancellationToken cancellationToken)
+        {
+            try
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(delay), cancellationToken: cancellationToken);
+                DealDamage();
+            }
+            catch(OperationCanceledException)
+            {
+            }
+        }
+
+        protected virtual void OnDisable()
+        {
+            m_AttackCts?.Cancel();
+            m_AttackCts?.Dispose();
+            m_AttackCts = null;
+        }
+
 		protected void DealDamage()
 		{
 			Poolable.TryPool(gameObject);
@@ -72,34 +55,17 @@ namespace TowerDefense.Towers.Projectiles
 				return;
 			}
 			
-			// ƒGƒtƒFƒNƒg
 			ParticleSystem pfxPrefab = m_Damager.collisionParticles;
 			var attackEffect = Poolable.TryGetPoolable<ParticleSystem>(pfxPrefab.gameObject);
 			attackEffect.transform.position = m_Enemy.position;
 			attackEffect.Play();
 			
 			m_Enemy.TakeDamage(m_Damager.damage, m_Enemy.position, m_Damager.alignmentProvider);
-			m_PauseTimer = true;
 		}
 
-		/// <summary>
-		/// ‚±‚ÌƒIƒuƒWƒFƒNƒg‚ÉƒAƒ^ƒbƒ`‚³‚ê‚½DamagerƒRƒ“ƒ|[ƒlƒ“ƒg‚ğƒLƒƒƒbƒVƒ…‚µ‚Ü‚·
-		/// </summary>
 		protected virtual void Awake()
 		{
 			m_Damager = GetComponent<Damager>();
-			m_Timer = new Timer(delay, DealDamage);
-		}
-
-		/// <summary>
-		/// m_Timer‚ª—˜—p‰Â”\‚Èê‡‚ÍXV‚µ‚Ü‚·
-		/// </summary>
-		protected virtual void Update()
-		{
-			if (!m_PauseTimer)
-			{
-				m_Timer.Tick(Time.deltaTime);
-			}
 		}
 	}
 }
