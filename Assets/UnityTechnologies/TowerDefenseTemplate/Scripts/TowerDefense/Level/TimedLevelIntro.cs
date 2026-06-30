@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 
@@ -10,7 +10,8 @@ namespace TowerDefense.Level
 	public class TimedLevelIntro : LevelIntro
 	{
 		/// <summary>
-		/// 遅延
+		/// 旧：「毎フレーム Tick して、時間が来たら callback」
+        /// 新：await UniTask.Delay(...) が「時間が来るまでここで一時停止」を担当
 		/// </summary>
 		public float time = 5f;
 
